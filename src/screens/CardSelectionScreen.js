@@ -40,11 +40,11 @@ const CardSelectionScreen = ({ navigation }) => {
   }, []);
 
   const handleYesNo = () => {
-    navigation.navigate("QuestionInput");
+    navigation.navigate("QuestionInput", { cardType: "yesno" });
   };
 
   const handleDailyCard = () => {
-    console.log("데일리 카드 선택");
+    navigation.navigate("QuestionInput", { cardType: "daily" });
   };
 
   const handleHomePress = () => {

@@ -8,16 +8,28 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Image,
+  ImageBackground,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
+import { LinearGradient } from "expo-linear-gradient";
+import MaskedView from "@react-native-masked-view/masked-view";
 
-const QuestionInputScreen = ({ navigation }) => {
+const QuestionInputScreen = ({ navigation, route }) => {
   const [question, setQuestion] = useState("");
+
+  // 라우트 파라미터에서 카드 타입 확인
+  const cardType = route.params?.cardType || "yesno";
 
   const handleNext = () => {
     if (question.trim()) {
-      navigation.navigate("CardDraw", { question: question.trim() });
+      navigation.navigate("CardDraw", {
+        question: question.trim(),
+        cardType: cardType,
+      });
     }
   };
 
@@ -25,95 +37,159 @@ const QuestionInputScreen = ({ navigation }) => {
     navigation.goBack();
   };
 
+  // 동적 타이틀 생성
+  const getHeaderTitle = () => {
+    return cardType === "daily" ? "데일리 카드" : "Yes or No 오라클 타로";
+  };
+
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <ImageBackground
+        source={require("../../assets/subBg.png")}
+        style={styles.container}
+        resizeMode="cover"
       >
-        {/* 상단 텍스트 */}
-        <View style={styles.headerContainer}>
-          <Text style={styles.title}>질문을 입력하세요</Text>
-          <Text style={styles.subtitle}>
-            예/아니오로 답할 수 있는 질문을 작성해주세요
-          </Text>
-        </View>
-
-        {/* 질문 입력 영역 */}
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>질문</Text>
-          <TextInput
-            style={styles.textInput}
-            value={question}
-            onChangeText={setQuestion}
-            placeholder="예: 오늘 고백할까요?"
-            placeholderTextColor={colors.textSecondary}
-            multiline
-            numberOfLines={4}
-            textAlignVertical="top"
-            maxLength={100}
-          />
-          <Text style={styles.characterCount}>{question.length}/100</Text>
-        </View>
-
-        {/* 예시 질문들 */}
-        <View style={styles.examplesContainer}>
-          <Text style={styles.examplesTitle}>예시 질문</Text>
-          <View style={styles.exampleItems}>
-            <Text style={styles.exampleItem}>• 오늘 고백할까요?</Text>
-            <Text style={styles.exampleItem}>• 숙제를 할까요?</Text>
-            <Text style={styles.exampleItem}>• 여행을 갈까요?</Text>
-            <Text style={styles.exampleItem}>• 새로운 것을 시도해볼까요?</Text>
-          </View>
-        </View>
-
-        {/* 버튼 영역 */}
-        <View style={styles.buttonContainer}>
+        {/* 상단 헤더 */}
+        <View style={styles.header}>
           <TouchableOpacity
-            style={[
-              styles.nextButton,
-              !question.trim() && styles.nextButtonDisabled,
-            ]}
-            onPress={handleNext}
-            disabled={!question.trim()}
+            style={styles.backButton}
+            onPress={handleBack}
             activeOpacity={0.8}
           >
-            <Text style={styles.nextButtonText}>다음</Text>
+            <Image
+              source={require("../../assets/back-icon.png")}
+              style={styles.backIcon}
+              resizeMode="contain"
+            />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-            <Text style={styles.backButtonText}>뒤로가기</Text>
-          </TouchableOpacity>
+          <Text style={styles.headerTitle}>{getHeaderTitle()}</Text>
+
+          <View style={styles.placeholder} />
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+
+        <View style={styles.content}>
+          {/* 중앙 그룹 영역 */}
+          <View style={styles.centerGroup}>
+            {/* 상단 텍스트 */}
+            <View style={styles.gradientContainer}>
+              <MaskedView
+                maskElement={
+                  <Text style={styles.gradientTitle}>
+                    긍정적일지, 부정적일지{"\n"}궁금한 질문을 알려주세요.
+                  </Text>
+                }
+              >
+                <LinearGradient
+                  colors={["#612CC9", "#C53D93"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 0.8, y: 0 }}
+                >
+                  <Text style={[styles.gradientTitle, { opacity: 0 }]}>
+                    긍정적일지, 부정적일지{"\n"}궁금한 질문을 알려주세요.
+                  </Text>
+                </LinearGradient>
+              </MaskedView>
+            </View>
+
+            {/* 질문 입력 영역 */}
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.textInput}
+                value={question}
+                onChangeText={setQuestion}
+                placeholder="질문을 입력해 주세요."
+                placeholderTextColor="#C3C3C3"
+                multiline
+                numberOfLines={4}
+                textAlignVertical="top"
+                maxLength={16}
+                blurOnSubmit={true}
+                returnKeyType="done"
+                onSubmitEditing={Keyboard.dismiss}
+              />
+              <Text style={styles.characterCount}>{question.length}/16</Text>
+            </View>
+          </View>
+
+          {/* 하단 버튼 영역 */}
+          <View style={styles.bottomSection}>
+            <TouchableOpacity
+              style={[
+                styles.nextButton,
+                !question.trim() && styles.nextButtonDisabled,
+              ]}
+              onPress={handleNext}
+              disabled={!question.trim()}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.nextButtonText}>다음</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ImageBackground>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.gradientStart,
   },
-  scrollContent: {
-    flexGrow: 1,
-    paddingTop: 80,
-    paddingBottom: 40,
-    paddingHorizontal: 30,
-  },
-  headerContainer: {
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 40,
+    paddingTop: 60,
+    paddingHorizontal: 24,
+    paddingBottom: 20,
+  },
+  backButton: {
+    padding: 8,
+  },
+  backIcon: {
+    width: 24,
+    height: 24,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: colors.textPrimary,
+    textAlign: "center",
+  },
+  placeholder: {
+    width: 40,
+  },
+  content: {
+    flex: 1,
+    justifyContent: "space-between",
+    paddingHorizontal: 24,
+  },
+  centerGroup: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: colors.textLight,
-    marginBottom: 10,
+    color: colors.textPrimary,
+    // marginBottom: 10,
     textAlign: "center",
+  },
+  gradient: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 5,
+    alignSelf: "center",
+    marginTop: 100,
+  },
+  gradientTitle: {
+    fontSize: 26,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 28,
+    lineHeight: 34,
   },
   subtitle: {
     fontSize: 18,
@@ -122,7 +198,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   inputContainer: {
-    marginBottom: 40,
+    width: "100%",
   },
   inputLabel: {
     fontSize: 18,
@@ -133,79 +209,44 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: colors.cardBackground,
     borderRadius: 15,
-    padding: 20,
-    fontSize: 16,
+    padding: 24,
+    fontSize: 20,
     color: colors.textPrimary,
-    minHeight: 120,
     textAlignVertical: "top",
-    shadowColor: colors.shadow,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
+    textAlign: "center",
+    borderWidth: 1,
+    borderColor: "#722FC0",
+    borderStyle: "solid",
     elevation: 6,
   },
   characterCount: {
     fontSize: 14,
-    color: colors.textLight,
-    opacity: 0.6,
+    color: colors.textSecondary,
     textAlign: "right",
     marginTop: 8,
   },
-  examplesContainer: {
-    marginBottom: 40,
-  },
-  examplesTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: colors.textLight,
-    marginBottom: 15,
-  },
-  exampleItems: {
-    backgroundColor: colors.cardBackground,
-    borderRadius: 15,
-    padding: 20,
-    shadowColor: colors.shadow,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 6,
-  },
-  exampleItem: {
-    fontSize: 16,
-    color: colors.textSecondary,
-    marginBottom: 8,
-    lineHeight: 22,
-  },
-  buttonContainer: {
-    gap: 15,
+  bottomSection: {
+    paddingBottom: 40,
+    alignItems: "center",
   },
   nextButton: {
-    backgroundColor: colors.textLight,
-    borderRadius: 15,
-    paddingVertical: 18,
+    backgroundColor: colors.primary,
+    borderRadius: 8,
+    paddingVertical: 20,
+    paddingHorizontal: 80,
+    marginBottom: 30,
+    width: "100%",
     alignItems: "center",
-    shadowColor: colors.shadow,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 6,
+    justifyContent: "center",
   },
   nextButtonDisabled: {
     opacity: 0.5,
   },
   nextButtonText: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: "bold",
-    color: colors.primary,
-  },
-  backButton: {
-    alignItems: "center",
-    paddingVertical: 15,
-  },
-  backButtonText: {
-    fontSize: 16,
     color: colors.textLight,
-    opacity: 0.8,
+    textAlign: "center",
   },
 });
 
