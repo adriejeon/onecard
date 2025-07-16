@@ -1,7 +1,7 @@
 // 피그마 디자인 기반 색상 테마
 export const colors = {
   // 메인 컬러 (보라색 계열)
-  primary: "#6B46C1",
+  primary: "#3039FE",
   primaryLight: "#9F7AEA",
   primaryDark: "#553C9A",
 
@@ -12,10 +12,11 @@ export const colors = {
   // 카드 색상
   cardBackground: "#FFFFFF",
   cardBackgroundDark: "#2D3748",
+  choiceBackground: "#CAB7FF",
 
   // 텍스트 색상
-  textPrimary: "#2D3748",
-  textSecondary: "#718096",
+  textPrimary: "#020058",
+  textSecondary: "#050279",
   textLight: "#FFFFFF",
 
   // Yes/No 결과 색상
