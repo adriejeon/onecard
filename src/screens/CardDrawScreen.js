@@ -17,8 +17,6 @@ const CardDrawScreen = ({ navigation, route }) => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  // test
-  // test
   // 애니메이션 값들
   const cardScale = new Animated.Value(1);
   const cardOpacity = new Animated.Value(1);
