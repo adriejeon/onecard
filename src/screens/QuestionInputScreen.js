@@ -225,8 +225,8 @@ const styles = StyleSheet.create({
     borderColor: "#722FC0",
     borderStyle: "solid",
     elevation: 6,
-    height: 120, // 고정 높이 설정
-    minHeight: 120, // 최소 높이 보장
+    height: 74, // 고정 높이 설정
+    minHeight: 74, // 최소 높이 보장
   },
   characterCount: {
     fontSize: 14,
