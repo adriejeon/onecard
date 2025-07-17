@@ -17,6 +17,8 @@ const { width, height } = Dimensions.get("window");
 const CardSelectionScreen = ({ navigation }) => {
   const rotateAnim = useRef(new Animated.Value(0)).current;
 
+  // test
+
   useEffect(() => {
     const startRotation = () => {
       rotateAnim.setValue(0);
