@@ -311,7 +311,7 @@ const ResultScreen = ({ navigation, route }) => {
   const handleShare = async () => {
     try {
       const cardResult = getCardResult(result.id);
-      const shareMessage = `질문: ${question}\n답: ${cardResult.percentage} ${cardResult.text}\n\n원카드 앱으로 운명의 답을 찾아보세요! (https://apps.apple.com/app/onecard)`;
+      const shareMessage = `질문: ${question}\n답: ${cardResult.percentage} ${cardResult.text}\n\n${cardResult.description}\n\n원카드 앱으로 운명의 답을 찾아보세요! (https://apps.apple.com/app/onecard)`;
 
       // 먼저 카카오톡이 설치되어 있는지 확인
       const canOpenKakao = await Linking.canOpenURL("kakaotalk://");
@@ -335,7 +335,7 @@ const ResultScreen = ({ navigation, route }) => {
       // 모든 방법이 실패한 경우 기본 공유 시트로 폴백
       try {
         const cardResult = getCardResult(result.id);
-        const shareMessage = `질문: ${question}\n답: ${cardResult.percentage} ${cardResult.text}\n\n원카드 앱으로 답을 찾아보세요!`;
+        const shareMessage = `질문: ${question}\n답: ${cardResult.percentage} ${cardResult.text}\n\n${cardResult.description}\n\n원카드 앱으로 운명의 답을 찾아보세요! (https://apps.apple.com/app/onecard)`;
 
         await Share.share({
           message: shareMessage,
