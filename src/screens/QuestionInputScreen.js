@@ -12,6 +12,7 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Keyboard,
+  StatusBar,
 } from "react-native";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
@@ -49,6 +50,11 @@ const QuestionInputScreen = ({ navigation, route }) => {
         style={styles.container}
         resizeMode="cover"
       >
+        <StatusBar
+          barStyle="dark-content"
+          backgroundColor="transparent"
+          translucent
+        />
         {/* 상단 헤더 */}
         <View style={styles.header}>
           <TouchableOpacity
@@ -240,7 +246,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   nextButtonDisabled: {
-    opacity: 0.5,
+    opacity: 0.2,
   },
   nextButtonText: {
     fontSize: 22,

@@ -8,6 +8,7 @@ import {
   ImageBackground,
   Image,
   Animated,
+  StatusBar,
 } from "react-native";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
@@ -67,6 +68,11 @@ const CardSelectionScreen = ({ navigation }) => {
       style={styles.container}
       resizeMode="cover"
     >
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
       {/* 상단 헤더 */}
       <View style={styles.header}>
         <TouchableOpacity

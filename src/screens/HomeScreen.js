@@ -8,6 +8,7 @@ import {
   ImageBackground,
   Image,
   Animated,
+  StatusBar,
 } from "react-native";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
@@ -56,6 +57,11 @@ const HomeScreen = ({ navigation }) => {
       style={styles.container}
       resizeMode="cover"
     >
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
       <View style={styles.content}>
         {/* 상단 심볼 영역 */}
         <View style={styles.symbolContainer}>

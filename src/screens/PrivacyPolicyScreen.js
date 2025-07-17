@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   ImageBackground,
+  StatusBar,
 } from "react-native";
 import { colors } from "../styles/colors";
 
@@ -16,6 +17,11 @@ const PrivacyPolicyScreen = ({ navigation }) => {
       style={styles.container}
       resizeMode="cover"
     >
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
       <View style={styles.content}>
         {/* 상단 헤더 */}
         <View style={styles.header}>
