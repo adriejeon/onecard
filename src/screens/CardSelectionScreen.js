@@ -103,8 +103,8 @@ const CardSelectionScreen = ({ navigation }) => {
             source={require("../../assets/info-icon.png")}
             style={styles.infoImage}
             resizeMode="contain"
-            width={24}
-            height={24}
+            width={20}
+            height={20}
           />
         </TouchableOpacity>
       </View>
@@ -183,8 +183,8 @@ const styles = StyleSheet.create({
   },
   infoButton: {},
   infoImage: {
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 20,
   },
   centerContent: {
     flex: 0.7,

@@ -202,7 +202,17 @@ const CardDrawScreen = ({ navigation, route }) => {
 
         <Text style={styles.headerTitle}>{getHeaderTitle()}</Text>
 
-        <View style={styles.placeholder} />
+        <TouchableOpacity
+          style={styles.infoButton}
+          onPress={() => navigation.navigate("PrivacyPolicy")}
+          activeOpacity={0.8}
+        >
+          <Image
+            source={require("../../assets/info-icon-dark.png")}
+            style={styles.infoIcon}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.content}>
@@ -331,8 +341,12 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     textAlign: "center",
   },
-  placeholder: {
-    width: 40,
+  infoButton: {
+    padding: 8,
+  },
+  infoIcon: {
+    width: 20,
+    height: 20,
   },
   content: {
     flex: 1,
