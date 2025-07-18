@@ -45,7 +45,7 @@ const CardSelectionScreen = ({ navigation }) => {
   };
 
   const handleDailyCard = () => {
-    navigation.navigate("QuestionInput", { cardType: "daily" });
+    navigation.navigate("DailyCardSelection");
   };
 
   const handleHomePress = () => {

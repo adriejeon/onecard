@@ -8,6 +8,8 @@ import CardSelectionScreen from "../screens/CardSelectionScreen";
 import QuestionInputScreen from "../screens/QuestionInputScreen";
 import CardDrawScreen from "../screens/CardDrawScreen";
 import ResultScreen from "../screens/ResultScreen";
+import DailyCardSelectionScreen from "../screens/DailyCardSelectionScreen";
+import DailyResultScreen from "../screens/DailyResultScreen";
 import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
 
 const Stack = createStackNavigator();
@@ -34,6 +36,11 @@ const AppNavigator = () => {
         <Stack.Screen name="QuestionInput" component={QuestionInputScreen} />
         <Stack.Screen name="CardDraw" component={CardDrawScreen} />
         <Stack.Screen name="Result" component={ResultScreen} />
+        <Stack.Screen
+          name="DailyCardSelection"
+          component={DailyCardSelectionScreen}
+        />
+        <Stack.Screen name="DailyResult" component={DailyResultScreen} />
         <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
       </Stack.Navigator>
     </NavigationContainer>
