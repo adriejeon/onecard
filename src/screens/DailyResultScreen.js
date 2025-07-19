@@ -221,9 +221,9 @@ const DailyResultScreen = ({ navigation, route }) => {
         translucent
       />
       {/* 상단 헤더 */}
-      <View style={commonStyles.header}>
+      <View style={[commonStyles.header, { position: "relative" }]}>
         <TouchableOpacity
-          style={commonStyles.backButton}
+          style={[commonStyles.backButton, { zIndex: 2 }]}
           onPress={handleBack}
           activeOpacity={0.8}
         >
@@ -233,10 +233,23 @@ const DailyResultScreen = ({ navigation, route }) => {
             contentFit="contain"
           />
         </TouchableOpacity>
-        <Text style={commonStyles.headerTitle}>데일리 카드</Text>
+        <Text
+          style={[
+            commonStyles.headerTitle,
+            {
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: 60,
+              zIndex: 1,
+            },
+          ]}
+        >
+          데일리 카드
+        </Text>
         {!cardData ? (
           <TouchableOpacity
-            style={commonStyles.infoButton}
+            style={[commonStyles.infoButton, { zIndex: 2 }]}
             onPress={() => navigation.navigate("More")}
             activeOpacity={0.8}
           >
@@ -247,7 +260,7 @@ const DailyResultScreen = ({ navigation, route }) => {
             />
           </TouchableOpacity>
         ) : (
-          <View style={commonStyles.infoButton} />
+          <View style={[commonStyles.infoButton, { zIndex: 2 }]} />
         )}
       </View>
 

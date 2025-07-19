@@ -451,9 +451,9 @@ const ResultScreen = ({ navigation, route }) => {
         translucent
       />
       {/* 상단 헤더 */}
-      <View style={commonStyles.header}>
+      <View style={[commonStyles.header, { position: "relative" }]}>
         <TouchableOpacity
-          style={commonStyles.backButton}
+          style={[commonStyles.backButton, { zIndex: 2 }]}
           onPress={handleBack}
           activeOpacity={0.8}
         >
@@ -464,11 +464,24 @@ const ResultScreen = ({ navigation, route }) => {
           />
         </TouchableOpacity>
 
-        <Text style={commonStyles.headerTitle}>{getHeaderTitle()}</Text>
+        <Text
+          style={[
+            commonStyles.headerTitle,
+            {
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: 60,
+              zIndex: 1,
+            },
+          ]}
+        >
+          {getHeaderTitle()}
+        </Text>
 
         {!route.params.fromArchive ? (
           <TouchableOpacity
-            style={commonStyles.infoButton}
+            style={[commonStyles.infoButton, { zIndex: 2 }]}
             onPress={() => navigation.navigate("More")}
             activeOpacity={0.8}
           >
@@ -479,7 +492,7 @@ const ResultScreen = ({ navigation, route }) => {
             />
           </TouchableOpacity>
         ) : (
-          <View style={commonStyles.infoButton} />
+          <View style={[commonStyles.infoButton, { zIndex: 2 }]} />
         )}
       </View>
 

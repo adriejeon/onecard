@@ -7,15 +7,13 @@ export const commonStyles = StyleSheet.create({
   // 공통 헤더 스타일
   header: {
     flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
     paddingTop: 60,
     paddingHorizontal: 24,
     paddingBottom: 10,
-    position: "relative",
   },
-  backButton: {
-    zIndex: 2,
-  },
+  backButton: {},
   backIcon: {
     width: 24,
     height: 24,
@@ -25,15 +23,8 @@ export const commonStyles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.textPrimary,
     textAlign: "center",
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 60,
-    zIndex: 1,
   },
-  infoButton: {
-    zIndex: 2,
-  },
+  infoButton: {},
   infoIcon: {
     width: 18,
     height: 18,
