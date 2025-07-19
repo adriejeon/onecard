@@ -20,6 +20,7 @@ import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
+import { saveDailyCardDraw } from "../utils/dailyCardUtils";
 
 const { width, height } = Dimensions.get("window");
 
@@ -191,6 +192,12 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
     setTimeout(() => {
       setIsAnimating(false);
       setShowSelectedCard(true);
+      // 데일리 카드 뽑기 완료 저장 (카드 정보 포함)
+      const cardDataToSave = {
+        result: card,
+        cardType: "daily",
+      };
+      saveDailyCardDraw(cardDataToSave);
     }, 600);
   };
 
@@ -219,29 +226,29 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
         translucent
       />
       {/* 상단 헤더 */}
-      <View style={styles.header}>
+      <View style={commonStyles.header}>
         <TouchableOpacity
-          style={styles.backButton}
+          style={commonStyles.backButton}
           onPress={handleBack}
           activeOpacity={0.8}
         >
           <Image
             source={require("../../assets/back-icon.png")}
-            style={styles.backIcon}
+            style={commonStyles.backIcon}
             contentFit="contain"
           />
         </TouchableOpacity>
 
-        <Text style={styles.headerTitle}>데일리 카드</Text>
+        <Text style={commonStyles.headerTitle}>데일리 카드</Text>
 
         <TouchableOpacity
-          style={styles.infoButton}
-          onPress={() => navigation.navigate("PrivacyPolicy")}
+          style={commonStyles.infoButton}
+          onPress={() => navigation.navigate("More")}
           activeOpacity={0.8}
         >
           <Image
             source={require("../../assets/info-icon-dark.png")}
-            style={styles.infoIcon}
+            style={commonStyles.infoIcon}
             contentFit="contain"
           />
         </TouchableOpacity>
@@ -350,34 +357,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingTop: 60,
-    paddingHorizontal: 24,
-    paddingBottom: 20,
-  },
-  backButton: {
-    padding: 8,
-  },
-  backIcon: {
-    width: 24,
-    height: 24,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: colors.textPrimary,
-    textAlign: "center",
-  },
-  infoButton: {
-    padding: 8,
-  },
-  infoIcon: {
-    width: 20,
-    height: 20,
-  },
   content: {
     flex: 1,
     paddingHorizontal: 20,
@@ -386,6 +365,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
     width: "100%",
+    marginTop: 28,
   },
   gradientContainer: {
     alignItems: "center",

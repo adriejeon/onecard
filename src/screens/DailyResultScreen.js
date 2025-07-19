@@ -23,7 +23,10 @@ import cardResults from "../assets/data/cardResults";
 const { width } = Dimensions.get("window");
 
 const DailyResultScreen = ({ navigation, route }) => {
-  const { result } = route.params;
+  const { result, cardData } = route.params;
+
+  // cardData가 있으면 그것을 사용하고, 없으면 result를 사용
+  const selectedCard = cardData ? cardData.result : result;
 
   // 애니메이션 값들
   const resultScale = useRef(new Animated.Value(0)).current;
@@ -32,7 +35,7 @@ const DailyResultScreen = ({ navigation, route }) => {
 
   // 카드 결과에 따라 배경 결정
   const getBackgroundImage = () => {
-    const cardResult = getCardResult(result.id);
+    const cardResult = getCardResult(selectedCard.id);
     return cardResult.isPositive
       ? require("../../assets/resultBg-posi.png")
       : require("../../assets/resultBg-nage.png");
@@ -75,7 +78,7 @@ const DailyResultScreen = ({ navigation, route }) => {
 
   const handleShare = async () => {
     try {
-      const cardResult = getCardResult(result.id);
+      const cardResult = getCardResult(selectedCard.id);
       const shareMessage = `오늘의 데일리 카드: ${cardResult.title}\n\n${cardResult.description}\n\n원카드 앱으로 오늘의 운세를 확인해보세요!`;
 
       // 먼저 카카오톡이 설치되어 있는지 확인
@@ -101,7 +104,7 @@ const DailyResultScreen = ({ navigation, route }) => {
 
       // 모든 방법이 실패한 경우 기본 공유 시트로 폴백
       try {
-        const cardResult = getCardResult(result.id);
+        const cardResult = getCardResult(selectedCard.id);
         const shareMessage = `오늘의 데일리 카드: ${cardResult.title}\n\n${cardResult.description}\n\n원카드 앱으로 오늘의 운세를 확인해보세요! (https://apps.apple.com/app/onecard)`;
 
         await Share.share({
@@ -127,7 +130,7 @@ const DailyResultScreen = ({ navigation, route }) => {
     navigation.navigate("Home");
   };
 
-  const cardResult = getCardResult(result.id);
+  const cardResult = getCardResult(selectedCard.id);
 
   return (
     <ImageBackground
@@ -156,7 +159,7 @@ const DailyResultScreen = ({ navigation, route }) => {
         <Text style={commonStyles.headerTitle}>데일리 카드</Text>
         <TouchableOpacity
           style={commonStyles.infoButton}
-          onPress={() => navigation.navigate("PrivacyPolicy")}
+          onPress={() => navigation.navigate("More")}
           activeOpacity={0.8}
         >
           <Image
@@ -206,7 +209,7 @@ const DailyResultScreen = ({ navigation, route }) => {
             ]}
           >
             <Image
-              source={result.frontImage}
+              source={selectedCard.frontImage}
               style={commonStyles.resultCardImage}
               contentFit="contain"
             />

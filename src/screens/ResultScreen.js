@@ -378,29 +378,29 @@ const ResultScreen = ({ navigation, route }) => {
         translucent
       />
       {/* 상단 헤더 */}
-      <View style={styles.header}>
+      <View style={commonStyles.header}>
         <TouchableOpacity
-          style={styles.backButton}
+          style={commonStyles.backButton}
           onPress={handleBack}
           activeOpacity={0.8}
         >
           <Image
             source={require("../../assets/back-icon.png")}
-            style={styles.backIcon}
+            style={commonStyles.backIcon}
             contentFit="contain"
           />
         </TouchableOpacity>
 
-        <Text style={styles.headerTitle}>{getHeaderTitle()}</Text>
+        <Text style={commonStyles.headerTitle}>{getHeaderTitle()}</Text>
 
         <TouchableOpacity
-          style={styles.infoButton}
-          onPress={() => navigation.navigate("PrivacyPolicy")}
+          style={commonStyles.infoButton}
+          onPress={() => navigation.navigate("More")}
           activeOpacity={0.8}
         >
           <Image
             source={require("../../assets/info-icon-dark.png")}
-            style={styles.infoIcon}
+            style={commonStyles.infoIcon}
             contentFit="contain"
           />
         </TouchableOpacity>
@@ -510,34 +510,6 @@ const ResultScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingTop: 60,
-    paddingHorizontal: 24,
-    paddingBottom: 20,
-  },
-  backButton: {
-    padding: 8,
-  },
-  backIcon: {
-    width: 24,
-    height: 24,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: colors.textPrimary,
-    textAlign: "center",
-  },
-  infoButton: {
-    padding: 8,
-  },
-  infoIcon: {
-    width: 20,
-    height: 20,
   },
   content: {
     flex: 1,

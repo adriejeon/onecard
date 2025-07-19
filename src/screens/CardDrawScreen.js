@@ -187,67 +187,67 @@ const CardDrawScreen = ({ navigation, route }) => {
         translucent
       />
       {/* 상단 헤더 */}
-      <View style={styles.header}>
+      <View style={commonStyles.header}>
         <TouchableOpacity
-          style={styles.backButton}
+          style={commonStyles.backButton}
           onPress={handleBack}
           activeOpacity={0.8}
         >
           <Image
             source={require("../../assets/back-icon.png")}
-            style={styles.backIcon}
+            style={commonStyles.backIcon}
             contentFit="contain"
           />
         </TouchableOpacity>
 
-        <Text style={styles.headerTitle}>{getHeaderTitle()}</Text>
+        <Text style={commonStyles.headerTitle}>{getHeaderTitle()}</Text>
 
         <TouchableOpacity
-          style={styles.infoButton}
-          onPress={() => navigation.navigate("PrivacyPolicy")}
+          style={commonStyles.infoButton}
+          onPress={() => navigation.navigate("More")}
           activeOpacity={0.8}
         >
           <Image
             source={require("../../assets/info-icon-dark.png")}
-            style={styles.infoIcon}
+            style={commonStyles.infoIcon}
             contentFit="contain"
           />
         </TouchableOpacity>
       </View>
 
       <View style={styles.content}>
-        {/* 상단 텍스트 */}
-        <View style={styles.headerContainer}>
-          <View style={styles.gradientContainer}>
-            <MaskedView
-              style={{ width: "100%" }}
-              maskElement={
-                <Text style={styles.gradientTitle}>
-                  {question}
-                  {"\n"}를 생각하며 한 장 뽑아주세요.
-                </Text>
-              }
-            >
-              <LinearGradient
-                colors={["#612CC9", "#C53D93"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 0.8, y: 0 }}
-              >
-                <Text style={[styles.gradientTitle, { opacity: 0 }]}>
-                  {question}
-                  {"\n"}를 생각하며 한 장 뽑아주세요.
-                </Text>
-              </LinearGradient>
-            </MaskedView>
-          </View>
-        </View>
-
         {/* 카드 그리드 */}
         <ScrollView
           style={styles.scrollContainer}
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
+          {/* 상단 텍스트 */}
+          <View style={styles.headerContainer}>
+            <View style={styles.gradientContainer}>
+              <MaskedView
+                style={{ width: "100%" }}
+                maskElement={
+                  <Text style={styles.gradientTitle}>
+                    {question}
+                    {"\n"}를 생각하며 한 장 뽑아주세요.
+                  </Text>
+                }
+              >
+                <LinearGradient
+                  colors={["#612CC9", "#C53D93"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 0.8, y: 0 }}
+                >
+                  <Text style={[styles.gradientTitle, { opacity: 0 }]}>
+                    {question}
+                    {"\n"}를 생각하며 한 장 뽑아주세요.
+                  </Text>
+                </LinearGradient>
+              </MaskedView>
+            </View>
+          </View>
+
           <View style={styles.cardsContainer}>
             {shuffledCards.map((card, index) => {
               const isSelected = selectedCardIndex === index;
@@ -319,34 +319,6 @@ const CardDrawScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingTop: 60,
-    paddingHorizontal: 24,
-    paddingBottom: 20,
-  },
-  backButton: {
-    padding: 8,
-  },
-  backIcon: {
-    width: 24,
-    height: 24,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: colors.textPrimary,
-    textAlign: "center",
-  },
-  infoButton: {
-    padding: 8,
-  },
-  infoIcon: {
-    width: 20,
-    height: 20,
   },
   content: {
     flex: 1,

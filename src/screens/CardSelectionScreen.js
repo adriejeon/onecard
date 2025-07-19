@@ -8,10 +8,16 @@ import {
   ImageBackground,
   Animated,
   StatusBar,
+  Alert,
 } from "react-native";
 import { Image } from "expo-image";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
+import {
+  checkDailyCardAvailability,
+  getTodayDailyCard,
+  resetDailyCardData,
+} from "../utils/dailyCardUtils";
 
 const { width, height } = Dimensions.get("window");
 
@@ -44,7 +50,24 @@ const CardSelectionScreen = ({ navigation }) => {
     navigation.navigate("QuestionInput", { cardType: "yesno" });
   };
 
-  const handleDailyCard = () => {
+  const handleDailyCard = async () => {
+    // 데일리 카드 뽑기 가능 여부 확인
+    const canDrawDaily = await checkDailyCardAvailability();
+
+    if (!canDrawDaily) {
+      // 이미 오늘 뽑았으면 오늘 뽑은 데일리 카드 결과 페이지로 바로 이동
+      const todayCard = await getTodayDailyCard();
+      if (todayCard) {
+        navigation.navigate("DailyResult", { cardData: todayCard });
+      } else {
+        // 카드 정보가 없으면 데이터 초기화하고 새로 뽑기
+        await resetDailyCardData();
+        navigation.navigate("DailyCardSelection");
+      }
+      return;
+    }
+
+    // 뽑기 가능하면 데일리 카드 선택 화면으로 이동
     navigation.navigate("DailyCardSelection");
   };
 
@@ -53,7 +76,7 @@ const CardSelectionScreen = ({ navigation }) => {
   };
 
   const handleInfoPress = () => {
-    navigation.navigate("PrivacyPolicy");
+    navigation.navigate("More");
   };
 
   const spin = rotateAnim.interpolate({
@@ -82,7 +105,7 @@ const CardSelectionScreen = ({ navigation }) => {
         >
           <Animated.View
             style={[
-              commonStyles.symbolImage,
+              styles.symbolImage,
               {
                 transform: [{ rotate: spin }],
               },
@@ -90,7 +113,7 @@ const CardSelectionScreen = ({ navigation }) => {
           >
             <Image
               source={require("../../assets/home-symbol.png")}
-              style={commonStyles.symbolImage}
+              style={styles.symbolImage}
               contentFit="contain"
             />
           </Animated.View>
@@ -178,8 +201,8 @@ const styles = StyleSheet.create({
   },
   symbolButton: {},
   symbolImage: {
-    width: 34,
-    height: 34,
+    width: 32,
+    height: 32,
   },
   infoButton: {},
   infoImage: {

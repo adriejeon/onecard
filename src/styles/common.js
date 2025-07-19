@@ -13,9 +13,7 @@ export const commonStyles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingBottom: 10,
   },
-  backButton: {
-    padding: 8,
-  },
+  backButton: {},
   backIcon: {
     width: 24,
     height: 24,
@@ -26,12 +24,10 @@ export const commonStyles = StyleSheet.create({
     color: colors.textPrimary,
     textAlign: "center",
   },
-  infoButton: {
-    padding: 8,
-  },
+  infoButton: {},
   infoIcon: {
-    width: 20,
-    height: 20,
+    width: 18,
+    height: 18,
   },
 
   // 공통 컨테이너 스타일
@@ -276,11 +272,13 @@ export const commonStyles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 60,
     paddingBottom: 40,
+    marginTop: 60,
   },
   symbolImage: {
     width: 48,
     height: 48,
   },
+
   centerTextContainer: {
     flex: 1,
     justifyContent: "center",
