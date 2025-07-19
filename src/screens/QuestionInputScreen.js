@@ -8,12 +8,12 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Image,
   ImageBackground,
   TouchableWithoutFeedback,
   Keyboard,
   StatusBar,
 } from "react-native";
+import { Image } from "expo-image";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 import { LinearGradient } from "expo-linear-gradient";
@@ -65,7 +65,7 @@ const QuestionInputScreen = ({ navigation, route }) => {
             <Image
               source={require("../../assets/back-icon.png")}
               style={styles.backIcon}
-              resizeMode="contain"
+              contentFit="contain"
             />
           </TouchableOpacity>
 
@@ -79,7 +79,7 @@ const QuestionInputScreen = ({ navigation, route }) => {
             <Image
               source={require("../../assets/info-icon-dark.png")}
               style={styles.infoIcon}
-              resizeMode="contain"
+              contentFit="contain"
             />
           </TouchableOpacity>
         </View>

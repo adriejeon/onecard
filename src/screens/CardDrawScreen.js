@@ -5,11 +5,11 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
-  Image,
   ImageBackground,
   ScrollView,
   StatusBar,
 } from "react-native";
+import { Image } from "expo-image";
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -196,7 +196,7 @@ const CardDrawScreen = ({ navigation, route }) => {
           <Image
             source={require("../../assets/back-icon.png")}
             style={styles.backIcon}
-            resizeMode="contain"
+            contentFit="contain"
           />
         </TouchableOpacity>
 
@@ -210,7 +210,7 @@ const CardDrawScreen = ({ navigation, route }) => {
           <Image
             source={require("../../assets/info-icon-dark.png")}
             style={styles.infoIcon}
-            resizeMode="contain"
+            contentFit="contain"
           />
         </TouchableOpacity>
       </View>
@@ -272,7 +272,7 @@ const CardDrawScreen = ({ navigation, route }) => {
                       <Image
                         source={card.backImage}
                         style={styles.cardImage}
-                        resizeMode="contain"
+                        contentFit="contain"
                       />
                     </Animated.View>
 
@@ -287,7 +287,7 @@ const CardDrawScreen = ({ navigation, route }) => {
                       <Image
                         source={card.frontImage}
                         style={styles.cardImage}
-                        resizeMode="contain"
+                        contentFit="contain"
                       />
                     </Animated.View>
                   </View>

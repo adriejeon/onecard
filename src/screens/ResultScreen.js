@@ -8,11 +8,11 @@ import {
   Animated,
   Share,
   ImageBackground,
-  Image,
   StatusBar,
   Alert,
   Linking,
 } from "react-native";
+import { Image } from "expo-image";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 import { LinearGradient } from "expo-linear-gradient";
@@ -317,10 +317,14 @@ const ResultScreen = ({ navigation, route }) => {
       const canOpenKakao = await Linking.canOpenURL("kakaotalk://");
 
       if (canOpenKakao) {
-        // 카카오톡으로 직접 공유
+        // 카카오톡으로 직접 공유 (이미지 포함)
+        // 카드 이미지 URL을 포함한 공유 URL 생성
+        const imageUrl = encodeURIComponent(
+          "https://your-app-domain.com/card-image.jpg"
+        ); // 실제 이미지 URL로 교체 필요
         const kakaoUrl = `kakaotalk://send?text=${encodeURIComponent(
           shareMessage
-        )}`;
+        )}&image=${imageUrl}`;
         await Linking.openURL(kakaoUrl);
       } else {
         // 카카오톡이 없으면 기본 공유 시트 사용
@@ -383,7 +387,7 @@ const ResultScreen = ({ navigation, route }) => {
           <Image
             source={require("../../assets/back-icon.png")}
             style={styles.backIcon}
-            resizeMode="contain"
+            contentFit="contain"
           />
         </TouchableOpacity>
 
@@ -397,7 +401,7 @@ const ResultScreen = ({ navigation, route }) => {
           <Image
             source={require("../../assets/info-icon-dark.png")}
             style={styles.infoIcon}
-            resizeMode="contain"
+            contentFit="contain"
           />
         </TouchableOpacity>
       </View>
@@ -437,7 +441,7 @@ const ResultScreen = ({ navigation, route }) => {
             <Image
               source={result.frontImage}
               style={styles.resultCardImage}
-              resizeMode="contain"
+              contentFit="contain"
             />
           </Animated.View>
         </View>

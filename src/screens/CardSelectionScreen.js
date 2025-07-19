@@ -6,10 +6,10 @@ import {
   StyleSheet,
   Dimensions,
   ImageBackground,
-  Image,
   Animated,
   StatusBar,
 } from "react-native";
+import { Image } from "expo-image";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 
@@ -74,37 +74,37 @@ const CardSelectionScreen = ({ navigation }) => {
         translucent
       />
       {/* 상단 헤더 */}
-      <View style={styles.header}>
+      <View style={commonStyles.header}>
         <TouchableOpacity
-          style={styles.symbolButton}
+          style={commonStyles.backButton}
           onPress={handleHomePress}
           activeOpacity={0.8}
         >
-          <Animated.Image
-            source={require("../../assets/home-symbol.png")}
+          <Animated.View
             style={[
-              styles.symbolImage,
+              commonStyles.symbolImage,
               {
                 transform: [{ rotate: spin }],
               },
             ]}
-            resizeMode="contain"
-            width={32}
-            height={32}
-          />
+          >
+            <Image
+              source={require("../../assets/home-symbol.png")}
+              style={commonStyles.symbolImage}
+              contentFit="contain"
+            />
+          </Animated.View>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.infoButton}
+          style={commonStyles.infoButton}
           onPress={handleInfoPress}
           activeOpacity={0.8}
         >
           <Image
             source={require("../../assets/info-icon.png")}
-            style={styles.infoImage}
-            resizeMode="contain"
-            width={20}
-            height={20}
+            style={commonStyles.infoIcon}
+            contentFit="contain"
           />
         </TouchableOpacity>
       </View>
@@ -128,7 +128,7 @@ const CardSelectionScreen = ({ navigation }) => {
               <Image
                 source={require("../../assets/taro-icon.png")}
                 style={styles.cardIcon}
-                resizeMode="contain"
+                contentFit="contain"
               />
               <View style={styles.cardTextContainer}>
                 <Text style={styles.cardButtonTitle}>Yes or No</Text>
@@ -149,7 +149,7 @@ const CardSelectionScreen = ({ navigation }) => {
               <Image
                 source={require("../../assets/daily-icon.png")}
                 style={styles.cardIcon}
-                resizeMode="contain"
+                contentFit="contain"
               />
               <View style={styles.cardTextContainer}>
                 <Text style={styles.cardButtonTitle}>데일리 카드</Text>
