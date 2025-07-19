@@ -17,6 +17,7 @@ import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
+import { saveCardResult, deleteCardResult } from "../utils/cardArchiveUtils";
 
 const { width, height } = Dimensions.get("window");
 
@@ -357,11 +358,83 @@ const ResultScreen = ({ navigation, route }) => {
   };
 
   const handleBack = () => {
-    navigation.goBack();
+    if (route.params.fromArchive) {
+      // 보관함에서 온 경우 보관함으로 돌아가기
+      navigation.goBack();
+    } else {
+      // 새로운 카드 결과인 경우 홈으로 이동
+      navigation.navigate("Home");
+    }
   };
 
   const handleHome = () => {
     navigation.navigate("Home");
+  };
+
+  const handleArchive = async () => {
+    try {
+      const archiveData = {
+        cardType: "yesno",
+        question: question,
+        result: result,
+        cardResult: cardResult,
+      };
+
+      const success = await saveCardResult(archiveData);
+      if (success) {
+        Alert.alert("보관 완료", "카드 결과가 보관함에 저장되었습니다.");
+      } else {
+        Alert.alert("보관 실패", "카드 결과 저장에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("보관 실패:", error);
+      Alert.alert("보관 실패", "카드 결과 저장에 실패했습니다.");
+    }
+  };
+
+  const handleDelete = async () => {
+    Alert.alert(
+      "보관 삭제",
+      "이 카드 결과를 보관함에서 삭제하시겠습니까? 삭제된 카드 결과는 다시 되돌릴 수 없습니다",
+      [
+        {
+          text: "취소",
+          style: "cancel",
+        },
+        {
+          text: "삭제",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              // 보관함에서 온 경우에만 삭제 가능
+              if (route.params.fromArchive && route.params.archiveId) {
+                const success = await deleteCardResult(route.params.archiveId);
+                if (success) {
+                  Alert.alert(
+                    "삭제 완료",
+                    "카드 결과가 보관함에서 삭제되었습니다.",
+                    [
+                      {
+                        text: "확인",
+                        onPress: () => {
+                          // 보관함으로 돌아가기
+                          navigation.navigate("CardArchive");
+                        },
+                      },
+                    ]
+                  );
+                } else {
+                  Alert.alert("삭제 실패", "카드 결과 삭제에 실패했습니다.");
+                }
+              }
+            } catch (error) {
+              console.error("삭제 실패:", error);
+              Alert.alert("삭제 실패", "카드 결과 삭제에 실패했습니다.");
+            }
+          },
+        },
+      ]
+    );
   };
 
   const cardResult = getCardResult(result.id);
@@ -393,17 +466,21 @@ const ResultScreen = ({ navigation, route }) => {
 
         <Text style={commonStyles.headerTitle}>{getHeaderTitle()}</Text>
 
-        <TouchableOpacity
-          style={commonStyles.infoButton}
-          onPress={() => navigation.navigate("More")}
-          activeOpacity={0.8}
-        >
-          <Image
-            source={require("../../assets/info-icon-dark.png")}
-            style={commonStyles.infoIcon}
-            contentFit="contain"
-          />
-        </TouchableOpacity>
+        {!route.params.fromArchive ? (
+          <TouchableOpacity
+            style={commonStyles.infoButton}
+            onPress={() => navigation.navigate("More")}
+            activeOpacity={0.8}
+          >
+            <Image
+              source={require("../../assets/info-icon-dark.png")}
+              style={commonStyles.infoIcon}
+              contentFit="contain"
+            />
+          </TouchableOpacity>
+        ) : (
+          <View style={commonStyles.infoButton} />
+        )}
       </View>
 
       <View style={styles.content}>
@@ -481,22 +558,43 @@ const ResultScreen = ({ navigation, route }) => {
 
         {/* 버튼들 */}
         <View style={styles.buttonContainer}>
-          <View style={styles.topButtonRow}>
-            <TouchableOpacity
-              style={styles.retryButton}
-              onPress={handleRetry}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.retryButtonText}>처음으로</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.shareButton}
-              onPress={handleShare}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.shareButtonText}>공유하기</Text>
-            </TouchableOpacity>
-          </View>
+          {!route.params.fromArchive ? (
+            // 새로운 카드 결과인 경우에만 보관하기 버튼 표시
+            <View style={styles.topButtonRow}>
+              <TouchableOpacity
+                style={commonStyles.archiveButton}
+                onPress={handleArchive}
+                activeOpacity={0.8}
+              >
+                <Text style={commonStyles.archiveButtonText}>보관하기</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={commonStyles.shareButton}
+                onPress={handleShare}
+                activeOpacity={0.8}
+              >
+                <Text style={commonStyles.shareButtonText}>공유하기</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            // 보관함에서 온 경우 공유하기 + 삭제하기 버튼 표시
+            <View style={styles.topButtonRow}>
+              <TouchableOpacity
+                style={commonStyles.shareButton}
+                onPress={handleShare}
+                activeOpacity={0.8}
+              >
+                <Text style={commonStyles.shareButtonText}>공유하기</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={commonStyles.deleteButton}
+                onPress={handleDelete}
+                activeOpacity={0.8}
+              >
+                <Text style={commonStyles.deleteButtonText}>보관 삭제하기</Text>
+              </TouchableOpacity>
+            </View>
+          )}
 
           <TouchableOpacity style={styles.homeButton} onPress={handleHome}>
             <Text style={styles.homeButtonText}>홈으로</Text>
@@ -575,19 +673,7 @@ const styles = StyleSheet.create({
     gap: 12,
     width: "100%",
   },
-  shareButton: {
-    borderRadius: 15,
-    paddingVertical: 18,
-    alignItems: "center",
-    width: "48%",
-    borderColor: colors.primary,
-    borderWidth: 1,
-  },
-  shareButtonText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: colors.primary,
-  },
+
   retryButton: {
     borderRadius: 15,
     paddingVertical: 18,

@@ -18,10 +18,7 @@ const MoreScreen = ({ navigation }) => {
     {
       id: "archive",
       title: "카드 결과 보관함",
-      onPress: () => {
-        // 결과 보관함 페이지로 이동 (아직 구현되지 않음)
-        console.log("결과 보관함");
-      },
+      onPress: () => navigation.navigate("CardArchive"),
     },
     {
       id: "privacy",

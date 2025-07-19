@@ -7,13 +7,15 @@ export const commonStyles = StyleSheet.create({
   // 공통 헤더 스타일
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     paddingTop: 60,
     paddingHorizontal: 24,
     paddingBottom: 10,
+    position: "relative",
   },
-  backButton: {},
+  backButton: {
+    zIndex: 2,
+  },
   backIcon: {
     width: 24,
     height: 24,
@@ -23,8 +25,15 @@ export const commonStyles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.textPrimary,
     textAlign: "center",
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 60,
+    zIndex: 1,
   },
-  infoButton: {},
+  infoButton: {
+    zIndex: 2,
+  },
   infoIcon: {
     width: 18,
     height: 18,
@@ -77,13 +86,39 @@ export const commonStyles = StyleSheet.create({
     paddingVertical: 18,
     alignItems: "center",
     width: "48%",
-    borderColor: colors.primary,
+    borderColor: colors.textPrimary,
     borderWidth: 1,
   },
   shareButtonText: {
     fontSize: 18,
+    fontWeight: "600",
+    color: colors.textPrimary,
+  },
+  archiveButton: {
+    borderRadius: 15,
+    paddingVertical: 18,
+    alignItems: "center",
+    width: "48%",
+    borderColor: colors.primary,
+    borderWidth: 1,
+  },
+  archiveButtonText: {
+    fontSize: 18,
     fontWeight: "bold",
     color: colors.primary,
+  },
+  deleteButton: {
+    borderRadius: 15,
+    paddingVertical: 18,
+    alignItems: "center",
+    width: "48%",
+    borderColor: "#EA1B63",
+    borderWidth: 1,
+  },
+  deleteButtonText: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#EA1B63",
   },
   retryButton: {
     borderRadius: 15,
@@ -369,5 +404,20 @@ export const commonStyles = StyleSheet.create({
   percentageContainer: {
     alignItems: "center",
     marginBottom: 20,
+  },
+
+  // 보관 버튼 스타일
+  archiveButton: {
+    borderRadius: 15,
+    paddingVertical: 18,
+    alignItems: "center",
+    width: "48%",
+    borderColor: colors.primary,
+    borderWidth: 1,
+  },
+  archiveButtonText: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: colors.primary,
   },
 });
