@@ -28,10 +28,7 @@ const MoreScreen = ({ navigation }) => {
     {
       id: "contact",
       title: "개발자에게 문의하기",
-      onPress: () => {
-        // 개발자 문의 페이지로 이동 (아직 구현되지 않음)
-        console.log("개발자 문의");
-      },
+      onPress: () => navigation.navigate("ContactDeveloper"),
     },
   ];
 

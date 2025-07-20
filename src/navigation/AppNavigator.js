@@ -13,6 +13,7 @@ import DailyResultScreen from "../screens/DailyResultScreen";
 import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
 import MoreScreen from "../screens/MoreScreen";
 import CardArchiveScreen from "../screens/CardArchiveScreen";
+import ContactDeveloperScreen from "../screens/ContactDeveloperScreen";
 
 const Stack = createStackNavigator();
 
@@ -46,6 +47,10 @@ const AppNavigator = () => {
         <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
         <Stack.Screen name="More" component={MoreScreen} />
         <Stack.Screen name="CardArchive" component={CardArchiveScreen} />
+        <Stack.Screen
+          name="ContactDeveloper"
+          component={ContactDeveloperScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
