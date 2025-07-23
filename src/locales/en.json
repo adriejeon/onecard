@@ -39,5 +39,626 @@
     "section18_content": "1. Data subjects may apply for dispute resolution or consultation to the Personal Information Dispute Mediation Committee, the Korea Internet & Security Agency Personal Information Infringement Report Center, etc., to receive relief from personal information infringement. For other reports or consultations on personal information infringement, please contact the following organizations: a. Personal Information Dispute Mediation Committee: 1833-6972 (www.kopuco.go.kr) b. Personal Information Infringement Report Center: 118 (privacy.kisa.or.kr) c. Supreme Prosecutors' Office: 1301 (www.spo.go.kr) d. National Police Agency: 182 (ecrm.cyber.go.kr) 2. The Company guarantees the data subject's right to self-determination of personal information and strives to provide counseling and relief for personal information infringement. If you need to report or consult, please contact the department in paragraph 1. 3. A person whose rights or interests have been infringed by a disposition or omission by the head of a public institution in response to a request under Article 35 (Access to Personal Information), Article 36 (Correction or Deletion of Personal Information), or Article 37 (Suspension of Processing of Personal Information) of the Personal Information Protection Act may file an administrative appeal in accordance with the Administrative Appeals Act. a. Central Administrative Appeals Commission: 110 (www.simpan.go.kr)",
     "section19": "Addendum",
     "section19_content": "Article 1 This Policy shall take effect from July 21, 2025."
+  },
+  "home": {
+    "mainText": "Every day is a new opportunity.\nThe card you draw today\nwill lead you to new chances.",
+    "start": "Start"
+  },
+  "cardSelection": {
+    "subtitle": "Which card would you like to draw?",
+    "yesnoTitle": "Yes or No",
+    "yesnoDesc": "A question that can be answered with Yes or No",
+    "dailyTitle": "Daily Card",
+    "dailyDesc": "Check your fortune for today"
+  },
+  "questionInput": {
+    "headerYesno": "Yes or No Oracle Tarot",
+    "headerDaily": "Daily Card",
+    "gradientTitle": "Please tell us the question\nyou are curious about, whether it will be positive or negative.",
+    "placeholder": "Please enter your question.",
+    "next": "Next"
+  },
+  "dailyCardSelection": {
+    "gradientTitle": "Find out your fortune for today.",
+    "result": "View Result"
+  },
+  "cardDraw": {
+    "gradientTitleSuffix": "Think about it and draw a card.",
+    "result": "View Result"
+  },
+  "result": {
+    "archive": "Save",
+    "share": "Share",
+    "delete": "Delete from Archive",
+    "home": "Go to Home"
+  },
+  "more": {
+    "title": "More",
+    "version": "App Version: 1.1.0",
+    "archive": "Card Archive",
+    "privacy": "Privacy Policy",
+    "contact": "Contact Developer"
+  },
+  "contact": {
+    "title": "What would you like to ask?",
+    "desc": "Feel free to leave your feedback. We carefully listen to all opinions and will improve the app. Thank you always.",
+    "placeholder": "Please write your feedback...",
+    "alertTitle": "Notice",
+    "alertEmpty": "Please enter your feedback.",
+    "sending": "Sending...",
+    "send": "Send Feedback",
+    "errorTitle": "Error",
+    "mailUnavailable": "Mail app is not available on this device.",
+    "ok": "OK",
+    "mailSubject": "OneCard App - User Feedback",
+    "mailBody": "User Feedback",
+    "sendTime": "Sent at",
+    "sendComplete": "Sent Successfully",
+    "sendThanks": "Thank you for your valuable feedback. The admin will review and respond!",
+    "cancelled": "Cancelled",
+    "mailCancelled": "Mail sending was cancelled.",
+    "sendFail": "Send Failed",
+    "sendFailMsg": "Failed to send email.",
+    "error": "Error",
+    "retry": "Please try again."
+  },
+  "cards": {
+    "major_0": {
+      "title": "The Fool",
+      "description": "Today is a day full of new beginnings and infinite possibilities. Unexpected offers or opportunities may come your way. Sometimes, taking the first step impulsively without a plan can bring you greater luck. Listen to your inner voice.",
+      "keywords": "New beginnings, adventure, innocence, potential"
+    },
+    "major_1": {
+      "title": "The Magician",
+      "description": "Today is a day when you can fully express your talents and creativity. You are filled with confidence and the ability to make anything possible. It's a perfect day to put new ideas into action or move toward your goals.",
+      "keywords": "Creativity, talent, confidence, action"
+    },
+    "major_2": {
+      "title": "The High Priestess",
+      "description": "Today is a day when you need to rely on intuition rather than logic. Slow down and listen to your inner voice. You may discover hidden truths or gain important insights.",
+      "keywords": "Intuition, insight, wisdom, mystery"
+    },
+    "major_3": {
+      "title": "The Empress",
+      "description": "Today is a day full of abundance and creativity. Your ongoing work is bearing fruit, and in relationships, you can feel love and satisfaction. It will be a day of abundance both materially and emotionally.",
+      "keywords": "Abundance, fruition, prosperity, stability"
+    },
+    "major_4": {
+      "title": "The Emperor",
+      "description": "Today is a day when you may become conflicted or stubborn due to excessive authority or rigidity. Rather than insisting on your own way, listen to the opinions of those around you and show flexibility. Responsibility is good, but pursue harmony, not control.",
+      "keywords": "Authority, control, stubbornness, responsibility"
+    },
+    "major_5": {
+      "title": "The Hierophant",
+      "description": "Today is a day when you may feel trapped by rules or traditions. It's difficult to break free and hesitate to try something new. Sometimes, you need courage to follow your own convictions.",
+      "keywords": "Tradition, custom, rule, conservative"
+    },
+    "major_6": {
+      "title": "The Lovers",
+      "description": "Today is a day full of joy in love and relationships. You may find yourself in a crucial crossroads. If you decide based on your heart and values, you can achieve the best results. It will be a day of love and happiness.",
+      "keywords": "Love, relationship, harmony, choice"
+    },
+    "major_7": {
+      "title": "The Chariot",
+      "description": "Today is a day when you need to charge forward toward your goals with determination and confidence. If you arm yourself with strength and confidence, you can overcome any difficulties and achieve victory. Don't hesitate to move forward.",
+      "keywords": "Victory, determination, will, goal achievement"
+    },
+    "major_8": {
+      "title": "Strength",
+      "description": "Today is a day when you need to rely on your inner strength to overcome weakness. When facing difficult situations, hold on with patience and composure. Your courage and gentle charisma will solve everything.",
+      "keywords": "Inner strength, courage, patience, gentle charisma"
+    },
+    "major_9": {
+      "title": "The Hermit",
+      "description": "Today is a day when you can escape the noise of the world and spend time alone to reflect on your inner self. If there are unresolved issues, it's better to seek answers quietly within yourself rather than looking for them externally. You can find answers when you focus on yourself.",
+      "keywords": "Inner reflection, wisdom exploration, recharge, alone time"
+    },
+    "major_10": {
+      "title": "Wheel of Fortune",
+      "description": "Today is a day when unexpected good fortune and positive changes come your way. Your destiny wheel is beginning to move in a favorable direction for you. Don't be afraid of new opportunities and embrace them proactively.",
+      "keywords": "Destructive transition, fortune, opportunity, change"
+    },
+    "major_11": {
+      "title": "Justice",
+      "description": "Today is a day when you need to make fair and wise judgments. If you need to make an important decision, don't let your emotions sway you. You will get a just result for your actions.",
+      "keywords": "Justice, balance, fairness, responsibility"
+    },
+    "major_12": {
+      "title": "The Hanged Man",
+      "description": "Today is a day when you may feel trapped and stuck. However, this is a process of patience to gain a greater insight. You need to work on seeing problems from different perspectives.",
+      "keywords": "Patience, sacrifice, stagnation, new perspective"
+    },
+    "major_13": {
+      "title": "Death",
+      "description": "Today is a day when you face both the end of a situation and a new beginning. You need to be decisive about clearing the past to move forward to a better future. Change is painful, but remember it's an essential process.",
+      "keywords": "End, change, separation, new beginning"
+    },
+    "major_14": {
+      "title": "Temperance",
+      "description": "Today is a day when finding harmony and balance is important. You need to avoid extremes in your relationships or work and exercise moderation. With patience, you can find peace.",
+      "keywords": "Harmony, balance, moderation, patience"
+    },
+    "major_15": {
+      "title": "The Devil",
+      "description": "Today is a day when you may become trapped by material temptation or negative relationships. Be careful not to fall into a situation that you want to escape but cannot. You need to be honest about your desires.",
+      "keywords": "Temptation, obsession, addiction, bondage"
+    },
+    "major_16": {
+      "title": "The Tower",
+      "description": "Today is a day when unexpected shocking events may cause the existing order to collapse. It will be difficult, but this change will make you stronger and lay the foundation for a new beginning.",
+      "keywords": "Unexpected change, shock, destruction, awakening"
+    },
+    "major_17": {
+      "title": "The Star",
+      "description": "Today is a day full of hope and inspiration. Even in difficult situations, you will discover a bright vision for the future. Believe in your dreams and move forward. Good energy will accompany you.",
+      "keywords": "Hope, inspiration, positivity, healing"
+    },
+    "major_18": {
+      "title": "The Moon",
+      "description": "Today is a day when anxiety and confusion make it difficult to find direction. It may be difficult to distinguish between reality and illusion. It's better to avoid important decisions. You need courage to face your fears.",
+      "keywords": "Anxiety, confusion, illusion, fear"
+    },
+    "major_19": {
+      "title": "The Sun",
+      "description": "Today is the best day full of success and happiness. Everything is positive, and you are filled with confidence and vitality. Your relationships with others are also improving. Enjoy this good energy.",
+      "keywords": "Success, happiness, positivity, vitality"
+    },
+    "major_20": {
+      "title": "Judgement",
+      "description": "Today is a day when you need to respond to a new summons and reward for past efforts. You will grow one step further through important decisions. Forgive the past and accept the new beginning.",
+      "keywords": "Resurrection, reward, new calling, forgiveness"
+    },
+    "major_21": {
+      "title": "The World",
+      "description": "Today is a day when the work you've been working on for a long time finally comes to fruition and you savor a great sense of achievement. You are ready to move forward into a new world with a successful conclusion. Enjoy satisfaction and happiness.",
+      "keywords": "Completion, achievement, success, new stage"
+    },
+    "ace_cups": {
+      "title": "Ace of Cups",
+      "description": "Today is a day when new love or emotions sprout. Your heart opens up, and you can share deep emotional connections with people. Your creative inspiration overflows, and you will be filled with happiness.",
+      "keywords": "New emotions, beginning of love, empathy, happiness"
+    },
+    "cups_2": {
+      "title": "Two of Cups",
+      "description": "Today is a day when you deeply connect with someone you love or your partner. You can confirm each other's feelings and advance your relationship one step further. It's also a good day to meet new acquaintances.",
+      "keywords": "Union, partnership, love, connection"
+    },
+    "cups_3": {
+      "title": "Three of Cups",
+      "description": "Today is a day full of joy when you share happiness with your friends and celebrate. You may spend enjoyable moments at social gatherings or parties. Feel the happiness of being together.",
+      "keywords": "Celebration, friendship, enjoyable gathering, joy"
+    },
+    "cups_4": {
+      "title": "Four of Cups",
+      "description": "Today is a day when you may feel apathy or lethargy towards everyday life. You may miss good opportunities or offers that are given to you and overlook them. You need to work on seeing the world around you from a new perspective.",
+      "keywords": "Apathy, indifference, dissatisfaction, missing opportunity"
+    },
+    "cups_5": {
+      "title": "Five of Cups",
+      "description": "Today is a day when you may become trapped by the loss of the past or regret. Rather than focusing only on what you lost, look back at the precious things that still remain in you. You need to work on seeing the positive side.",
+      "keywords": "Loss, regret, sadness, disappointment"
+    },
+    "cups_6": {
+      "title": "Six of Cups",
+      "description": "Today is a day when you feel happiness from good memories of the past or from long-lost friends. A moment may come to recall the time when you were pure, or a pleasant person may contact you. Share warmth with each other.",
+      "keywords": "Memories, purity, homesickness, old friend"
+    },
+    "cups_7": {
+      "title": "Seven of Cups",
+      "description": "Today is a day when you may easily get lost in too many choices and unrealistic fantasies. Rather than focusing on unrealistic dreams, you need to focus on reality and clarify what you truly want.",
+      "keywords": "Fantasy, unrealistic expectations, difficulty in choice, confusion"
+    },
+    "cups_8": {
+      "title": "Eight of Cups",
+      "description": "Today is a day when you can no longer find satisfaction in the situation or relationship, and you may need to leave. You need courage to give up the stability of the present to find a better future. Leave for a better future.",
+      "keywords": "Leaving, transition, exploring new paths, letting go of regret"
+    },
+    "cups_9": {
+      "title": "Nine of Cups",
+      "description": "Today is a day of satisfaction when your wishes come true. You will feel great satisfaction and happiness both materially and emotionally. Enjoy your achievements and praise yourself.",
+      "keywords": "Wish fulfillment, satisfaction, happiness, abundance"
+    },
+    "cups_10": {
+      "title": "Ten of Cups",
+      "description": "Today is a day of perfect happiness and harmony when you are with your family or people you love. You feel emotional abundance and stability, and love and joy overflow in every relationship.",
+      "keywords": "Family happiness, perfect love, harmony, emotional satisfaction"
+    },
+    "ace_pentacles": {
+      "title": "Ace of Pentacles",
+      "description": "Today is a day when new business opportunities or seeds of financial fortune sprout. It's a good day to make a realistic plan and put it into action. Your efforts will bear concrete results.",
+      "keywords": "New opportunity, prosperity, stability, reality"
+    },
+    "pentacle_2": {
+      "title": "Two of Pentacles",
+      "description": "Today is a day when you need to handle various matters simultaneously and move busily. You need to be flexible in dealing with changing situations and good at balancing. Enjoy the changes with a happy heart.",
+      "keywords": "Balance, flexibility, adaptability, change management"
+    },
+    "pentacle_3": {
+      "title": "Three of Pentacles",
+      "description": "Today is a day when you achieve excellent results through cooperation with others. Your skills and talents are recognized, and you have an opportunity to grow even more through teamwork.",
+      "keywords": "Teamwork, cooperation, skills, recognition"
+    },
+    "pentacle_4": {
+      "title": "Four of Pentacles",
+      "description": "Today is a day when your desire to maintain material stability and achievements is becoming stronger. Feeling stable is good, but overly rigid or resistant attitudes need to be avoided. Sometimes, giving is more beneficial.",
+      "keywords": "Ownership, stability, conservatism, frugality"
+    },
+    "pentacle_5": {
+      "title": "Five of Pentacles",
+      "description": "Today is a day when you may face financial difficulties or a sense of isolation. Don't try to shoulder everything alone. Ask for help from those around you. There are people who can help you nearby.",
+      "keywords": "Financial difficulties, isolation, sense of loss, adversity"
+    },
+    "pentacle_6": {
+      "title": "Six of Pentacles",
+      "description": "Today is a day when you feel joy in giving or receiving help. Your financial flow becomes smoother, and the more generous you are, the greater the reward. Maintain fair and balanced relationships.",
+      "keywords": "Generosity, generosity, help, reward"
+    },
+    "pentacle_7": {
+      "title": "Seven of Pentacles",
+      "description": "Today is a day when you wait for the harvest while looking back at your efforts. Even if the results are not yet visible, don't be disappointed. With patience and perseverance, you will soon reap a rich harvest.",
+      "keywords": "Patience, evaluation, waiting, investment"
+    },
+    "pentacle_8": {
+      "title": "Eight of Pentacles",
+      "description": "Today is a day when you devote yourself to perfecting your skills and gaining expertise. Your hard work will put you in the ranks of professionals. Focus on learning and growth.",
+      "keywords": "Expertise, craftsmanship, effort, concentration"
+    },
+    "pentacle_9": {
+      "title": "Nine of Pentacles",
+      "description": "Today is a day when you savor abundance and success achieved through your own efforts. You can enjoy freedom and leisure both economically and spiritually. Enjoy a day filled with confidence and satisfaction.",
+      "keywords": "Independence, abundance, self-sufficiency, freedom"
+    },
+    "pentacle_10": {
+      "title": "Ten of Pentacles",
+      "description": "Today is a day full of abundance with material wealth and family stability. You will share your accumulated wealth and reputation with your family, community, and experience great happiness. Plan your future on a stable foundation.",
+      "keywords": "Wealth, inheritance, family prosperity, stability"
+    },
+    "ace_swords": {
+      "title": "Ace of Swords",
+      "description": "Today is a day when clear ideas come to mind and pierce the truth. Complex problems become clear, and you can make correct decisions with rational judgment. It's a good day to start a new challenge.",
+      "keywords": "Clarity, truth, breakthrough, rational judgment"
+    },
+    "swords_2": {
+      "title": "Two of Swords",
+      "description": "Today is a day when it's difficult to make a decision in a situation of stalemate. You may be deliberately avoiding the truth. You need to open your heart and face the situation squarely.",
+      "keywords": "Decision-making difficulty, deadlock, conflict, avoidance"
+    },
+    "swords_3": {
+      "title": "Three of Swords",
+      "description": "Today is a day when you may encounter painful truths or hear hurtful words. It will be painful and painful, but accepting it as it is is the first step to healing.",
+      "keywords": "Heartache, sadness, painful truth, separation"
+    },
+    "swords_4": {
+      "title": "Four of Swords",
+      "description": "Today is a day when you need to stop everything and take a break. Take time to recharge from stress and conflicts. This break is an important preparation for the next step.",
+      "keywords": "Rest, recharge, recovery, peace"
+    },
+    "swords_5": {
+      "title": "Five of Swords",
+      "description": "Today is a day when you may become entangled in unnecessary conflicts or competition, which can lead to a messy day. Rather than asserting yourself, it's wise to take a step back. Think about what's more important than victory.",
+      "keywords": "Conflict, defeat, dishonor, selfish victory"
+    },
+    "swords_6": {
+      "title": "Six of Swords",
+      "description": "Today is a day of transition when you need to move away from difficult situations to better places. The difficult period is coming to an end, and a peaceful future awaits. You may also receive advice from a logical advisor.",
+      "keywords": "Transition, movement, recovery, new beginning"
+    },
+    "swords_7": {
+      "title": "Seven of Swords",
+      "description": "Today is a day when you need to be vigilant against deceptive actions or betrayal. You may try to get something dishonestly or deceive someone. You need courage to face the problem head-on.",
+      "keywords": "Deception, betrayal, deceit, escape"
+    },
+    "swords_8": {
+      "title": "Eight of Swords",
+      "description": "Today is a day when you feel trapped in your own thoughts and powerless. The situation may not be as bad as you think. If you break free from negative thoughts, you will find solutions.",
+      "keywords": "Bondage, restriction, powerlessness, self-repression"
+    },
+    "swords_9": {
+      "title": "Nine of Swords",
+      "description": "Today is a day when excessive worry and anxiety make it difficult to sleep. You may be torturing yourself by imagining the worst possible scenario. Understand the reality of your worries and seek help.",
+      "keywords": "Anxiety, worry, nightmare, despair"
+    },
+    "swords_10": {
+      "title": "Ten of Swords",
+      "description": "Today is a day when you can't get any worse, the worst possible situation, and face the complete end. However, at that very moment, you can start a new beginning. You only have to get up now.",
+      "keywords": "Failure, end, despair, dawn of new beginning"
+    },
+    "ace_wands": {
+      "title": "Ace of Wands",
+      "description": "Today is a day when new passion and creative energy sprout. It's a perfect day to start a new project or put your inspiration into action. Don't hesitate to challenge.",
+      "keywords": "Passion, creativity, inspiration, new beginning"
+    },
+    "wands_2": {
+      "title": "Two of Wands",
+      "description": "Today is a day when you plan for the future and explore new possibilities. You need to prepare for a bigger world rather than staying content with your current success. It's a good day to make bold decisions.",
+      "keywords": "Future planning, decision, courage, expansion"
+    },
+    "wands_3": {
+      "title": "Three of Wands",
+      "description": "Today is a day when your plan proceeds smoothly, and you look forward to the first results of your efforts. You have an opportunity to expand further into a wider world. Believe in a positive outlook and continue moving forward.",
+      "keywords": "Expansion, growth, leadership, expectation for the future"
+    },
+    "wands_4": {
+      "title": "Four of Wands",
+      "description": "Today is a day of peace and joy when you celebrate on a stable foundation. Share your achievements with your family and friends and spend enjoyable moments. It's a day when you can experience harmony and stability.",
+      "keywords": "Celebration, stability, harmony, happiness"
+    },
+    "wands_5": {
+      "title": "Five of Wands",
+      "description": "Today is a day when you may encounter petty disagreements or competition, which can lead to a noisy day. Conflict can be a healthy stimulus for growth, but it's better to avoid unnecessary energy consumption.",
+      "keywords": "Competition, conflict, disagreement, chaos"
+    },
+    "wands_6": {
+      "title": "Six of Wands",
+      "description": "Today is a day when you gain recognition and success through your efforts. Celebrate your victory with those around you. Have confidence and move toward your next goal.",
+      "keywords": "Victory, success, recognition, confidence"
+    },
+    "wands_7": {
+      "title": "Seven of Wands",
+      "description": "Today is a day when you need to fight for your convictions and positions. You may face many challenges and criticisms, but with courage, you can defend your advantageous position.",
+      "keywords": "Challenge, defense, courage, perseverance"
+    },
+    "wands_8": {
+      "title": "Eight of Wands",
+      "description": "Today is a day when the situation progresses very quickly, and the news you've been waiting for arrives. You may have sudden travel or new opportunities. Act quickly to adapt to the rapid changes.",
+      "keywords": "Rapid development, news, movement, action"
+    },
+    "wands_9": {
+      "title": "Nine of Wands",
+      "description": "Today is a day when you are tired of fighting, but you cannot give up at the last moment. You are almost there. Don't give up. Your perseverance and patience will eventually bring victory.",
+      "keywords": "Patience, defense, perseverance, boundary"
+    },
+    "wands_10": {
+      "title": "Ten of Wands",
+      "description": "Today is a day when you are overwhelmed by too much responsibility and pressure. Don't try to shoulder everything alone. Ask for help from others or lower some of your responsibilities. You need courage.",
+      "keywords": "Excessive responsibility, pressure, pressure, burnout"
+    },
+    "page_cups": {
+      "title": "Page of Cups",
+      "description": "Today is a day when you receive unexpected emotional messages or creative proposals. Trust your intuition and open your heart. New relationships or ideas may sprout.",
+      "keywords": "Creative inspiration, intuitive message, sensitivity, curiosity"
+    },
+    "page_pentacles": {
+      "title": "Page of Pentacles",
+      "description": "Today is a day when you learn something new or master practical skills. You may have new business opportunities or investment proposals. If you approach it seriously, you will achieve good results.",
+      "keywords": "New opportunity, learning, diligence, practical plan"
+    },
+    "page_swords": {
+      "title": "Page of Swords",
+      "description": "Today is a day when your new ideas overflow and your intellectual curiosity becomes intense. You have a strong desire to explore new information and pursue truth. Pay attention to hasty words or actions.",
+      "keywords": "New ideas, curiosity, truth pursuit, honesty"
+    },
+    "page_wands": {
+      "title": "Page of Wands",
+      "description": "Today is a day when your passion for new adventures bursts and you are filled with energy to explore. You are ready to dive into new possibilities with enthusiasm. Express yourself freely.",
+      "keywords": "New passion, adventurous spirit, exploration, positive energy"
+    },
+    "knight_cups": {
+      "title": "Knight of Cups",
+      "description": "Today is a day when you may receive romantic proposals or meet someone who captivates your heart. Follow your emotions. You can also expect good results in artistic and creative activities.",
+      "keywords": "Romance, proposal, charm, sensitivity"
+    },
+    "knight_pentacles": {
+      "title": "Knight of Pentacles",
+      "description": "Today is a day when it's important to steadily and diligently pursue your goals. Rather than seeking quick results, a prudent and responsible attitude is better for achieving good results. It's a good day to build trust.",
+      "keywords": "Diligence, responsibility, consistency, trust"
+    },
+    "knight_swords": {
+      "title": "Knight of Swords",
+      "description": "Today is a day when you may become too hasty and impulsive, making mistakes. Ambition is good, but acting impulsively without paying attention to the surrounding situation can cause conflicts. Be careful.",
+      "keywords": "Haste, impulsive action, argument, stubbornness"
+    },
+    "knight_wands": {
+      "title": "Knight of Wands",
+      "description": "Today is a day when you are filled with energy and act confidently. You may find new adventures or become enthusiastic about projects. Your passion has a positive impact on those around you.",
+      "keywords": "Passion, adventure, confidence, action"
+    },
+    "queen_cups": {
+      "title": "Queen of Cups",
+      "description": "Today is a day when your outstanding intuition and empathy abilities shine. You can warm up to those around you and provide wise advice. Trust your inner voice.",
+      "keywords": "Empathy, intuition, emotional wisdom, warmth"
+    },
+    "queen_pentacles": {
+      "title": "Queen of Pentacles",
+      "description": "Today is a day when your practical and warm nature shines. You can make everyday life and family life full. Focus on creating a stable and comfortable environment.",
+      "keywords": "Abundance, stability, practicality, care"
+    },
+    "queen_swords": {
+      "title": "Queen of Swords",
+      "description": "Today is a day when your sharp and independent judgment shines, but sometimes you may seem too cold and critical. Pursuing truth is good, but don't forget a warm word.",
+      "keywords": "Independence, clear judgment, intelligence, coldness"
+    },
+    "queen_wands": {
+      "title": "Queen of Wands",
+      "description": "Today is a day when your confident and enthusiastic charm is unleashed. Your energetic energy inspires those around you and drives everything forward. You shine in social activities.",
+      "keywords": "Confidence, enthusiasm, charm, leadership"
+    },
+    "king_cups": {
+      "title": "King of Cups",
+      "description": "Today is a day when you handle all situations with emotional maturity and balance. You have the ability to empathize with others without being swayed by emotions. You can play the role of a wise advisor.",
+      "keywords": "Emotional balance, mercy, maturity, wisdom"
+    },
+    "king_pentacles": {
+      "title": "King of Pentacles",
+      "description": "Today is a day when your business acumen and stable leadership bring abundance and success. Your efforts return as wealth and achievements. You gain trust with a firm and reliable appearance.",
+      "keywords": "Business success, abundance, stability, leadership"
+    },
+    "king_swords": {
+      "title": "King of Swords",
+      "description": "Today is a day when your intellectual authority and sharp judgment dominate the situation. However, overly strict and cold attitudes may hurt those around you. Rather than asserting authority, share wisdom.",
+      "keywords": "Authority, intellectual ability, strictness, truth"
+    },
+    "king_wands": {
+      "title": "King of Wands",
+      "description": "Today is a day when your natural leadership and charisma turn your vision into reality. Your creative ideas and passion will inspire many people and achieve great success. Act boldly.",
+      "keywords": "Leadership, vision, charisma, passion"
+    }
+  },
+  "oracleResults": {
+    "1": {
+      "text": "YES",
+      "percentage": "100%",
+      "description": "The Sun card, blessed by the sun, marks the start and beginning of all things. What is meant to be will surely come true."
+    },
+    "2": {
+      "text": "YES",
+      "percentage": "100%",
+      "description": "The Rising card shows that victory will follow in what you do."
+    },
+    "3": {
+      "text": "YES",
+      "percentage": "100%",
+      "description": "The Honor card shows that your question can elevate your honor."
+    },
+    "4": {
+      "text": "YES",
+      "percentage": "84%",
+      "description": "The Leadership card shows that your position is solid. It indicates your question will go in a positive direction."
+    },
+    "5": {
+      "text": "NO",
+      "percentage": "73%",
+      "description": "The Melancholy card shows that you may have many worries. The direction of your question may flow in a negative way."
+    },
+    "6": {
+      "text": "NO",
+      "percentage": "86%",
+      "description": "The Fickle card shows an unstable state. The future of your question may become unclear."
+    },
+    "7": {
+      "text": "YES",
+      "percentage": "80%",
+      "description": "The Family card shows that you are within a strong fence. The future of your question can be considered stable."
+    },
+    "8": {
+      "text": "YES",
+      "percentage": "90%",
+      "description": "The Mother card is always like a warm embrace. Your question can flow in a positive direction."
+    },
+    "9": {
+      "text": "NO",
+      "percentage": "94%",
+      "description": "The Disease card shows that things are not going as intended. The result may not be good."
+    },
+    "10": {
+      "text": "NO",
+      "percentage": "56%",
+      "description": "The Change card suggests change. If you respond well, it can be positive, but generally it is negative."
+    },
+    "11": {
+      "text": "YES",
+      "percentage": "73%",
+      "description": "The Intelligence card is quite positive. You can solve problems by using your intelligence."
+    },
+    "12": {
+      "text": "NO",
+      "percentage": "95%",
+      "description": "The Theft card is negative. Things may be frustrated by the negative actions of others, not your own thoughts."
+    },
+    "13": {
+      "text": "YES",
+      "percentage": "64%",
+      "description": "The Trade card is quite positive. Negotiations may occur, but you can compromise positively."
+    },
+    "14": {
+      "text": "YES",
+      "percentage": "82%",
+      "description": "The Joy card is very positive. Whatever the result, happiness and joy will follow."
+    },
+    "15": {
+      "text": "YES",
+      "percentage": "100%",
+      "description": "The Peace card is very positive. The result will eventually end positively and peace will come."
+    },
+    "16": {
+      "text": "YES",
+      "percentage": "88%",
+      "description": "The Money card is close to positive. There may be things resolved financially or money coming back to you."
+    },
+    "17": {
+      "text": "YES",
+      "percentage": "100%",
+      "description": "The Love card is positive. If your question was about romance, it will eventually lead to a union of love."
+    },
+    "18": {
+      "text": "YES",
+      "percentage": "88%",
+      "description": "The Food and Drink card is positive. You will have a good time eating and drinking delicious things."
+    },
+    "19": {
+      "text": "NO",
+      "percentage": "100%",
+      "description": "The Malice card is negative. Things may be frustrated by the intervention or malice of others, not your own will."
+    },
+    "20": {
+      "text": "NO",
+      "percentage": "100%",
+      "description": "The War card is negative. There may be conflicts, fights, and misunderstandings."
+    },
+    "21": {
+      "text": "NO",
+      "percentage": "100%",
+      "description": "The Enemy card is negative. There may be an enemy close by who harms or slanders you."
+    },
+    "22": {
+      "text": "NO",
+      "percentage": "100%",
+      "description": "The Disaster card is negative. Things may be frustrated by disasters or external variables beyond your control."
+    },
+    "23": {
+      "text": "NO",
+      "percentage": "100%",
+      "description": "The Accident card is negative. Sudden issues may arise."
+    },
+    "24": {
+      "text": "YES",
+      "percentage": "70%",
+      "description": "The Reflection card is positive. Through self-reflection, you can move toward a better future."
+    },
+    "25": {
+      "text": "YES",
+      "percentage": "100%",
+      "description": "The Good Opportunity card is very positive. Unexpected good opportunities may be waiting nearby."
+    },
+    "26": {
+      "text": "YES",
+      "percentage": "100%",
+      "description": "The Fame card is very positive. There may be positive events where your good news and reputation rise."
+    },
+    "27": {
+      "text": "NO",
+      "percentage": "100%",
+      "description": "The Misfortune card is negative. Misfortune may come regardless of your mistakes or faults."
+    },
+    "28": {
+      "text": "NO",
+      "percentage": "100%",
+      "description": "The Tragedy card is negative. As the name suggests, it may lead to a tragic conclusion, so be careful."
+    },
+    "29": {
+      "text": "NO",
+      "percentage": "100%",
+      "description": "The Ruin card is negative. As the name suggests, it may end in ruin."
+    },
+    "30": {
+      "text": "NO",
+      "percentage": "60%",
+      "description": "The Delay card is quite negative. There may be delays and blockages."
+    },
+    "31": {
+      "text": "NO",
+      "percentage": "70%",
+      "description": "The Isolation card is quite negative. You may spend lonely and solitary times in isolation."
+    },
+    "32": {
+      "text": "YES",
+      "percentage": "80%",
+      "description": "The Humor card is quite positive. There may be times when you have fun conversations and laugh with someone."
+    }
+  },
+  "dailyResult": {
+    "scoreSuffix": "pt",
+    "gradientTitle": "Today's Card Result",
+    "title": "Today's Fortune"
   }
 }

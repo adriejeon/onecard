@@ -18,6 +18,7 @@ import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
+import i18n from "../utils/i18n";
 
 const QuestionInputScreen = ({ navigation, route }) => {
   const [question, setQuestion] = useState("");
@@ -40,7 +41,9 @@ const QuestionInputScreen = ({ navigation, route }) => {
 
   // 동적 타이틀 생성
   const getHeaderTitle = () => {
-    return cardType === "daily" ? "데일리 카드" : "Yes or No 오라클 타로";
+    return cardType === "daily"
+      ? i18n.t("questionInput.headerDaily")
+      : i18n.t("questionInput.headerYesno");
   };
 
   return (
@@ -92,7 +95,7 @@ const QuestionInputScreen = ({ navigation, route }) => {
               <MaskedView
                 maskElement={
                   <Text style={styles.gradientTitle}>
-                    긍정적일지, 부정적일지{"\n"}궁금한 질문을 알려주세요.
+                    {i18n.t("questionInput.gradientTitle")}
                   </Text>
                 }
               >
@@ -102,7 +105,7 @@ const QuestionInputScreen = ({ navigation, route }) => {
                   end={{ x: 0.8, y: 0 }}
                 >
                   <Text style={[styles.gradientTitle, { opacity: 0 }]}>
-                    긍정적일지, 부정적일지{"\n"}궁금한 질문을 알려주세요.
+                    {i18n.t("questionInput.gradientTitle")}
                   </Text>
                 </LinearGradient>
               </MaskedView>
@@ -114,7 +117,7 @@ const QuestionInputScreen = ({ navigation, route }) => {
                 style={styles.textInput}
                 value={question}
                 onChangeText={setQuestion}
-                placeholder="질문을 입력해 주세요."
+                placeholder={i18n.t("questionInput.placeholder")}
                 placeholderTextColor="#C3C3C3"
                 multiline
                 numberOfLines={4}
@@ -140,7 +143,9 @@ const QuestionInputScreen = ({ navigation, route }) => {
               disabled={!question.trim()}
               activeOpacity={0.8}
             >
-              <Text style={styles.nextButtonText}>다음</Text>
+              <Text style={styles.nextButtonText}>
+                {i18n.t("questionInput.next")}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

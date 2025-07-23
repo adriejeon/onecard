@@ -10,6 +10,7 @@ import {
 import { Image } from "expo-image";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
+import i18n from "../utils/i18n";
 
 const { width } = Dimensions.get("window");
 
@@ -17,23 +18,30 @@ const MoreScreen = ({ navigation }) => {
   const menuItems = [
     {
       id: "archive",
-      title: "카드 결과 보관함",
-      onPress: () => navigation.navigate("CardArchive"),
+      title: i18n.t("more.archive"),
+      onPress: () =>
+        navigation.reset({ index: 0, routes: [{ name: "CardArchive" }] }),
     },
     {
       id: "privacy",
-      title: "개인정보처리방침",
-      onPress: () => navigation.navigate("PrivacyPolicy"),
+      title: i18n.t("more.privacy"),
+      onPress: () =>
+        navigation.reset({ index: 0, routes: [{ name: "PrivacyPolicy" }] }),
     },
     {
       id: "contact",
-      title: "개발자에게 문의하기",
-      onPress: () => navigation.navigate("ContactDeveloper"),
+      title: i18n.t("more.contact"),
+      onPress: () =>
+        navigation.reset({ index: 0, routes: [{ name: "ContactDeveloper" }] }),
     },
   ];
 
   const handleBack = () => {
-    navigation.goBack();
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      navigation.navigate("Home");
+    }
   };
 
   return (
@@ -45,9 +53,9 @@ const MoreScreen = ({ navigation }) => {
       />
 
       {/* 상단 헤더 */}
-      <View style={[commonStyles.header, { backgroundColor: "#F8F3FA" }]}>
+      <View style={[commonStyles.header, { position: "relative" }]}>
         <TouchableOpacity
-          style={commonStyles.backButton}
+          style={[commonStyles.backButton, { zIndex: 2 }]}
           onPress={handleBack}
           activeOpacity={0.8}
         >
@@ -57,10 +65,15 @@ const MoreScreen = ({ navigation }) => {
             contentFit="contain"
           />
         </TouchableOpacity>
-
-        <Text style={commonStyles.headerTitle}>더보기</Text>
-
-        <View style={styles.placeholderButton} />
+        <Text
+          style={[
+            commonStyles.headerTitle,
+            { position: "absolute", left: 0, right: 0, top: 60, zIndex: 1 },
+          ]}
+        >
+          {i18n.t("more.title")}
+        </Text>
+        <View style={[commonStyles.infoButton, { zIndex: 2 }]} />
       </View>
 
       {/* 메뉴 리스트 */}
@@ -84,7 +97,7 @@ const MoreScreen = ({ navigation }) => {
 
       {/* 앱 버전 정보 */}
       <View style={styles.versionContainer}>
-        <Text style={styles.versionText}>앱 버전: 1.1.0</Text>
+        <Text style={styles.versionText}>{i18n.t("more.version")}</Text>
       </View>
     </View>
   );

@@ -18,8 +18,20 @@ import { commonStyles } from "../styles/common";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { saveCardResult, deleteCardResult } from "../utils/cardArchiveUtils";
+import i18n from "../utils/i18n";
+import cardResults from "../assets/data/cardResults";
 
 const { width, height } = Dimensions.get("window");
+
+// 카드 id를 cardResults의 실제 키로 변환하는 함수
+const getCardKeyById = (id) => {
+  for (const key in cardResults) {
+    if (cardResults[key] && (cardResults[key].id === id || key === id)) {
+      return key;
+    }
+  }
+  return id;
+};
 
 const ResultScreen = ({ navigation, route }) => {
   const { question, result, cardType } = route.params;
@@ -45,241 +57,12 @@ const ResultScreen = ({ navigation, route }) => {
 
   // 카드별 결과 정보
   const getCardResult = (cardId) => {
-    const cardResults = {
-      1: {
-        isPositive: true,
-        percentage: "100%",
-        text: "YES",
-        description:
-          "태양의 가호를 받은 태양 카드는 모든 일의 출발과 시작입니다. 될 일은 결코 이루어집니다.",
-      },
-      2: {
-        isPositive: true,
-        percentage: "100%",
-        text: "YES",
-        description:
-          "위로 올라가는 상승 카드는 하는 일에 승리가 따를 것을 보여줍니다.",
-      },
-      3: {
-        isPositive: true,
-        percentage: "100%",
-        text: "YES",
-        description:
-          "명예 카드는 질문이 곧 나의 명예를 상승시켜 줄 수 있음을 보여줍니다.",
-      },
-      4: {
-        isPositive: true,
-        percentage: "84%",
-        text: "YES",
-        description:
-          "리더쉽 카드는 나의 자리가 견고함을 보여줍니다. 질문이 긍정적인 방향으로 갈 것을 알려줍니다.",
-      },
-      5: {
-        isPositive: false,
-        percentage: "73%",
-        text: "NO",
-        description:
-          "우울 카드는 고민이 많아지는 것을 보여줍니다. 질문의 방향이 좋지 않은 쪽으로 흘러갈 가능성이 있습니다.",
-      },
-      6: {
-        isPositive: false,
-        percentage: "86%",
-        text: "NO",
-        description:
-          "변덕 카드는 불안정한 상태를 보여줍니다. 질문의 미래가 불투명해질 수 있습니다.",
-      },
-      7: {
-        isPositive: true,
-        percentage: "80%",
-        text: "YES",
-        description:
-          "가족 카드는 든든한 울타리 안에 있음을 보여줍니다. 질문의 미래가 안정적이라고 볼 수 있습니다.",
-      },
-      8: {
-        isPositive: true,
-        percentage: "90%",
-        text: "YES",
-        description:
-          "엄마 카드는 언제나 따뜻하게 품어주는 엄마와 같습니다. 질문이 긍정적인 방향으로 흘러갈 수 있습니다.",
-      },
-      9: {
-        isPositive: false,
-        percentage: "94%",
-        text: "NO",
-        description:
-          "질병 카드는 뜻과 같이 일이 진행되지 않음을 보여줍니다. 결과가 좋지 않을 수 있습니다.",
-      },
-      10: {
-        isPositive: false,
-        percentage: "56%",
-        text: "NO",
-        description:
-          "변화 카드는 변화를 암시합니다. 변화는 잘 대응하면 긍정적이지만 대체로 부정적입니다.",
-      },
-      11: {
-        isPositive: true,
-        percentage: "73%",
-        text: "YES",
-        description:
-          "지성 카드는 꽤 긍정적입니다. 지성을 발휘하여 문제를 해결해 나갈 수 있습니다.",
-      },
-      12: {
-        isPositive: false,
-        percentage: "95%",
-        text: "NO",
-        description:
-          "도둑질 카드는 부정적인 카드입니다. 내 생각과 다르게 타인의 부정 행위에 의해 좌절될 수 있습니다.",
-      },
-      13: {
-        isPositive: true,
-        percentage: "64%",
-        text: "YES",
-        description:
-          "트레이드 카드는 꽤 긍정적입니다. 협상이 발생할 수 있지만 긍정적인 쪽으로 타협할 수 있습니다.",
-      },
-      14: {
-        isPositive: true,
-        percentage: "82%",
-        text: "YES",
-        description:
-          "즐거움 카드는 상당히 긍정적입니다. 결과가 어찌되든 자신이 느끼는 행복과 즐거움이 따릅니다.",
-      },
-      15: {
-        isPositive: true,
-        percentage: "100%",
-        text: "YES",
-        description:
-          "평화 카드는 무척 긍정적입니다. 결과는 결국 긍정적인 방향으로 종결되고 평화가 찾아올 것입니다.",
-      },
-      16: {
-        isPositive: true,
-        percentage: "88%",
-        text: "YES",
-        description:
-          "돈 카드는 긍정에 가깝습니다. 금전적으로 해결되는 일, 혹은 금전이 되어 돌아오는 일 생길 수 있습니다.",
-      },
-      17: {
-        isPositive: true,
-        percentage: "100%",
-        text: "YES",
-        description:
-          "사랑 카드는 긍정입니다. 연애와 관련한 질문이었다면 결국 사랑의 화합으로 이어질 것입니다.",
-      },
-      18: {
-        isPositive: true,
-        percentage: "88%",
-        text: "YES",
-        description:
-          "음식과 음료 카드는 긍정입니다. 맛있는걸 먹고 마시며 즐거운 시간으로 이어질 것입니다.",
-      },
-      19: {
-        isPositive: false,
-        percentage: "100%",
-        text: "NO",
-        description:
-          "악의 카드는 부정적입니다. 내 뜻과 달리 타인의 개입이나 악의로 인해 좌절될 수 있습니다.",
-      },
-      20: {
-        isPositive: false,
-        percentage: "100%",
-        text: "NO",
-        description:
-          "전쟁 카드는 부정적입니다. 서로 충돌하고 싸우고 오해하는 일이 생길 수 있습니다.",
-      },
-      21: {
-        isPositive: false,
-        percentage: "100%",
-        text: "NO",
-        description:
-          "적 카드는 부정적입니다. 나를 해치고 음해하는 적이 가까운 곳에 있을 수 있습니다.",
-      },
-      22: {
-        isPositive: false,
-        percentage: "100%",
-        text: "NO",
-        description:
-          "재난 카드는 부정적입니다. 내 뜻과 다른 재해와 가까운 외부 변수로 인해 좌절될 수 있습니다.",
-      },
-      23: {
-        isPositive: false,
-        percentage: "100%",
-        text: "NO",
-        description:
-          "사고 카드는 부정적입니다. 갑작스러운 이슈가 생길 수 있습니다.",
-      },
-      24: {
-        isPositive: true,
-        percentage: "70%",
-        text: "YES",
-        description:
-          "성찰 카드는 긍정적입니다. 자아 성찰을 통해 더 나은 미래로 나아갈 수 있습니다.",
-      },
-      25: {
-        isPositive: true,
-        percentage: "100%",
-        text: "YES",
-        description:
-          "좋은 기회 카드는 무척 긍정적입니다. 생각하지 못한 좋은 기회가 가까운 곳에서 기다리고 있을 수 있습니다.",
-      },
-      26: {
-        isPositive: true,
-        percentage: "100%",
-        text: "YES",
-        description:
-          "명성 카드는 무척 긍정적입니다. 주변에 나의 좋은 소식, 명성이 올라가는 긍정적인 이벤트가 있을 수 있습니다.",
-      },
-      27: {
-        isPositive: false,
-        percentage: "100%",
-        text: "NO",
-        description:
-          "불운 카드는 부정적입니다. 내 실수나 잘못을 떠나서 찾아오는 불운이 생길 수 있습니다.",
-      },
-      28: {
-        isPositive: false,
-        percentage: "100%",
-        text: "NO",
-        description:
-          "비극 카드는 부정적입니다. 이름에서 느껴지듯 비극적인 결론으로 이어질 수 있으니 주의가 필요합니다.",
-      },
-      29: {
-        isPositive: false,
-        percentage: "100%",
-        text: "NO",
-        description:
-          "파멸 카드는 부정적입니다. 이름에서 느껴지듯 파멸로 향하며 끝날 수 있습니다.",
-      },
-      30: {
-        isPositive: false,
-        percentage: "60%",
-        text: "NO",
-        description:
-          "지연 카드는 꽤 부정적입니다. 일의 지연과 막힘이 있을 수 있습니다.",
-      },
-      31: {
-        isPositive: false,
-        percentage: "70%",
-        text: "NO",
-        description:
-          "고립 카드는 꽤 부정적입니다. 혼자 고립되어 외롭고 고독한 시간을 보낼 수 있습니다.",
-      },
-      32: {
-        isPositive: true,
-        percentage: "80%",
-        text: "YES",
-        description:
-          "유머 카드는 꽤 긍정적입니다. 누군가와 즐겁게 대화하고 웃을 수 있는 시간이 있을 수 있습니다.",
-      },
+    return {
+      isPositive: i18n.t(`oracleResults.${cardId}.text`) === "YES",
+      percentage: i18n.t(`oracleResults.${cardId}.percentage`),
+      text: i18n.t(`oracleResults.${cardId}.text`),
+      description: i18n.t(`oracleResults.${cardId}.description`),
     };
-
-    return (
-      cardResults[cardId] || {
-        isPositive: true,
-        percentage: "50%",
-        text: "YES",
-        description: "카드 결과를 확인할 수 없습니다.",
-      }
-    );
   };
 
   // 동적 타이틀 생성
@@ -382,59 +165,70 @@ const ResultScreen = ({ navigation, route }) => {
 
       const success = await saveCardResult(archiveData);
       if (success) {
-        Alert.alert("보관 완료", "카드 결과가 보관함에 저장되었습니다.");
+        Alert.alert(
+          i18n.t("result.archiveComplete"),
+          i18n.t("result.archiveSaved")
+        );
       } else {
-        Alert.alert("보관 실패", "카드 결과 저장에 실패했습니다.");
+        Alert.alert(
+          i18n.t("result.archiveFail"),
+          i18n.t("result.archiveSaveFail")
+        );
       }
     } catch (error) {
       console.error("보관 실패:", error);
-      Alert.alert("보관 실패", "카드 결과 저장에 실패했습니다.");
+      Alert.alert(
+        i18n.t("result.archiveFail"),
+        i18n.t("result.archiveSaveFail")
+      );
     }
   };
 
   const handleDelete = async () => {
-    Alert.alert(
-      "보관 삭제",
-      "이 카드 결과를 보관함에서 삭제하시겠습니까? 삭제된 카드 결과는 다시 되돌릴 수 없습니다",
-      [
-        {
-          text: "취소",
-          style: "cancel",
-        },
-        {
-          text: "삭제",
-          style: "destructive",
-          onPress: async () => {
-            try {
-              // 보관함에서 온 경우에만 삭제 가능
-              if (route.params.fromArchive && route.params.archiveId) {
-                const success = await deleteCardResult(route.params.archiveId);
-                if (success) {
-                  Alert.alert(
-                    "삭제 완료",
-                    "카드 결과가 보관함에서 삭제되었습니다.",
-                    [
-                      {
-                        text: "확인",
-                        onPress: () => {
-                          // 보관함으로 돌아가기
-                          navigation.navigate("CardArchive");
-                        },
+    Alert.alert(i18n.t("result.deleteTitle"), i18n.t("result.deleteMessage"), [
+      {
+        text: i18n.t("result.cancel"),
+        style: "cancel",
+      },
+      {
+        text: i18n.t("result.delete"),
+        style: "destructive",
+        onPress: async () => {
+          try {
+            // 보관함에서 온 경우에만 삭제 가능
+            if (route.params.fromArchive && route.params.archiveId) {
+              const success = await deleteCardResult(route.params.archiveId);
+              if (success) {
+                Alert.alert(
+                  i18n.t("result.deleteComplete"),
+                  i18n.t("result.archiveDeleted"),
+                  [
+                    {
+                      text: i18n.t("result.confirm"),
+                      onPress: () => {
+                        // 보관함으로 돌아가기
+                        navigation.navigate("CardArchive");
                       },
-                    ]
-                  );
-                } else {
-                  Alert.alert("삭제 실패", "카드 결과 삭제에 실패했습니다.");
-                }
+                    },
+                  ]
+                );
+              } else {
+                Alert.alert(
+                  i18n.t("result.deleteFail"),
+                  i18n.t("result.archiveDeleteFail")
+                );
               }
-            } catch (error) {
-              console.error("삭제 실패:", error);
-              Alert.alert("삭제 실패", "카드 결과 삭제에 실패했습니다.");
             }
-          },
+          } catch (error) {
+            console.error("삭제 실패:", error);
+            Alert.alert(
+              i18n.t("result.deleteFail"),
+              i18n.t("result.archiveDeleteFail")
+            );
+          }
         },
-      ]
-    );
+      },
+    ]);
   };
 
   const cardResult = getCardResult(result.id);
@@ -566,7 +360,9 @@ const ResultScreen = ({ navigation, route }) => {
             },
           ]}
         >
-          <Text style={styles.explanationText}>{cardResult.description}</Text>
+          <Text style={styles.explanationText}>
+            {i18n.t(`oracleResults.${String(result.id)}.description`)}
+          </Text>
         </Animated.View>
 
         {/* 버튼들 */}
@@ -579,14 +375,18 @@ const ResultScreen = ({ navigation, route }) => {
                 onPress={handleArchive}
                 activeOpacity={0.8}
               >
-                <Text style={commonStyles.archiveButtonText}>보관하기</Text>
+                <Text style={commonStyles.archiveButtonText}>
+                  {i18n.t("result.archive")}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={commonStyles.shareButton}
                 onPress={handleShare}
                 activeOpacity={0.8}
               >
-                <Text style={commonStyles.shareButtonText}>공유하기</Text>
+                <Text style={commonStyles.shareButtonText}>
+                  {i18n.t("result.share")}
+                </Text>
               </TouchableOpacity>
             </View>
           ) : (
@@ -597,20 +397,24 @@ const ResultScreen = ({ navigation, route }) => {
                 onPress={handleShare}
                 activeOpacity={0.8}
               >
-                <Text style={commonStyles.shareButtonText}>공유하기</Text>
+                <Text style={commonStyles.shareButtonText}>
+                  {i18n.t("result.share")}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={commonStyles.deleteButton}
                 onPress={handleDelete}
                 activeOpacity={0.8}
               >
-                <Text style={commonStyles.deleteButtonText}>보관 삭제하기</Text>
+                <Text style={commonStyles.deleteButtonText}>
+                  {i18n.t("result.delete")}
+                </Text>
               </TouchableOpacity>
             </View>
           )}
 
           <TouchableOpacity style={styles.homeButton} onPress={handleHome}>
-            <Text style={styles.homeButtonText}>홈으로</Text>
+            <Text style={styles.homeButtonText}>{i18n.t("result.home")}</Text>
           </TouchableOpacity>
         </View>
       </View>

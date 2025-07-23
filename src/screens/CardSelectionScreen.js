@@ -18,6 +18,7 @@ import {
   getTodayDailyCard,
   resetDailyCardData,
 } from "../utils/dailyCardUtils";
+import i18n from "../utils/i18n";
 
 const { width, height } = Dimensions.get("window");
 
@@ -136,7 +137,9 @@ const CardSelectionScreen = ({ navigation }) => {
       <View style={styles.centerContent}>
         {/* 상단 텍스트 */}
         <View style={styles.headerContainer}>
-          <Text style={styles.subtitle}>어떤 카드를 뽑아볼까요?</Text>
+          <Text style={styles.subtitle}>
+            {i18n.t("cardSelection.subtitle")}
+          </Text>
         </View>
 
         {/* 카드 선택 버튼들 */}
@@ -154,9 +157,11 @@ const CardSelectionScreen = ({ navigation }) => {
                 contentFit="contain"
               />
               <View style={styles.cardTextContainer}>
-                <Text style={styles.cardButtonTitle}>Yes or No</Text>
+                <Text style={styles.cardButtonTitle}>
+                  {i18n.t("cardSelection.yesnoTitle")}
+                </Text>
                 <Text style={styles.cardButtonSubtitle}>
-                  예/아니오로 답할 수 있는 질문
+                  {i18n.t("cardSelection.yesnoDesc")}
                 </Text>
               </View>
             </View>
@@ -175,9 +180,11 @@ const CardSelectionScreen = ({ navigation }) => {
                 contentFit="contain"
               />
               <View style={styles.cardTextContainer}>
-                <Text style={styles.cardButtonTitle}>데일리 카드</Text>
+                <Text style={styles.cardButtonTitle}>
+                  {i18n.t("cardSelection.dailyTitle")}
+                </Text>
                 <Text style={styles.cardButtonSubtitle}>
-                  오늘 하루의 운세를 확인해보세요
+                  {i18n.t("cardSelection.dailyDesc")}
                 </Text>
               </View>
             </View>

@@ -21,6 +21,7 @@ import { commonStyles } from "../styles/common";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { saveDailyCardDraw } from "../utils/dailyCardUtils";
+import i18n from "../utils/i18n";
 
 const { width, height } = Dimensions.get("window");
 
@@ -262,7 +263,7 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
               style={{ width: "100%" }}
               maskElement={
                 <Text style={styles.gradientTitle}>
-                  오늘 하루의 운세를{"\n"}알아보세요.
+                  {i18n.t("dailyCardSelection.gradientTitle")}
                 </Text>
               }
             >
@@ -272,7 +273,7 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
                 end={{ x: 0.8, y: 0 }}
               >
                 <Text style={[styles.gradientTitle, { opacity: 0 }]}>
-                  오늘 하루의 운세를{"\n"}알아보세요.
+                  {i18n.t("dailyCardSelection.gradientTitle")}
                 </Text>
               </LinearGradient>
             </MaskedView>
@@ -345,7 +346,9 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
             disabled={!showSelectedCard}
             activeOpacity={0.8}
           >
-            <Text style={styles.resultButtonText}>결과 보기</Text>
+            <Text style={styles.resultButtonText}>
+              {i18n.t("dailyCardSelection.result")}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

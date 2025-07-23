@@ -1,6 +1,7 @@
 const cardResults = {
   // Major Arcana
   major_0: {
+    id: "major_0",
     isPositive: true,
     score: "50",
     title: "The Fool",
@@ -9,6 +10,7 @@ const cardResults = {
     keywords: "새로운 시작, 모험, 순수함, 잠재력",
   },
   major_1: {
+    id: "major_1",
     isPositive: true,
     score: "85",
     title: "The Magician",
@@ -17,6 +19,7 @@ const cardResults = {
     keywords: "창의력, 재능, 자신감, 실행력",
   },
   major_2: {
+    id: "major_2",
     isPositive: true,
     score: "75",
     title: "The High Priestess",
@@ -25,6 +28,7 @@ const cardResults = {
     keywords: "직관, 통찰력, 지혜, 비밀",
   },
   major_3: {
+    id: "major_3",
     isPositive: true,
     score: "80",
     title: "The Empress",
@@ -33,6 +37,7 @@ const cardResults = {
     keywords: "풍요, 결실, 다산, 안정",
   },
   major_4: {
+    id: "major_4",
     isPositive: false,
     score: "30",
     title: "The Emperor",
@@ -41,6 +46,7 @@ const cardResults = {
     keywords: "권위적인, 통제, 고집, 책임감",
   },
   major_5: {
+    id: "major_5",
     isPositive: false,
     score: "25",
     title: "The Hierophant",
@@ -49,6 +55,7 @@ const cardResults = {
     keywords: "전통, 관습, 규칙, 보수적",
   },
   major_6: {
+    id: "major_6",
     isPositive: true,
     score: "90",
     title: "The Lovers",
@@ -57,6 +64,7 @@ const cardResults = {
     keywords: "사랑, 관계, 조화, 선택",
   },
   major_7: {
+    id: "major_7",
     isPositive: true,
     score: "70",
     title: "The Chariot",
@@ -65,6 +73,7 @@ const cardResults = {
     keywords: "승리, 추진력, 의지, 목표 달성",
   },
   major_8: {
+    id: "major_8",
     isPositive: true,
     score: "65",
     title: "Strength",
@@ -73,6 +82,7 @@ const cardResults = {
     keywords: "내면의 힘, 용기, 인내, 부드러운 카리스마",
   },
   major_9: {
+    id: "major_9",
     isPositive: false,
     score: "20",
     title: "The Hermit",
@@ -81,6 +91,7 @@ const cardResults = {
     keywords: "내면 성찰, 지혜 탐구, 재충전, 혼자만의 시간",
   },
   major_10: {
+    id: "major_10",
     isPositive: true,
     score: "75",
     title: "Wheel of Fortune",
@@ -89,6 +100,7 @@ const cardResults = {
     keywords: "운명적 전환, 행운, 기회, 변화",
   },
   major_11: {
+    id: "major_11",
     isPositive: true,
     score: "80",
     title: "Justice",
@@ -97,6 +109,7 @@ const cardResults = {
     keywords: "정의, 균형, 공정함, 책임",
   },
   major_12: {
+    id: "major_12",
     isPositive: false,
     score: "15",
     title: "The Hanged Man",
@@ -105,6 +118,7 @@ const cardResults = {
     keywords: "인내, 희생, 정체, 새로운 관점",
   },
   major_13: {
+    id: "major_13",
     isPositive: false,
     score: "10",
     title: "Death",
@@ -113,6 +127,7 @@ const cardResults = {
     keywords: "끝, 변화, 이별, 새로운 시작",
   },
   major_14: {
+    id: "major_14",
     isPositive: true,
     score: "70",
     title: "Temperance",
@@ -121,6 +136,7 @@ const cardResults = {
     keywords: "조화, 균형, 절제, 인내",
   },
   major_15: {
+    id: "major_15",
     isPositive: false,
     score: "5",
     title: "The Devil",
@@ -129,6 +145,7 @@ const cardResults = {
     keywords: "유혹, 집착, 중독, 속박",
   },
   major_16: {
+    id: "major_16",
     isPositive: false,
     score: "20",
     title: "The Tower",
@@ -137,6 +154,7 @@ const cardResults = {
     keywords: "급작스러운 변화, 충격, 파괴, 각성",
   },
   major_17: {
+    id: "major_17",
     isPositive: true,
     score: "85",
     title: "The Star",
@@ -145,6 +163,7 @@ const cardResults = {
     keywords: "희망, 영감, 긍정, 치유",
   },
   major_18: {
+    id: "major_18",
     isPositive: false,
     score: "30",
     title: "The Moon",
@@ -153,6 +172,7 @@ const cardResults = {
     keywords: "불안, 혼란, 환상, 두려움",
   },
   major_19: {
+    id: "major_19",
     isPositive: true,
     score: "90",
     title: "The Sun",
@@ -161,6 +181,7 @@ const cardResults = {
     keywords: "성공, 행복, 긍정, 활력",
   },
   major_20: {
+    id: "major_20",
     isPositive: true,
     score: "80",
     title: "Judgement",
@@ -169,6 +190,7 @@ const cardResults = {
     keywords: "부활, 보상, 새로운 소명, 용서",
   },
   major_21: {
+    id: "major_21",
     isPositive: true,
     score: "95",
     title: "The World",
@@ -179,6 +201,7 @@ const cardResults = {
 
   // Cups (컵)
   ace_cups: {
+    id: "ace_cups",
     isPositive: true,
     score: "85",
     title: "Ace of Cups",
@@ -187,6 +210,7 @@ const cardResults = {
     keywords: "새로운 감정, 사랑의 시작, 공감, 행복",
   },
   cups_2: {
+    id: "cups_2",
     isPositive: true,
     score: "80",
     title: "Two of Cups",
@@ -195,6 +219,7 @@ const cardResults = {
     keywords: "연합, 파트너십, 사랑, 교감",
   },
   cups_3: {
+    id: "cups_3",
     isPositive: true,
     score: "75",
     title: "Three of Cups",
@@ -203,6 +228,7 @@ const cardResults = {
     keywords: "축하, 우정, 즐거운 모임, 기쁨",
   },
   cups_4: {
+    id: "cups_4",
     isPositive: false,
     score: "40",
     title: "Four of Cups",
@@ -211,6 +237,7 @@ const cardResults = {
     keywords: "권태, 무관심, 불만족, 기회를 놓침",
   },
   cups_5: {
+    id: "cups_5",
     isPositive: false,
     score: "25",
     title: "Five of Cups",
@@ -219,6 +246,7 @@ const cardResults = {
     keywords: "상실, 후회, 슬픔, 실망",
   },
   cups_6: {
+    id: "cups_6",
     isPositive: true,
     score: "70",
     title: "Six of Cups",
@@ -227,6 +255,7 @@ const cardResults = {
     keywords: "추억, 순수함, 그리움, 옛 친구",
   },
   cups_7: {
+    id: "cups_7",
     isPositive: false,
     score: "35",
     title: "Seven of Cups",
@@ -235,6 +264,7 @@ const cardResults = {
     keywords: "환상, 비현실적 기대, 선택의 어려움, 혼란",
   },
   cups_8: {
+    id: "cups_8",
     isPositive: false,
     score: "30",
     title: "Eight of Cups",
@@ -243,6 +273,7 @@ const cardResults = {
     keywords: "떠남, 전환, 새로운 길 모색, 미련 버리기",
   },
   cups_9: {
+    id: "cups_9",
     isPositive: true,
     score: "85",
     title: "Nine of Cups",
@@ -251,6 +282,7 @@ const cardResults = {
     keywords: "소원 성취, 만족, 행복, 풍요",
   },
   cups_10: {
+    id: "cups_10",
     isPositive: true,
     score: "90",
     title: "Ten of Cups",
@@ -261,6 +293,7 @@ const cardResults = {
 
   // Pentacles (펜타클)
   ace_pentacles: {
+    id: "ace_pentacles",
     isPositive: true,
     score: "80",
     title: "Ace of Pentacles",
@@ -269,6 +302,7 @@ const cardResults = {
     keywords: "새로운 기회, 번영, 안정, 현실화",
   },
   pentacle_2: {
+    id: "pentacle_2",
     isPositive: true,
     score: "65",
     title: "Two of Pentacles",
@@ -277,6 +311,7 @@ const cardResults = {
     keywords: "균형, 유연성, 적응, 변화 관리",
   },
   pentacle_3: {
+    id: "pentacle_3",
     isPositive: true,
     score: "70",
     title: "Three of Pentacles",
@@ -285,6 +320,7 @@ const cardResults = {
     keywords: "팀워크, 협력, 기술, 인정",
   },
   pentacle_4: {
+    id: "pentacle_4",
     isPositive: true,
     score: "75",
     title: "Four of Pentacles",
@@ -293,6 +329,7 @@ const cardResults = {
     keywords: "소유, 안정, 보수적, 절약",
   },
   pentacle_5: {
+    id: "pentacle_5",
     isPositive: false,
     score: "30",
     title: "Five of Pentacles",
@@ -301,6 +338,7 @@ const cardResults = {
     keywords: "재정적 어려움, 고립, 상실감, 역경",
   },
   pentacle_6: {
+    id: "pentacle_6",
     isPositive: true,
     score: "80",
     title: "Six of Pentacles",
@@ -309,6 +347,7 @@ const cardResults = {
     keywords: "나눔, 관대함, 도움, 보상",
   },
   pentacle_7: {
+    id: "pentacle_7",
     isPositive: true,
     score: "70",
     title: "Seven of Pentacles",
@@ -317,6 +356,7 @@ const cardResults = {
     keywords: "인내, 평가, 기다림, 투자",
   },
   pentacle_8: {
+    id: "pentacle_8",
     isPositive: true,
     score: "75",
     title: "Eight of Pentacles",
@@ -325,6 +365,7 @@ const cardResults = {
     keywords: "숙련, 장인정신, 노력, 집중",
   },
   pentacle_9: {
+    id: "pentacle_9",
     isPositive: true,
     score: "85",
     title: "Nine of Pentacles",
@@ -333,6 +374,7 @@ const cardResults = {
     keywords: "독립, 풍요, 자수성가, 여유",
   },
   pentacle_10: {
+    id: "pentacle_10",
     isPositive: true,
     score: "90",
     title: "Ten of Pentacles",
@@ -343,6 +385,7 @@ const cardResults = {
 
   // Swords (소드)
   ace_swords: {
+    id: "ace_swords",
     isPositive: true,
     score: "75",
     title: "Ace of Swords",
@@ -351,6 +394,7 @@ const cardResults = {
     keywords: "명확함, 진실, 돌파구, 이성적 판단",
   },
   swords_2: {
+    id: "swords_2",
     isPositive: false,
     score: "45",
     title: "Two of Swords",
@@ -359,6 +403,7 @@ const cardResults = {
     keywords: "결정 장애, 교착 상태, 갈등, 외면",
   },
   swords_3: {
+    id: "swords_3",
     isPositive: false,
     score: "20",
     title: "Three of Swords",
@@ -367,6 +412,7 @@ const cardResults = {
     keywords: "상심, 슬픔, 고통스러운 진실, 이별",
   },
   swords_4: {
+    id: "swords_4",
     isPositive: false,
     score: "35",
     title: "Four of Swords",
@@ -375,6 +421,7 @@ const cardResults = {
     keywords: "휴식, 재충전, 회복, 평화",
   },
   swords_5: {
+    id: "swords_5",
     isPositive: false,
     score: "25",
     title: "Five of Swords",
@@ -383,6 +430,7 @@ const cardResults = {
     keywords: "갈등, 패배, 불명예, 이기적인 승리",
   },
   swords_6: {
+    id: "swords_6",
     isPositive: true,
     score: "70",
     title: "Six of Swords",
@@ -391,6 +439,7 @@ const cardResults = {
     keywords: "전환, 이동, 회복, 새로운 시작",
   },
   swords_7: {
+    id: "swords_7",
     isPositive: false,
     score: "40",
     title: "Seven of Swords",
@@ -399,6 +448,7 @@ const cardResults = {
     keywords: "기만, 배신, 속임수, 도피",
   },
   swords_8: {
+    id: "swords_8",
     isPositive: false,
     score: "15",
     title: "Eight of Swords",
@@ -407,6 +457,7 @@ const cardResults = {
     keywords: "속박, 제한, 무력감, 자기 억압",
   },
   swords_9: {
+    id: "swords_9",
     isPositive: false,
     score: "10",
     title: "Nine of Swords",
@@ -415,6 +466,7 @@ const cardResults = {
     keywords: "불안, 걱정, 악몽, 절망",
   },
   swords_10: {
+    id: "swords_10",
     isPositive: false,
     score: "5",
     title: "Ten of Swords",
@@ -425,6 +477,7 @@ const cardResults = {
 
   // Wands (완드)
   ace_wands: {
+    id: "ace_wands",
     isPositive: true,
     score: "85",
     title: "Ace of Wands",
@@ -433,6 +486,7 @@ const cardResults = {
     keywords: "열정, 창의력, 영감, 새로운 시작",
   },
   wands_2: {
+    id: "wands_2",
     isPositive: true,
     score: "70",
     title: "Two of Wands",
@@ -441,6 +495,7 @@ const cardResults = {
     keywords: "미래 계획, 결정, 용기, 확장",
   },
   wands_3: {
+    id: "wands_3",
     isPositive: true,
     score: "75",
     title: "Three of Wands",
@@ -449,6 +504,7 @@ const cardResults = {
     keywords: "확장, 성장, 리더십, 미래에 대한 기대",
   },
   wands_4: {
+    id: "wands_4",
     isPositive: true,
     score: "65",
     title: "Four of Wands",
@@ -457,6 +513,7 @@ const cardResults = {
     keywords: "축하, 안정, 조화, 행복",
   },
   wands_5: {
+    id: "wands_5",
     isPositive: false,
     score: "35",
     title: "Five of Wands",
@@ -465,6 +522,7 @@ const cardResults = {
     keywords: "경쟁, 갈등, 의견 충돌, 혼란",
   },
   wands_6: {
+    id: "wands_6",
     isPositive: true,
     score: "80",
     title: "Six of Wands",
@@ -473,6 +531,7 @@ const cardResults = {
     keywords: "승리, 성공, 인정, 자신감",
   },
   wands_7: {
+    id: "wands_7",
     isPositive: false,
     score: "40",
     title: "Seven of Wands",
@@ -481,6 +540,7 @@ const cardResults = {
     keywords: "도전, 방어, 용기, 끈기",
   },
   wands_8: {
+    id: "wands_8",
     isPositive: true,
     score: "75",
     title: "Eight of Wands",
@@ -489,6 +549,7 @@ const cardResults = {
     keywords: "급속한 전개, 소식, 이동, 행동",
   },
   wands_9: {
+    id: "wands_9",
     isPositive: false,
     score: "30",
     title: "Nine of Wands",
@@ -497,6 +558,7 @@ const cardResults = {
     keywords: "인내, 방어, 끈기, 경계",
   },
   wands_10: {
+    id: "wands_10",
     isPositive: false,
     score: "20",
     title: "Ten of Wands",
@@ -507,6 +569,7 @@ const cardResults = {
 
   // Court Cards (궁정 카드)
   page_cups: {
+    id: "page_cups",
     isPositive: true,
     score: "70",
     title: "Page of Cups",
@@ -515,6 +578,7 @@ const cardResults = {
     keywords: "창의적 영감, 직관적 메시지, 감수성, 호기심",
   },
   page_pentacles: {
+    id: "page_pentacles",
     isPositive: true,
     score: "65",
     title: "Page of Pentacles",
@@ -523,6 +587,7 @@ const cardResults = {
     keywords: "새로운 기회, 학습, 성실함, 현실적인 계획",
   },
   page_swords: {
+    id: "page_swords",
     isPositive: true,
     score: "60",
     title: "Page of Swords",
@@ -531,6 +596,7 @@ const cardResults = {
     keywords: "새로운 아이디어, 호기심, 진실 탐구, 솔직함",
   },
   page_wands: {
+    id: "page_wands",
     isPositive: true,
     score: "75",
     title: "Page of Wands",
@@ -540,6 +606,7 @@ const cardResults = {
   },
 
   knight_cups: {
+    id: "knight_cups",
     isPositive: true,
     score: "75",
     title: "Knight of Cups",
@@ -548,6 +615,7 @@ const cardResults = {
     keywords: "로맨스, 제안, 매력, 감성",
   },
   knight_pentacles: {
+    id: "knight_pentacles",
     isPositive: true,
     score: "70",
     title: "Knight of Pentacles",
@@ -556,6 +624,7 @@ const cardResults = {
     keywords: "성실함, 책임감, 꾸준함, 신뢰",
   },
   knight_swords: {
+    id: "knight_swords",
     isPositive: false,
     score: "45",
     title: "Knight of Swords",
@@ -564,6 +633,7 @@ const cardResults = {
     keywords: "성급함, 충동적 행동, 논쟁, 저돌적",
   },
   knight_wands: {
+    id: "knight_wands",
     isPositive: true,
     score: "80",
     title: "Knight of Wands",
@@ -573,6 +643,7 @@ const cardResults = {
   },
 
   queen_cups: {
+    id: "queen_cups",
     isPositive: true,
     score: "85",
     title: "Queen of Cups",
@@ -581,6 +652,7 @@ const cardResults = {
     keywords: "공감 능력, 직관, 감성적 지혜, 따뜻함",
   },
   queen_pentacles: {
+    id: "queen_pentacles",
     isPositive: true,
     score: "80",
     title: "Queen of Pentacles",
@@ -589,6 +661,7 @@ const cardResults = {
     keywords: "풍요, 안정, 실용성, 보살핌",
   },
   queen_swords: {
+    id: "queen_swords",
     isPositive: false,
     score: "50",
     title: "Queen of Swords",
@@ -597,6 +670,7 @@ const cardResults = {
     keywords: "독립적, 명확한 판단, 지성, 냉철함",
   },
   queen_wands: {
+    id: "queen_wands",
     isPositive: true,
     score: "86",
     title: "Queen of Wands",
@@ -606,6 +680,7 @@ const cardResults = {
   },
 
   king_cups: {
+    id: "king_cups",
     isPositive: true,
     score: "80",
     title: "King of Cups",
@@ -614,6 +689,7 @@ const cardResults = {
     keywords: "감정적 균형, 자비, 성숙함, 지혜",
   },
   king_pentacles: {
+    id: "king_pentacles",
     isPositive: true,
     score: "85",
     title: "King of Pentacles",
@@ -622,6 +698,7 @@ const cardResults = {
     keywords: "사업적 성공, 풍요, 안정, 리더십",
   },
   king_swords: {
+    id: "king_swords",
     isPositive: false,
     score: "55",
     title: "King of Swords",
@@ -630,6 +707,7 @@ const cardResults = {
     keywords: "권위, 지적 능력, 엄격함, 진실",
   },
   king_wands: {
+    id: "king_wands",
     isPositive: true,
     score: "90",
     title: "King of Wands",

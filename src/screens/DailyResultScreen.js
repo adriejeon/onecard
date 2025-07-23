@@ -20,8 +20,21 @@ import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import cardResults from "../assets/data/cardResults";
 import { saveCardResult, deleteCardResult } from "../utils/cardArchiveUtils";
+import i18n from "../utils/i18n";
 
 const { width } = Dimensions.get("window");
+
+// 카드 id를 cardResults의 실제 키로 변환하는 함수
+const getCardKeyById = (id) => {
+  // cardResults의 모든 키를 순회하여 id(숫자/문자)와 일치하는 키를 반환
+  for (const key in cardResults) {
+    if (cardResults[key] && (cardResults[key].id === id || key === id)) {
+      return key;
+    }
+  }
+  // fallback: id가 이미 major_16 등일 수도 있으니 그대로 반환
+  return id;
+};
 
 const DailyResultScreen = ({ navigation, route }) => {
   const { result, cardData } = route.params;
@@ -80,7 +93,9 @@ const DailyResultScreen = ({ navigation, route }) => {
   const handleShare = async () => {
     try {
       const cardResult = getCardResult(selectedCard.id);
-      const shareMessage = `오늘의 데일리 카드: ${cardResult.title}\n\n${cardResult.description}\n\n원카드 앱으로 오늘의 운세를 확인해보세요!`;
+      const shareMessage = `${i18n.t("dailyResult.todayCard")}: ${
+        cardResult.title
+      }\n\n${cardResult.description}\n\n${i18n.t("dailyResult.shareApp")}`;
 
       // 먼저 카카오톡이 설치되어 있는지 확인
       const canOpenKakao = await Linking.canOpenURL("kakaotalk://");
@@ -97,7 +112,7 @@ const DailyResultScreen = ({ navigation, route }) => {
         // 카카오톡이 없으면 기본 공유 시트 사용
         await Share.share({
           message: `${shareMessage}\n\n${appDownloadUrl}`,
-          title: "원카드 데일리 결과",
+          title: i18n.t("dailyResult.shareTitle"),
         });
       }
     } catch (error) {
@@ -106,15 +121,19 @@ const DailyResultScreen = ({ navigation, route }) => {
       // 모든 방법이 실패한 경우 기본 공유 시트로 폴백
       try {
         const cardResult = getCardResult(selectedCard.id);
-        const shareMessage = `오늘의 데일리 카드: ${cardResult.title}\n\n${cardResult.description}\n\n원카드 앱으로 오늘의 운세를 확인해보세요! (https://apps.apple.com/app/onecard)`;
+        const shareMessage = `${i18n.t("dailyResult.todayCard")}: ${
+          cardResult.title
+        }\n\n${cardResult.description}\n\n${i18n.t("dailyResult.shareApp")}`;
 
         await Share.share({
           message: shareMessage,
-          title: "원카드 데일리 결과",
+          title: i18n.t("dailyResult.shareTitle"),
         });
       } catch (fallbackError) {
-        console.log("기본 공유도 실패:", fallbackError);
-        Alert.alert("공유 실패", "공유 기능을 사용할 수 없습니다.");
+        Alert.alert(
+          i18n.t("dailyResult.shareFailTitle"),
+          i18n.t("dailyResult.shareFailMessage")
+        );
       }
     }
   };
@@ -147,64 +166,73 @@ const DailyResultScreen = ({ navigation, route }) => {
 
       const success = await saveCardResult(archiveData);
       if (success) {
-        Alert.alert("보관 완료", "카드 결과가 보관함에 저장되었습니다.");
+        Alert.alert(
+          i18n.t("result.archiveComplete"),
+          i18n.t("result.archiveSaved")
+        );
       } else {
-        Alert.alert("보관 실패", "카드 결과 저장에 실패했습니다.");
+        Alert.alert(
+          i18n.t("result.archiveFail"),
+          i18n.t("result.archiveSaveFail")
+        );
       }
     } catch (error) {
-      console.error("보관 실패:", error);
-      Alert.alert("보관 실패", "카드 결과 저장에 실패했습니다.");
+      Alert.alert(
+        i18n.t("result.archiveFail"),
+        i18n.t("result.archiveSaveFail")
+      );
     }
   };
 
   const handleDelete = async () => {
-    Alert.alert(
-      "보관 삭제",
-      "이 카드 결과를 보관함에서 삭제하시겠습니까? 삭제된 카드 결과는 다시 되돌릴 수 없습니다",
-      [
-        {
-          text: "취소",
-          style: "cancel",
-        },
-        {
-          text: "삭제",
-          style: "destructive",
-          onPress: async () => {
-            try {
-              // 보관함에서 온 경우에만 삭제 가능
-              if (cardData && cardData.id) {
-                const success = await deleteCardResult(cardData.id);
-                if (success) {
-                  Alert.alert(
-                    "삭제 완료",
-                    "카드 결과가 보관함에서 삭제되었습니다.",
-                    [
-                      {
-                        text: "확인",
-                        onPress: () => {
-                          // 보관함으로 돌아가기
-                          navigation.navigate("CardArchive");
-                        },
+    Alert.alert(i18n.t("result.deleteTitle"), i18n.t("result.deleteMessage"), [
+      {
+        text: i18n.t("result.cancel"),
+        style: "cancel",
+      },
+      {
+        text: i18n.t("result.delete"),
+        style: "destructive",
+        onPress: async () => {
+          try {
+            // 보관함에서 온 경우에만 삭제 가능
+            if (cardData && cardData.id) {
+              const success = await deleteCardResult(cardData.id);
+              if (success) {
+                Alert.alert(
+                  i18n.t("result.deleteComplete"),
+                  i18n.t("result.archiveDeleted"),
+                  [
+                    {
+                      text: i18n.t("result.confirm"),
+                      onPress: () => {
+                        // 보관함으로 돌아가기
+                        navigation.navigate("CardArchive");
                       },
-                    ]
-                  );
-                } else {
-                  Alert.alert("삭제 실패", "카드 결과 삭제에 실패했습니다.");
-                }
+                    },
+                  ]
+                );
               } else {
                 Alert.alert(
-                  "삭제 실패",
-                  "삭제할 수 있는 카드 데이터가 없습니다."
+                  i18n.t("result.deleteFail"),
+                  i18n.t("result.archiveDeleteFail")
                 );
               }
-            } catch (error) {
-              console.error("삭제 실패:", error);
-              Alert.alert("삭제 실패", "카드 결과 삭제에 실패했습니다.");
+            } else {
+              Alert.alert(
+                i18n.t("result.deleteFail"),
+                i18n.t("result.noCardDataToDelete")
+              );
             }
-          },
+          } catch (error) {
+            Alert.alert(
+              i18n.t("result.deleteFail"),
+              i18n.t("result.archiveDeleteFail")
+            );
+          }
         },
-      ]
-    );
+      },
+    ]);
   };
 
   const cardResult = getCardResult(selectedCard.id);
@@ -245,7 +273,7 @@ const DailyResultScreen = ({ navigation, route }) => {
             },
           ]}
         >
-          데일리 카드
+          {i18n.t("dailyResult.title")}
         </Text>
         {!cardData ? (
           <TouchableOpacity
@@ -275,7 +303,9 @@ const DailyResultScreen = ({ navigation, route }) => {
             <MaskedView
               style={{ width: "100%" }}
               maskElement={
-                <Text style={commonStyles.gradientTitle}>오늘의 운세</Text>
+                <Text style={commonStyles.gradientTitle}>
+                  {i18n.t("dailyResult.gradientTitle")}
+                </Text>
               }
             >
               <LinearGradient
@@ -284,7 +314,7 @@ const DailyResultScreen = ({ navigation, route }) => {
                 end={{ x: 0.8, y: 0 }}
               >
                 <Text style={[commonStyles.gradientTitle, { opacity: 0 }]}>
-                  오늘의 운세
+                  {i18n.t("dailyResult.gradientTitle")}
                 </Text>
               </LinearGradient>
             </MaskedView>
@@ -326,7 +356,9 @@ const DailyResultScreen = ({ navigation, route }) => {
               { color: cardResult.isPositive ? colors.primary : "#E91B64" },
             ]}
           >
-            {cardResult.score}점 {cardResult.title}
+            {cardResult.score}
+            {i18n.t("dailyResult.scoreSuffix")}{" "}
+            {i18n.t(`cards.${getCardKeyById(selectedCard.id)}.title`)}
           </Text>
         </Animated.View>
 
@@ -350,7 +382,7 @@ const DailyResultScreen = ({ navigation, route }) => {
             </View>
           )}
           <Text style={commonStyles.explanationText}>
-            {cardResult.description}
+            {i18n.t(`cards.${getCardKeyById(selectedCard.id)}.description`)}
           </Text>
         </Animated.View>
 
@@ -364,14 +396,18 @@ const DailyResultScreen = ({ navigation, route }) => {
                 onPress={handleArchive}
                 activeOpacity={0.8}
               >
-                <Text style={commonStyles.archiveButtonText}>보관하기</Text>
+                <Text style={commonStyles.archiveButtonText}>
+                  {i18n.t("result.archive")}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={commonStyles.shareButton}
                 onPress={handleShare}
                 activeOpacity={0.8}
               >
-                <Text style={commonStyles.shareButtonText}>공유하기</Text>
+                <Text style={commonStyles.shareButtonText}>
+                  {i18n.t("result.share")}
+                </Text>
               </TouchableOpacity>
             </View>
           ) : (
@@ -382,14 +418,18 @@ const DailyResultScreen = ({ navigation, route }) => {
                 onPress={handleShare}
                 activeOpacity={0.8}
               >
-                <Text style={commonStyles.shareButtonText}>공유하기</Text>
+                <Text style={commonStyles.shareButtonText}>
+                  {i18n.t("result.share")}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={commonStyles.deleteButton}
                 onPress={handleDelete}
                 activeOpacity={0.8}
               >
-                <Text style={commonStyles.deleteButtonText}>보관 삭제하기</Text>
+                <Text style={commonStyles.deleteButtonText}>
+                  {i18n.t("result.delete")}
+                </Text>
               </TouchableOpacity>
             </View>
           )}
@@ -398,7 +438,9 @@ const DailyResultScreen = ({ navigation, route }) => {
             style={commonStyles.homeButton}
             onPress={handleHome}
           >
-            <Text style={commonStyles.homeButtonText}>홈으로</Text>
+            <Text style={commonStyles.homeButtonText}>
+              {i18n.t("result.home")}
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

@@ -17,6 +17,7 @@ import * as MailComposer from "expo-mail-composer";
 
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
+import i18n from "../utils/i18n";
 
 const ContactDeveloperScreen = ({ navigation }) => {
   const [feedback, setFeedback] = useState("");
@@ -32,7 +33,7 @@ const ContactDeveloperScreen = ({ navigation }) => {
 
   const handleSendFeedback = async () => {
     if (feedback.trim() === "") {
-      Alert.alert("알림", "의견을 입력해주세요.");
+      Alert.alert(i18n.t("contact.alertTitle"), i18n.t("contact.alertEmpty"));
       return;
     }
 
@@ -43,27 +44,31 @@ const ContactDeveloperScreen = ({ navigation }) => {
       const isAvailable = await MailComposer.isAvailableAsync();
 
       if (!isAvailable) {
-        Alert.alert("오류", "이 기기에서는 메일 앱을 사용할 수 없습니다.", [
-          { text: "확인" },
-        ]);
+        Alert.alert(
+          i18n.t("contact.errorTitle"),
+          i18n.t("contact.mailUnavailable"),
+          [{ text: i18n.t("contact.ok") }]
+        );
         return;
       }
 
       const result = await MailComposer.composeAsync({
         recipients: ["mhjun01@gmail.com", "hijennkim@gmail.com"],
-        subject: "원카드 앱 - 사용자 의견",
-        body: `사용자 의견:\n\n${feedback}\n\n전송 시간: ${new Date().toLocaleString()}`,
+        subject: i18n.t("contact.mailSubject"),
+        body: `${i18n.t("contact.mailBody")}:\n\n${feedback}\n\n${i18n.t(
+          "contact.sendTime"
+        )}: ${new Date().toLocaleString()}`,
       });
 
       console.log("메일 전송 결과:", result);
 
       if (result.status === "sent") {
         Alert.alert(
-          "전송 완료",
-          "소중한 의견을 보내주셔서 감사합니다. 관리자가 확인 후 답변드리겠습니다!",
+          i18n.t("contact.sendComplete"),
+          i18n.t("contact.sendThanks"),
           [
             {
-              text: "확인",
+              text: i18n.t("contact.ok"),
               onPress: () => {
                 setFeedback("");
                 navigation.goBack();
@@ -72,7 +77,10 @@ const ContactDeveloperScreen = ({ navigation }) => {
           ]
         );
       } else if (result.status === "cancelled") {
-        Alert.alert("취소됨", "메일 전송이 취소되었습니다.");
+        Alert.alert(
+          i18n.t("contact.cancelled"),
+          i18n.t("contact.mailCancelled")
+        );
       } else {
         throw new Error("전송 실패");
       }
@@ -80,11 +88,13 @@ const ContactDeveloperScreen = ({ navigation }) => {
       console.error("이메일 전송 실패:", error);
       console.error("에러 상세:", error.message);
       Alert.alert(
-        "전송 실패",
-        `이메일 전송에 실패했습니다.\n에러: ${error.message}\n다시 시도해주세요.`,
+        i18n.t("contact.sendFail"),
+        `${i18n.t("contact.sendFailMsg")}\n${i18n.t("contact.error")}: ${
+          error.message
+        }\n${i18n.t("contact.retry")}`,
         [
           {
-            text: "확인",
+            text: i18n.t("contact.ok"),
           },
         ]
       );
@@ -130,7 +140,7 @@ const ContactDeveloperScreen = ({ navigation }) => {
               },
             ]}
           >
-            개발자에게 문의하기
+            {i18n.t("more.contact")}
           </Text>
           <View style={[commonStyles.infoButton, { zIndex: 2 }]} />
         </View>
@@ -144,22 +154,19 @@ const ContactDeveloperScreen = ({ navigation }) => {
           <View style={styles.content}>
             {/* 타이틀 영역 */}
             <View style={styles.titleContainer}>
-              <Text style={styles.title}>어떤 문의를 남기시겠습니까?</Text>
+              <Text style={styles.title}>{i18n.t("more.contact")}</Text>
             </View>
 
             {/* 설명 텍스트 */}
             <View style={styles.descriptionContainer}>
-              <Text style={styles.description}>
-                자유롭게 의견을 남겨주세요. 모든 의견을 꼼꼼히 듣고 더 좋은
-                앱으로 개선하겠습니다. 언제나 감사합니다.
-              </Text>
+              <Text style={styles.description}>{i18n.t("contact.desc")}</Text>
             </View>
 
             {/* 피드백 입력 영역 */}
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.feedbackInput}
-                placeholder="의견을 자유롭게 작성해주세요..."
+                placeholder={i18n.t("contact.placeholder")}
                 placeholderTextColor={colors.textSecondary}
                 value={feedback}
                 onChangeText={setFeedback}
@@ -183,7 +190,9 @@ const ContactDeveloperScreen = ({ navigation }) => {
                 disabled={feedback.trim() === "" || isSending}
               >
                 <Text style={commonStyles.startButtonText}>
-                  {isSending ? "전송 중..." : "의견 보내기"}
+                  {isSending
+                    ? i18n.t("contact.sending")
+                    : i18n.t("contact.send")}
                 </Text>
               </TouchableOpacity>
             </View>

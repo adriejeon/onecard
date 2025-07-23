@@ -19,6 +19,7 @@ import {
   formatDate,
   truncateQuestion,
 } from "../utils/cardArchiveUtils";
+import i18n from "../utils/i18n";
 
 const CardArchiveScreen = ({ navigation }) => {
   const [archiveList, setArchiveList] = useState([]);
@@ -121,7 +122,7 @@ const CardArchiveScreen = ({ navigation }) => {
           />
         </TouchableOpacity>
 
-        <Text style={commonStyles.headerTitle}>카드 결과 보관함</Text>
+        <Text style={commonStyles.headerTitle}>{i18n.t("more.archive")}</Text>
 
         <View style={commonStyles.infoButton} />
       </View>

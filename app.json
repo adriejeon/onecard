@@ -17,9 +17,18 @@
       "bundleIdentifier": "com.anonymous.OneCardApp"
     },
     "android": {
+      "package": "com.anonymous.OneCardApp",
+      "versionCode": 1,
+      "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#3100BB"
+      },
+      "icon": "./assets/app-icon.png",
+      "splash": {
+        "image": "./assets/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#3100BB"
       },
       "edgeToEdgeEnabled": true
     },

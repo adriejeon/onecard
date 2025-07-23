@@ -20,6 +20,7 @@ import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
+import i18n from "../utils/i18n";
 
 const { width, height } = Dimensions.get("window");
 
@@ -229,8 +230,7 @@ const CardDrawScreen = ({ navigation, route }) => {
                 style={{ width: "100%" }}
                 maskElement={
                   <Text style={styles.gradientTitle}>
-                    {question}
-                    {"\n"}를 생각하며 한 장 뽑아주세요.
+                    {question + i18n.t("cardDraw.gradientTitleSuffix")}
                   </Text>
                 }
               >
@@ -240,8 +240,7 @@ const CardDrawScreen = ({ navigation, route }) => {
                   end={{ x: 0.8, y: 0 }}
                 >
                   <Text style={[styles.gradientTitle, { opacity: 0 }]}>
-                    {question}
-                    {"\n"}를 생각하며 한 장 뽑아주세요.
+                    {question + i18n.t("cardDraw.gradientTitleSuffix")}
                   </Text>
                 </LinearGradient>
               </MaskedView>

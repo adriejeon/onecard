@@ -12,6 +12,7 @@ import {
 import { Image } from "expo-image";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
+import i18n from "../utils/i18n";
 
 const { width, height } = Dimensions.get("window");
 
@@ -83,11 +84,7 @@ const HomeScreen = ({ navigation }) => {
 
         {/* 중앙 텍스트 영역 */}
         <View style={commonStyles.centerTextContainer}>
-          <Text style={commonStyles.centerText}>
-            매일이 새로운 기회입니다.{"\n"}
-            오늘 뽑은 한 장의 카드가{"\n"}
-            기회로 이끌어 줄 거예요.
-          </Text>
+          <Text style={commonStyles.centerText}>{i18n.t("home.mainText")}</Text>
         </View>
 
         {/* 하단 영역 */}
@@ -98,7 +95,9 @@ const HomeScreen = ({ navigation }) => {
             onPress={handleStart}
             activeOpacity={0.8}
           >
-            <Text style={commonStyles.startButtonText}>시작하기</Text>
+            <Text style={commonStyles.startButtonText}>
+              {i18n.t("home.start")}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
