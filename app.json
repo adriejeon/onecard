@@ -12,6 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#3100BB"
     },
+    "jsEngine": "jsc",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.OneCardApp"
