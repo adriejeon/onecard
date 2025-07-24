@@ -30,17 +30,34 @@
 				<string>com.anonymous.OneCardApp</string>
 			</array>
 		</dict>
-		<dict>
-			<key>CFBundleURLName</key>
-			<string>kakaotalk</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>kakaotalk</string>
-			</array>
-		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>airmail</string>
+		<string>message</string>
+		<string>bluemail</string>
+		<string>canary</string>
+		<string>edisonmail</string>
+		<string>szn-email</string>
+		<string>fastmail</string>
+		<string>x-gmxmail-netid-v1</string>
+		<string>googlegmail</string>
+		<string>mailrumail</string>
+		<string>ms-outlook</string>
+		<string>protonmail</string>
+		<string>ctxmail</string>
+		<string>readdle-spark</string>
+		<string>superhuman</string>
+		<string>telekommail</string>
+		<string>tutanota</string>
+		<string>x-webdemail-netid-v1</string>
+		<string>ymail</string>
+		<string>yandexmail</string>
+		<string>appcenter-f45b4c0b-75c9-2d01-7ab6-41f6a6015be2</string>
+		<string>mymail-mailto</string>
+	</array>
 	<key>LSMinimumSystemVersion</key>
 	<string>12.0</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -78,5 +95,7 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>앱에서 사진을 선택하거나 저장하기 위해 사진 라이브러리 접근 권한이 필요합니다.</string>
 </dict>
 </plist>

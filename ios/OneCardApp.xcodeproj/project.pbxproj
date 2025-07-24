@@ -7,31 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E019D132E3269D1009E1F41 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E019D122E3269D1009E1F41 /* StoreKit.framework */; };
+		022EDB330E0EEF2AE1D6FD94 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32FFBADB12B95A848ACB825 /* ExpoModulesProvider.swift */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		312BDFEFD27462EF15DE9E15 /* libPods-OneCardApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27DADB3879EF29B0D20316C0 /* libPods-OneCardApp.a */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
+		798907732FAF5D0B409D716B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 918BF8C604975AC6D92A59DA /* PrivacyInfo.xcprivacy */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		BC2A98CED0F715EA90709D58 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 58F56776B98A8D06D50787EA /* PrivacyInfo.xcprivacy */; };
-		C000065705EBF39307F909E3 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DE06197D18479180CAF5A2 /* ExpoModulesProvider.swift */; };
+		F01D5247C832A54D4E366720 /* libPods-OneCardApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FB6768BC446CAFE2391125E9 /* libPods-OneCardApp.a */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0E019D122E3269D1009E1F41 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		0C2B9E57AB2544CAD77B502C /* Pods-OneCardApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneCardApp.release.xcconfig"; path = "Target Support Files/Pods-OneCardApp/Pods-OneCardApp.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* OneCardApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneCardApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = OneCardApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = OneCardApp/Info.plist; sourceTree = "<group>"; };
-		27DADB3879EF29B0D20316C0 /* libPods-OneCardApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneCardApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E5E3C2713092CFC4475EC45 /* Pods-OneCardApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneCardApp.debug.xcconfig"; path = "Target Support Files/Pods-OneCardApp/Pods-OneCardApp.debug.xcconfig"; sourceTree = "<group>"; };
-		58F56776B98A8D06D50787EA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = OneCardApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		80DE06197D18479180CAF5A2 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-OneCardApp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		918BF8C604975AC6D92A59DA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = OneCardApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		A32FFBADB12B95A848ACB825 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-OneCardApp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = OneCardApp/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		BF9F04141AF656231D8B3204 /* Pods-OneCardApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneCardApp.release.xcconfig"; path = "Target Support Files/Pods-OneCardApp/Pods-OneCardApp.release.xcconfig"; sourceTree = "<group>"; };
+		E1641C0D768399B412A20552 /* Pods-OneCardApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneCardApp.debug.xcconfig"; path = "Target Support Files/Pods-OneCardApp/Pods-OneCardApp.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = OneCardApp/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* OneCardApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "OneCardApp-Bridging-Header.h"; path = "OneCardApp/OneCardApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		FB6768BC446CAFE2391125E9 /* libPods-OneCardApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneCardApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,14 +37,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E019D132E3269D1009E1F41 /* StoreKit.framework in Frameworks */,
-				312BDFEFD27462EF15DE9E15 /* libPods-OneCardApp.a in Frameworks */,
+				F01D5247C832A54D4E366720 /* libPods-OneCardApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		078D817F80025C0D545044C3 /* OneCardApp */ = {
+			isa = PBXGroup;
+			children = (
+				A32FFBADB12B95A848ACB825 /* ExpoModulesProvider.swift */,
+			);
+			name = OneCardApp;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* OneCardApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -56,7 +61,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				58F56776B98A8D06D50787EA /* PrivacyInfo.xcprivacy */,
+				918BF8C604975AC6D92A59DA /* PrivacyInfo.xcprivacy */,
 			);
 			name = OneCardApp;
 			sourceTree = "<group>";
@@ -64,27 +69,10 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0E019D122E3269D1009E1F41 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				27DADB3879EF29B0D20316C0 /* libPods-OneCardApp.a */,
+				FB6768BC446CAFE2391125E9 /* libPods-OneCardApp.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		2D54CEC79DD78CA9685C95A5 /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				49C4007227D1E68155E0DE1E /* OneCardApp */,
-			);
-			name = ExpoModulesProviders;
-			sourceTree = "<group>";
-		};
-		49C4007227D1E68155E0DE1E /* OneCardApp */ = {
-			isa = PBXGroup;
-			children = (
-				80DE06197D18479180CAF5A2 /* ExpoModulesProvider.swift */,
-			);
-			name = OneCardApp;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -101,8 +89,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				D6399B481F38C57345ED87BD /* Pods */,
-				2D54CEC79DD78CA9685C95A5 /* ExpoModulesProviders */,
+				CF332F2DF78E8CFCBC187F99 /* Pods */,
+				E08EF3E44773BF6FDE5CE8D0 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -126,13 +114,21 @@
 			path = OneCardApp/Supporting;
 			sourceTree = "<group>";
 		};
-		D6399B481F38C57345ED87BD /* Pods */ = {
+		CF332F2DF78E8CFCBC187F99 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2E5E3C2713092CFC4475EC45 /* Pods-OneCardApp.debug.xcconfig */,
-				BF9F04141AF656231D8B3204 /* Pods-OneCardApp.release.xcconfig */,
+				E1641C0D768399B412A20552 /* Pods-OneCardApp.debug.xcconfig */,
+				0C2B9E57AB2544CAD77B502C /* Pods-OneCardApp.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E08EF3E44773BF6FDE5CE8D0 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				078D817F80025C0D545044C3 /* OneCardApp */,
+			);
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,14 +138,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "OneCardApp" */;
 			buildPhases = (
-				C479E46DE9696F9D0ACFA595 /* [CP] Check Pods Manifest.lock */,
-				233325AFE73B6DECD8220FAA /* [Expo] Configure project */,
+				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
+				6E724F561E39722C209C2720 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				5966FC13518B1E932700A585 /* [CP] Embed Pods Frameworks */,
-				3A265788EDAE81AB7F02A24C /* [CP] Copy Pods Resources */,
+				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -199,7 +194,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				BC2A98CED0F715EA90709D58 /* PrivacyInfo.xcprivacy in Resources */,
+				798907732FAF5D0B409D716B /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,7 +216,29 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios absolute | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli', { paths: [require.resolve('expo/package.json')] })\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n# Source .xcode.env.updates if it exists to allow\n# SKIP_BUNDLING to be unset if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.updates\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.updates\"\nfi\n# Source local changes to allow overrides\n# if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n`\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n\n";
 		};
-		233325AFE73B6DECD8220FAA /* [Expo] Configure project */ = {
+		08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OneCardApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6E724F561E39722C209C2720 /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -240,7 +257,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-OneCardApp/expo-configure-project.sh\"\n";
 		};
-		3A265788EDAE81AB7F02A24C /* [CP] Copy Pods Resources */ = {
+		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -318,46 +335,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OneCardApp/Pods-OneCardApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5966FC13518B1E932700A585 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-OneCardApp/Pods-OneCardApp-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OneCardApp/Pods-OneCardApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C479E46DE9696F9D0ACFA595 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-OneCardApp-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -366,7 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				C000065705EBF39307F909E3 /* ExpoModulesProvider.swift in Sources */,
+				022EDB330E0EEF2AE1D6FD94 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,7 +352,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2E5E3C2713092CFC4475EC45 /* Pods-OneCardApp.debug.xcconfig */;
+			baseConfigurationReference = E1641C0D768399B412A20552 /* Pods-OneCardApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -388,6 +365,7 @@
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = OneCardApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "One Card";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -412,7 +390,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BF9F04141AF656231D8B3204 /* Pods-OneCardApp.release.xcconfig */;
+			baseConfigurationReference = 0C2B9E57AB2544CAD77B502C /* Pods-OneCardApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -420,6 +398,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = A3994TLFTY;
 				INFOPLIST_FILE = OneCardApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "One Card";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -496,14 +475,11 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
-				USE_HERMES = true;
+				USE_HERMES = false;
 			};
 			name = Debug;
 		};
@@ -554,13 +530,10 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
-				USE_HERMES = true;
+				USE_HERMES = false;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
