@@ -64,13 +64,53 @@
   },
   "cardDraw": {
     "gradientTitleSuffix": "Think about it and draw a card.",
-    "result": "View Result"
+    "result": "View Result",
+    "dailyTitle": "Daily Card",
+    "yesnoTitle": "Yes or No Oracle Tarot"
   },
   "result": {
     "archive": "Save",
     "share": "Share",
-    "delete": "Delete from Archive",
-    "home": "Go to Home"
+    "delete": "Delete",
+    "home": "Go to Home",
+    "archiveComplete": "Save Complete",
+    "archiveSaved": "Card result has been saved to archive.",
+    "archiveFail": "Save Failed",
+    "archiveSaveFail": "Failed to save card result.",
+    "deleteTitle": "Delete Confirmation",
+    "deleteMessage": "Are you sure you want to delete this card result?",
+    "cancel": "Cancel",
+    "deleteComplete": "Delete Complete",
+    "archiveDeleted": "Card result has been deleted.",
+    "confirm": "OK",
+    "deleteFail": "Delete Failed",
+    "archiveDeleteFail": "Failed to delete card result.",
+    "noCardDataToDelete": "No card data to delete.",
+    "archiving": "Saving...",
+    "archived": "Saved",
+    "unknownDescription": "Card result cannot be found.",
+    "shareMessage": {
+      "question": "Question: {{question}}",
+      "answer": "Answer: {{percentage}} {{text}}",
+      "description": "{{description}}",
+      "invite": "Find your destiny's answer with OneCard app!"
+    },
+    "shareTitle": "OneCard Result",
+    "shareFailTitle": "Share Failed",
+    "shareFailMessage": "Share feature is not available."
+  },
+  "archive": {
+    "emptyTitle": "No saved card results.",
+    "emptySubtitle": "Press the \"Save\" button on the card result page\nto save results to your archive.",
+    "deleteTitle": "Delete Card",
+    "deleteMessage": "Are you sure you want to delete this card result?",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "deleteFail": "Delete Failed",
+    "deleteFailMessage": "Failed to delete card.",
+    "unknownCard": "Unknown Card",
+    "dailyCard": "Daily Card",
+    "yesnoCard": "Yes or No Card"
   },
   "more": {
     "title": "More",
@@ -659,6 +699,11 @@
   "dailyResult": {
     "scoreSuffix": "pt",
     "gradientTitle": "Today's Card Result",
-    "title": "Today's Fortune"
+    "title": "Today's Fortune",
+    "todayCard": "Today's Card",
+    "shareApp": "Find your destiny's answer with OneCard app!",
+    "shareTitle": "OneCard Result",
+    "shareFailTitle": "Share Failed",
+    "shareFailMessage": "Share feature is not available."
   }
 }

@@ -119,16 +119,15 @@ const QuestionInputScreen = ({ navigation, route }) => {
                 onChangeText={setQuestion}
                 placeholder={i18n.t("questionInput.placeholder")}
                 placeholderTextColor="#C3C3C3"
-                multiline
-                numberOfLines={4}
-                textAlignVertical="top"
-                maxLength={16}
+                multiline={false}
+                textAlignVertical="center"
+                maxLength={60}
                 blurOnSubmit={true}
                 returnKeyType="done"
                 onSubmitEditing={Keyboard.dismiss}
-                scrollEnabled={false}
+                scrollEnabled={true}
               />
-              <Text style={styles.characterCount}>{question.length}/16</Text>
+              <Text style={styles.characterCount}>{question.length}/60</Text>
             </View>
           </View>
 
@@ -207,7 +206,7 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: colors.cardBackground,
     borderRadius: 15,
-    padding: 24,
+    padding: 20,
     fontSize: 20,
     color: colors.textPrimary,
     textAlignVertical: "top",

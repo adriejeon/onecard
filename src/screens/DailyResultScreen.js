@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -47,6 +47,10 @@ const DailyResultScreen = ({ navigation, route }) => {
   const resultOpacity = useRef(new Animated.Value(0)).current;
   const cardScale = useRef(new Animated.Value(0.5)).current;
 
+  // 보관 상태 관리
+  const [isArchived, setIsArchived] = useState(false);
+  const [isArchiving, setIsArchiving] = useState(false);
+
   // 카드 결과에 따라 배경 결정
   const getBackgroundImage = () => {
     const cardResult = getCardResult(selectedCard.id);
@@ -57,15 +61,13 @@ const DailyResultScreen = ({ navigation, route }) => {
 
   // 카드별 결과 정보
   const getCardResult = (cardId) => {
-    return (
-      cardResults[cardId] || {
-        isPositive: true,
-        score: "0",
-        title: "알 수 없는 카드",
-        description: "카드 결과를 확인할 수 없습니다.",
-        keywords: "",
-      }
-    );
+    return {
+      isPositive: cardResults[cardId]?.isPositive ?? true,
+      score: cardResults[cardId]?.score ?? "0",
+      title: i18n.t(`cards.${cardId}.title`),
+      description: i18n.t(`cards.${cardId}.description`),
+      keywords: i18n.t(`cards.${cardId}.keywords`),
+    };
   };
 
   useEffect(() => {
@@ -97,44 +99,15 @@ const DailyResultScreen = ({ navigation, route }) => {
         cardResult.title
       }\n\n${cardResult.description}\n\n${i18n.t("dailyResult.shareApp")}`;
 
-      // 먼저 카카오톡이 설치되어 있는지 확인
-      const canOpenKakao = await Linking.canOpenURL("kakaotalk://");
-
-      if (canOpenKakao) {
-        // 카카오톡으로 링크 공유 (리치 카드 형태)
-        // 앱 다운로드 링크를 포함하여 카드 형태로 표시되도록 함
-        const appDownloadUrl = "https://apps.apple.com/app/onecard";
-        const kakaoUrl = `kakaotalk://send?text=${encodeURIComponent(
-          shareMessage
-        )}&url=${encodeURIComponent(appDownloadUrl)}`;
-        await Linking.openURL(kakaoUrl);
-      } else {
-        // 카카오톡이 없으면 기본 공유 시트 사용
-        await Share.share({
-          message: `${shareMessage}\n\n${appDownloadUrl}`,
-          title: i18n.t("dailyResult.shareTitle"),
-        });
-      }
+      await Share.share({
+        message: shareMessage,
+        title: i18n.t("dailyResult.shareTitle"),
+      });
     } catch (error) {
-      console.log("공유 실패:", error);
-
-      // 모든 방법이 실패한 경우 기본 공유 시트로 폴백
-      try {
-        const cardResult = getCardResult(selectedCard.id);
-        const shareMessage = `${i18n.t("dailyResult.todayCard")}: ${
-          cardResult.title
-        }\n\n${cardResult.description}\n\n${i18n.t("dailyResult.shareApp")}`;
-
-        await Share.share({
-          message: shareMessage,
-          title: i18n.t("dailyResult.shareTitle"),
-        });
-      } catch (fallbackError) {
-        Alert.alert(
-          i18n.t("dailyResult.shareFailTitle"),
-          i18n.t("dailyResult.shareFailMessage")
-        );
-      }
+      Alert.alert(
+        i18n.t("dailyResult.shareFailTitle"),
+        i18n.t("dailyResult.shareFailMessage")
+      );
     }
   };
 
@@ -157,6 +130,13 @@ const DailyResultScreen = ({ navigation, route }) => {
   };
 
   const handleArchive = async () => {
+    // 이미 보관 중이거나 보관된 경우 중복 실행 방지
+    if (isArchiving || isArchived) {
+      return;
+    }
+
+    setIsArchiving(true);
+
     try {
       const archiveData = {
         cardType: "daily",
@@ -166,6 +146,7 @@ const DailyResultScreen = ({ navigation, route }) => {
 
       const success = await saveCardResult(archiveData);
       if (success) {
+        setIsArchived(true);
         Alert.alert(
           i18n.t("result.archiveComplete"),
           i18n.t("result.archiveSaved")
@@ -181,6 +162,8 @@ const DailyResultScreen = ({ navigation, route }) => {
         i18n.t("result.archiveFail"),
         i18n.t("result.archiveSaveFail")
       );
+    } finally {
+      setIsArchiving(false);
     }
   };
 
@@ -372,14 +355,24 @@ const DailyResultScreen = ({ navigation, route }) => {
             },
           ]}
         >
-          {cardResult.keywords && (
-            <View style={commonStyles.keywordsContainer}>
-              {cardResult.keywords.split(", ").map((keyword, index) => (
-                <View key={index} style={commonStyles.keywordChip}>
-                  <Text style={commonStyles.keywordText}>{keyword.trim()}</Text>
-                </View>
-              ))}
-            </View>
+          {i18n.t(`cards.${getCardKeyById(selectedCard.id)}.keywords`) && (
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={commonStyles.keywordsContainer}
+              style={{ marginBottom: 12 }}
+            >
+              {i18n
+                .t(`cards.${getCardKeyById(selectedCard.id)}.keywords`)
+                .split(", ")
+                .map((keyword, index) => (
+                  <View key={index} style={commonStyles.keywordChip}>
+                    <Text style={commonStyles.keywordText}>
+                      {keyword.trim()}
+                    </Text>
+                  </View>
+                ))}
+            </ScrollView>
           )}
           <Text style={commonStyles.explanationText}>
             {i18n.t(`cards.${getCardKeyById(selectedCard.id)}.description`)}
@@ -392,12 +385,26 @@ const DailyResultScreen = ({ navigation, route }) => {
             // 새로운 카드 결과인 경우에만 보관하기 버튼 표시
             <View style={commonStyles.topButtonRow}>
               <TouchableOpacity
-                style={commonStyles.archiveButton}
+                style={[
+                  commonStyles.archiveButton,
+                  (isArchived || isArchiving) && styles.archiveButtonDisabled,
+                ]}
                 onPress={handleArchive}
                 activeOpacity={0.8}
+                disabled={isArchived || isArchiving}
               >
-                <Text style={commonStyles.archiveButtonText}>
-                  {i18n.t("result.archive")}
+                <Text
+                  style={[
+                    commonStyles.archiveButtonText,
+                    (isArchived || isArchiving) &&
+                      styles.archiveButtonTextDisabled,
+                  ]}
+                >
+                  {isArchiving
+                    ? i18n.t("result.archiving")
+                    : isArchived
+                    ? i18n.t("result.archived")
+                    : i18n.t("result.archive")}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -451,6 +458,13 @@ const DailyResultScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  archiveButtonDisabled: {
+    opacity: 0.5,
+    backgroundColor: "#f0f0f0",
+  },
+  archiveButtonTextDisabled: {
+    color: "#999",
   },
 });
 

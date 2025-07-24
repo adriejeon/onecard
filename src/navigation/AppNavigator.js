@@ -45,7 +45,14 @@ const AppNavigator = () => {
         />
         <Stack.Screen name="DailyResult" component={DailyResultScreen} />
         <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
-        <Stack.Screen name="More" component={MoreScreen} />
+        <Stack.Screen
+          name="More"
+          component={MoreScreen}
+          options={{
+            presentation: "modal",
+            headerShown: false,
+          }}
+        />
         <Stack.Screen name="CardArchive" component={CardArchiveScreen} />
         <Stack.Screen
           name="ContactDeveloper"

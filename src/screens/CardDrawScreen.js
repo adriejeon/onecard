@@ -143,7 +143,9 @@ const CardDrawScreen = ({ navigation, route }) => {
 
   // 동적 타이틀 생성
   const getHeaderTitle = () => {
-    return cardType === "daily" ? "데일리 카드" : "Yes or No 오라클 타로";
+    return cardType === "daily"
+      ? i18n.t("cardDraw.dailyTitle")
+      : i18n.t("cardDraw.yesnoTitle");
   };
 
   const handleCardPress = (card, index) => {
@@ -230,7 +232,9 @@ const CardDrawScreen = ({ navigation, route }) => {
                 style={{ width: "100%" }}
                 maskElement={
                   <Text style={styles.gradientTitle}>
-                    {question + i18n.t("cardDraw.gradientTitleSuffix")}
+                    {question}
+                    {"\n"}
+                    {i18n.t("cardDraw.gradientTitleSuffix")}
                   </Text>
                 }
               >
@@ -240,7 +244,9 @@ const CardDrawScreen = ({ navigation, route }) => {
                   end={{ x: 0.8, y: 0 }}
                 >
                   <Text style={[styles.gradientTitle, { opacity: 0 }]}>
-                    {question + i18n.t("cardDraw.gradientTitleSuffix")}
+                    {question}
+                    {"\n"}
+                    {i18n.t("cardDraw.gradientTitleSuffix")}
                   </Text>
                 </LinearGradient>
               </MaskedView>
@@ -307,7 +313,9 @@ const CardDrawScreen = ({ navigation, route }) => {
             disabled={!showSelectedCard}
             activeOpacity={0.8}
           >
-            <Text style={styles.resultButtonText}>결과 보기</Text>
+            <Text style={styles.resultButtonText}>
+              {i18n.t("cardDraw.result")}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

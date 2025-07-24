@@ -55,24 +55,31 @@ const CardArchiveScreen = ({ navigation }) => {
   };
 
   const handleDeleteCard = async (archiveItem) => {
-    Alert.alert("카드 삭제", "이 카드 결과를 삭제하시겠습니까?", [
-      {
-        text: "취소",
-        style: "cancel",
-      },
-      {
-        text: "삭제",
-        style: "destructive",
-        onPress: async () => {
-          const success = await deleteCardResult(archiveItem.id);
-          if (success) {
-            loadArchiveList(); // 목록 새로고침
-          } else {
-            Alert.alert("삭제 실패", "카드 삭제에 실패했습니다.");
-          }
+    Alert.alert(
+      i18n.t("archive.deleteTitle"),
+      i18n.t("archive.deleteMessage"),
+      [
+        {
+          text: i18n.t("archive.cancel"),
+          style: "cancel",
         },
-      },
-    ]);
+        {
+          text: i18n.t("archive.delete"),
+          style: "destructive",
+          onPress: async () => {
+            const success = await deleteCardResult(archiveItem.id);
+            if (success) {
+              loadArchiveList(); // 목록 새로고침
+            } else {
+              Alert.alert(
+                i18n.t("archive.deleteFail"),
+                i18n.t("archive.deleteFailMessage")
+              );
+            }
+          },
+        },
+      ]
+    );
   };
 
   const handleBack = () => {
@@ -85,14 +92,14 @@ const CardArchiveScreen = ({ navigation }) => {
     } else if (archiveItem.cardType === "yesno") {
       return truncateQuestion(archiveItem.question);
     }
-    return "알 수 없는 카드";
+    return i18n.t("archive.unknownCard");
   };
 
   const getCardSubtitle = (archiveItem) => {
     if (archiveItem.cardType === "daily") {
-      return "데일리 카드";
+      return i18n.t("archive.dailyCard");
     } else if (archiveItem.cardType === "yesno") {
-      return "Yes or No 카드";
+      return i18n.t("archive.yesnoCard");
     }
     return "";
   };
@@ -116,7 +123,7 @@ const CardArchiveScreen = ({ navigation }) => {
           activeOpacity={0.8}
         >
           <Image
-            source={require("../../assets/back-icon.png")}
+            source={require("../../assets/close-icon.png")}
             style={commonStyles.backIcon}
             contentFit="contain"
           />
@@ -134,10 +141,9 @@ const CardArchiveScreen = ({ navigation }) => {
       >
         {archiveList.length === 0 ? (
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>보관된 카드 결과가 없습니다.</Text>
+            <Text style={styles.emptyText}>{i18n.t("archive.emptyTitle")}</Text>
             <Text style={styles.emptySubtext}>
-              카드 결과 페이지에서 "보관하기" 버튼을 눌러{"\n"}
-              결과를 보관함에 저장할 수 있습니다.
+              {i18n.t("archive.emptySubtitle")}
             </Text>
           </View>
         ) : (

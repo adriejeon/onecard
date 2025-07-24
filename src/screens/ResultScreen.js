@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -41,6 +41,10 @@ const ResultScreen = ({ navigation, route }) => {
   const resultOpacity = useRef(new Animated.Value(0)).current;
   const cardScale = useRef(new Animated.Value(0.5)).current;
 
+  // 보관 상태 관리
+  const [isArchived, setIsArchived] = useState(false);
+  const [isArchiving, setIsArchiving] = useState(false);
+
   // 카드 결과에 따라 배경 결정
   const getBackgroundImage = () => {
     const cardId = result.id;
@@ -67,7 +71,9 @@ const ResultScreen = ({ navigation, route }) => {
 
   // 동적 타이틀 생성
   const getHeaderTitle = () => {
-    return cardType === "daily" ? "데일리 카드" : "Yes or No 오라클 타로";
+    return cardType === "daily"
+      ? i18n.t("cardDraw.dailyTitle")
+      : i18n.t("cardDraw.yesnoTitle");
   };
 
   useEffect(() => {
@@ -95,44 +101,24 @@ const ResultScreen = ({ navigation, route }) => {
   const handleShare = async () => {
     try {
       const cardResult = getCardResult(result.id);
-      const shareMessage = `질문: ${question}\n답: ${cardResult.percentage} ${cardResult.text}\n\n${cardResult.description}\n\n원카드 앱으로 운명의 답을 찾아보세요! (https://apps.apple.com/app/onecard)`;
+      const shareMessage = `${i18n.t("result.shareMessage.question", {
+        question,
+      })}\n${i18n.t("result.shareMessage.answer", {
+        percentage: cardResult.percentage,
+        text: cardResult.text,
+      })}\n\n${i18n.t("result.shareMessage.description", {
+        description: cardResult.description,
+      })}\n\n${i18n.t("result.shareMessage.invite")}`;
 
-      // 먼저 카카오톡이 설치되어 있는지 확인
-      const canOpenKakao = await Linking.canOpenURL("kakaotalk://");
-
-      if (canOpenKakao) {
-        // 카카오톡으로 직접 공유 (이미지 포함)
-        // 카드 이미지 URL을 포함한 공유 URL 생성
-        const imageUrl = encodeURIComponent(
-          "https://your-app-domain.com/card-image.jpg"
-        ); // 실제 이미지 URL로 교체 필요
-        const kakaoUrl = `kakaotalk://send?text=${encodeURIComponent(
-          shareMessage
-        )}&image=${imageUrl}`;
-        await Linking.openURL(kakaoUrl);
-      } else {
-        // 카카오톡이 없으면 기본 공유 시트 사용
-        await Share.share({
-          message: shareMessage,
-          title: "원카드 결과",
-        });
-      }
+      await Share.share({
+        message: shareMessage,
+        title: i18n.t("result.shareTitle"),
+      });
     } catch (error) {
-      console.log("공유 실패:", error);
-
-      // 모든 방법이 실패한 경우 기본 공유 시트로 폴백
-      try {
-        const cardResult = getCardResult(result.id);
-        const shareMessage = `질문: ${question}\n답: ${cardResult.percentage} ${cardResult.text}\n\n${cardResult.description}\n\n원카드 앱으로 운명의 답을 찾아보세요! (https://apps.apple.com/app/onecard)`;
-
-        await Share.share({
-          message: shareMessage,
-          title: "원카드 결과",
-        });
-      } catch (fallbackError) {
-        console.log("기본 공유도 실패:", fallbackError);
-        Alert.alert("공유 실패", "공유 기능을 사용할 수 없습니다.");
-      }
+      Alert.alert(
+        i18n.t("result.shareFailTitle"),
+        i18n.t("result.shareFailMessage")
+      );
     }
   };
 
@@ -155,6 +141,13 @@ const ResultScreen = ({ navigation, route }) => {
   };
 
   const handleArchive = async () => {
+    // 이미 보관 중이거나 보관된 경우 중복 실행 방지
+    if (isArchiving || isArchived) {
+      return;
+    }
+
+    setIsArchiving(true);
+
     try {
       const archiveData = {
         cardType: "yesno",
@@ -165,6 +158,7 @@ const ResultScreen = ({ navigation, route }) => {
 
       const success = await saveCardResult(archiveData);
       if (success) {
+        setIsArchived(true);
         Alert.alert(
           i18n.t("result.archiveComplete"),
           i18n.t("result.archiveSaved")
@@ -176,11 +170,12 @@ const ResultScreen = ({ navigation, route }) => {
         );
       }
     } catch (error) {
-      console.error("보관 실패:", error);
       Alert.alert(
         i18n.t("result.archiveFail"),
         i18n.t("result.archiveSaveFail")
       );
+    } finally {
+      setIsArchiving(false);
     }
   };
 
@@ -220,7 +215,6 @@ const ResultScreen = ({ navigation, route }) => {
               }
             }
           } catch (error) {
-            console.error("삭제 실패:", error);
             Alert.alert(
               i18n.t("result.deleteFail"),
               i18n.t("result.archiveDeleteFail")
@@ -371,12 +365,26 @@ const ResultScreen = ({ navigation, route }) => {
             // 새로운 카드 결과인 경우에만 보관하기 버튼 표시
             <View style={styles.topButtonRow}>
               <TouchableOpacity
-                style={commonStyles.archiveButton}
+                style={[
+                  commonStyles.archiveButton,
+                  (isArchived || isArchiving) && styles.archiveButtonDisabled,
+                ]}
                 onPress={handleArchive}
                 activeOpacity={0.8}
+                disabled={isArchived || isArchiving}
               >
-                <Text style={commonStyles.archiveButtonText}>
-                  {i18n.t("result.archive")}
+                <Text
+                  style={[
+                    commonStyles.archiveButtonText,
+                    (isArchived || isArchiving) &&
+                      styles.archiveButtonTextDisabled,
+                  ]}
+                >
+                  {isArchiving
+                    ? i18n.t("result.archiving")
+                    : isArchived
+                    ? i18n.t("result.archived")
+                    : i18n.t("result.archive")}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -439,17 +447,17 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   gradientTitle: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 28,
+    marginBottom: 60,
     lineHeight: 34,
   },
   resultContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 60,
+    marginBottom: 50,
   },
   resultCard: {
     width: width * 0.8,
@@ -458,6 +466,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
+    marginBottom: 20,
   },
   resultCardImage: {
     width: "100%",
@@ -465,19 +474,20 @@ const styles = StyleSheet.create({
   },
   percentageContainer: {
     alignItems: "center",
-    marginBottom: 16,
   },
   percentageText: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
+    marginTop: 20,
+    marginBottom: 12,
   },
   explanationContainer: {
-    marginBottom: 60,
+    marginBottom: 28,
     paddingHorizontal: 24,
   },
   explanationText: {
-    fontSize: 18,
+    fontSize: 16,
     color: colors.textPrimary,
     textAlign: "center",
     lineHeight: 28,
@@ -512,6 +522,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.textLight,
     opacity: 0.8,
+  },
+  archiveButtonDisabled: {
+    opacity: 0.5,
+    backgroundColor: "#f0f0f0",
+  },
+  archiveButtonTextDisabled: {
+    color: "#999",
   },
 });
 

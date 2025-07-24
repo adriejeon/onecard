@@ -19,29 +19,22 @@ const MoreScreen = ({ navigation }) => {
     {
       id: "archive",
       title: i18n.t("more.archive"),
-      onPress: () =>
-        navigation.reset({ index: 0, routes: [{ name: "CardArchive" }] }),
+      onPress: () => navigation.navigate("CardArchive"),
     },
     {
       id: "privacy",
       title: i18n.t("more.privacy"),
-      onPress: () =>
-        navigation.reset({ index: 0, routes: [{ name: "PrivacyPolicy" }] }),
+      onPress: () => navigation.navigate("PrivacyPolicy"),
     },
     {
       id: "contact",
       title: i18n.t("more.contact"),
-      onPress: () =>
-        navigation.reset({ index: 0, routes: [{ name: "ContactDeveloper" }] }),
+      onPress: () => navigation.navigate("ContactDeveloper"),
     },
   ];
 
   const handleBack = () => {
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    } else {
-      navigation.navigate("Home");
-    }
+    navigation.goBack();
   };
 
   return (
@@ -60,7 +53,7 @@ const MoreScreen = ({ navigation }) => {
           activeOpacity={0.8}
         >
           <Image
-            source={require("../../assets/back-icon.png")}
+            source={require("../../assets/close-icon.png")}
             style={commonStyles.backIcon}
             contentFit="contain"
           />

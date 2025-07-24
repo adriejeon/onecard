@@ -64,13 +64,53 @@
   },
   "cardDraw": {
     "gradientTitleSuffix": "를 생각하며 한 장 뽑아주세요.",
-    "result": "결과 보기"
+    "result": "결과 보기",
+    "dailyTitle": "데일리 카드",
+    "yesnoTitle": "Yes or No 오라클 타로"
   },
   "result": {
     "archive": "보관하기",
     "share": "공유하기",
     "delete": "보관 삭제하기",
-    "home": "홈으로"
+    "home": "홈으로",
+    "archiveComplete": "보관 완료",
+    "archiveSaved": "카드 결과가 보관함에 저장되었습니다.",
+    "archiveFail": "보관 실패",
+    "archiveSaveFail": "카드 결과 저장에 실패했습니다.",
+    "deleteTitle": "삭제 확인",
+    "deleteMessage": "정말로 이 카드 결과를 삭제하시겠습니까?",
+    "cancel": "취소",
+    "deleteComplete": "삭제 완료",
+    "archiveDeleted": "카드 결과가 삭제되었습니다.",
+    "confirm": "확인",
+    "deleteFail": "삭제 실패",
+    "archiveDeleteFail": "카드 결과 삭제에 실패했습니다.",
+    "noCardDataToDelete": "삭제할 카드 데이터가 없습니다.",
+    "archiving": "보관 중...",
+    "archived": "보관됨",
+    "unknownDescription": "카드 결과를 확인할 수 없습니다.",
+    "shareMessage": {
+      "question": "질문: {{question}}",
+      "answer": "답: {{percentage}} {{text}}",
+      "description": "{{description}}",
+      "invite": "원카드 앱으로 운명의 답을 찾아보세요!"
+    },
+    "shareTitle": "원카드 결과",
+    "shareFailTitle": "공유 실패",
+    "shareFailMessage": "공유 기능을 사용할 수 없습니다."
+  },
+  "archive": {
+    "emptyTitle": "보관된 카드 결과가 없습니다.",
+    "emptySubtitle": "카드 결과 페이지에서 \"보관하기\" 버튼을 눌러\n결과를 보관함에 저장할 수 있습니다.",
+    "deleteTitle": "카드 삭제",
+    "deleteMessage": "이 카드 결과를 삭제하시겠습니까?",
+    "cancel": "취소",
+    "delete": "삭제",
+    "deleteFail": "삭제 실패",
+    "deleteFailMessage": "카드 삭제에 실패했습니다.",
+    "unknownCard": "알 수 없는 카드",
+    "dailyCard": "데일리 카드",
+    "yesnoCard": "Yes or No 카드"
   },
   "more": {
     "title": "더보기",
@@ -100,7 +140,8 @@
     "sendFail": "전송 실패",
     "sendFailMsg": "이메일 전송에 실패했습니다.",
     "error": "에러",
-    "retry": "다시 시도해주세요."
+    "retry": "다시 시도해주세요.",
+    "sendFail": "전송 실패"
   },
   "cards": {
     "major_0": {
@@ -659,6 +700,11 @@
   "dailyResult": {
     "scoreSuffix": "점",
     "gradientTitle": "오늘의 카드 결과",
-    "title": "오늘의 운세"
+    "title": "오늘의 운세",
+    "todayCard": "오늘의 카드",
+    "shareApp": "원카드 앱으로 운명의 답을 찾아보세요!",
+    "shareTitle": "원카드 결과",
+    "shareFailTitle": "공유 실패",
+    "shareFailMessage": "공유 기능을 사용할 수 없습니다."
   }
 }

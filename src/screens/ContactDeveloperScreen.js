@@ -60,8 +60,6 @@ const ContactDeveloperScreen = ({ navigation }) => {
         )}: ${new Date().toLocaleString()}`,
       });
 
-      console.log("메일 전송 결과:", result);
-
       if (result.status === "sent") {
         Alert.alert(
           i18n.t("contact.sendComplete"),
@@ -82,11 +80,9 @@ const ContactDeveloperScreen = ({ navigation }) => {
           i18n.t("contact.mailCancelled")
         );
       } else {
-        throw new Error("전송 실패");
+        throw new Error(i18n.t("contact.sendFail"));
       }
     } catch (error) {
-      console.error("이메일 전송 실패:", error);
-      console.error("에러 상세:", error.message);
       Alert.alert(
         i18n.t("contact.sendFail"),
         `${i18n.t("contact.sendFailMsg")}\n${i18n.t("contact.error")}: ${
@@ -123,7 +119,7 @@ const ContactDeveloperScreen = ({ navigation }) => {
             activeOpacity={0.8}
           >
             <Image
-              source={require("../../assets/back-icon.png")}
+              source={require("../../assets/close-icon.png")}
               style={commonStyles.backIcon}
               contentFit="contain"
             />

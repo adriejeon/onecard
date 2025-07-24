@@ -32,7 +32,6 @@ export const checkDailyCardAvailability = async () => {
 
     return lastDrawDate !== today;
   } catch (error) {
-    console.error("데일리 카드 확인 실패:", error);
     return true; // 에러 시 뽑기 허용
   }
 };
@@ -47,9 +46,7 @@ export const saveDailyCardDraw = async (cardData) => {
     if (cardData) {
       await AsyncStorage.setItem("todayDailyCard", JSON.stringify(cardData));
     }
-  } catch (error) {
-    console.error("데일리 카드 저장 실패:", error);
-  }
+  } catch (error) {}
 };
 
 // 오늘 뽑은 데일리 카드 정보 불러오기
@@ -66,7 +63,6 @@ export const getTodayDailyCard = async () => {
 
     return null;
   } catch (error) {
-    console.error("오늘 데일리 카드 불러오기 실패:", error);
     return null;
   }
 };
@@ -94,7 +90,5 @@ export const resetDailyCardData = async () => {
   try {
     await AsyncStorage.removeItem("lastDailyCardDate");
     await AsyncStorage.removeItem("todayDailyCard");
-  } catch (error) {
-    console.error("데일리 카드 데이터 초기화 실패:", error);
-  }
+  } catch (error) {}
 };

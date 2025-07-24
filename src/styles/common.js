@@ -76,7 +76,7 @@ export const commonStyles = StyleSheet.create({
     borderRadius: 15,
     paddingVertical: 18,
     alignItems: "center",
-    width: "48%",
+    flex: 1,
     borderColor: colors.textPrimary,
     borderWidth: 1,
   },
@@ -84,12 +84,13 @@ export const commonStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     color: colors.textPrimary,
+    textAlign: "center",
   },
   archiveButton: {
     borderRadius: 15,
     paddingVertical: 18,
     alignItems: "center",
-    width: "48%",
+    flex: 1,
     borderColor: colors.primary,
     borderWidth: 1,
   },
@@ -97,12 +98,13 @@ export const commonStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: colors.primary,
+    textAlign: "center",
   },
   deleteButton: {
     borderRadius: 15,
     paddingVertical: 18,
     alignItems: "center",
-    width: "48%",
+    flex: 1,
     borderColor: "#EA1B63",
     borderWidth: 1,
   },
@@ -110,12 +112,13 @@ export const commonStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     color: "#EA1B63",
+    textAlign: "center",
   },
   retryButton: {
     borderRadius: 15,
     paddingVertical: 18,
     alignItems: "center",
-    width: "48%",
+    flex: 1,
     borderColor: colors.textPrimary,
     borderWidth: 1,
   },
@@ -123,6 +126,7 @@ export const commonStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     color: colors.textPrimary,
+    textAlign: "center",
   },
   homeButton: {
     alignItems: "center",
@@ -297,7 +301,6 @@ export const commonStyles = StyleSheet.create({
   symbolContainer: {
     alignItems: "center",
     paddingTop: 60,
-    paddingBottom: 40,
     marginTop: 60,
   },
   symbolImage: {
@@ -309,7 +312,6 @@ export const commonStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 20,
   },
 
   // 공통 입력 스타일
@@ -372,23 +374,28 @@ export const commonStyles = StyleSheet.create({
   // 공통 키워드 스타일
   keywordsContainer: {
     flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
+    flexWrap: "nowrap",
+    justifyContent: "flex-start",
     alignItems: "center",
     marginTop: 16,
-    gap: 4,
+    gap: 6,
     marginBottom: 12,
+    paddingHorizontal: 10,
   },
   keywordChip: {
     backgroundColor: "rgba(97, 44, 201, 0.1)",
-    borderRadius: 20,
-    paddingHorizontal: 12,
+    borderRadius: 16,
+    paddingHorizontal: 10,
     paddingVertical: 6,
+    minWidth: 60,
+    flexShrink: 0,
   },
   keywordText: {
-    fontSize: 12,
+    fontSize: 11,
     color: colors.primary,
     fontWeight: "500",
+    textAlign: "center",
+    lineHeight: 14,
   },
 
   // 공통 퍼센트 컨테이너

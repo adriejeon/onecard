@@ -16,7 +16,6 @@ import { commonStyles } from "../styles/common";
 import {
   checkDailyCardAvailability,
   getTodayDailyCard,
-  resetDailyCardData,
 } from "../utils/dailyCardUtils";
 import i18n from "../utils/i18n";
 
@@ -59,10 +58,12 @@ const CardSelectionScreen = ({ navigation }) => {
       // 이미 오늘 뽑았으면 오늘 뽑은 데일리 카드 결과 페이지로 바로 이동
       const todayCard = await getTodayDailyCard();
       if (todayCard) {
-        navigation.navigate("DailyResult", { cardData: todayCard });
+        navigation.navigate("DailyResult", {
+          result: todayCard.result,
+          cardType: "daily",
+        });
       } else {
-        // 카드 정보가 없으면 데이터 초기화하고 새로 뽑기
-        await resetDailyCardData();
+        // 카드 정보가 없으면 새로 뽑기
         navigation.navigate("DailyCardSelection");
       }
       return;

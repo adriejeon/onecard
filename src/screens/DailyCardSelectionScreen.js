@@ -20,7 +20,11 @@ import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
-import { saveDailyCardDraw } from "../utils/dailyCardUtils";
+import {
+  saveDailyCardDraw,
+  checkDailyCardAvailability,
+  getTodayDailyCard,
+} from "../utils/dailyCardUtils";
 import i18n from "../utils/i18n";
 
 const { width, height } = Dimensions.get("window");
@@ -173,11 +177,31 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
     return cards;
   };
 
-  // 컴포넌트 마운트 시 카드 생성
+  // 컴포넌트 마운트 시 카드 생성 및 데일리 카드 확인
   useEffect(() => {
-    const cards = generateCards();
-    setShuffledCards(cards);
-  }, []);
+    const checkDailyCard = async () => {
+      // 데일리 카드 뽑기 가능 여부 확인
+      const canDrawDaily = await checkDailyCardAvailability();
+
+      if (!canDrawDaily) {
+        // 이미 오늘 뽑았으면 오늘 뽑은 데일리 카드 결과 페이지로 바로 이동
+        const todayCard = await getTodayDailyCard();
+        if (todayCard) {
+          navigation.navigate("DailyResult", {
+            result: todayCard.result,
+            cardType: "daily",
+          });
+          return;
+        }
+      }
+
+      // 뽑기 가능하거나 카드 정보가 없으면 카드 생성
+      const cards = generateCards();
+      setShuffledCards(cards);
+    };
+
+    checkDailyCard();
+  }, [navigation]);
 
   const handleCardPress = (card, index) => {
     if (isAnimating || showSelectedCard) return;
@@ -240,7 +264,9 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
           />
         </TouchableOpacity>
 
-        <Text style={commonStyles.headerTitle}>데일리 카드</Text>
+        <Text style={commonStyles.headerTitle}>
+          {i18n.t("cardDraw.dailyTitle")}
+        </Text>
 
         <TouchableOpacity
           style={commonStyles.infoButton}

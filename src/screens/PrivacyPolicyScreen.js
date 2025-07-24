@@ -24,11 +24,11 @@ const PrivacyPolicyScreen = ({ navigation }) => {
       <View style={[commonStyles.header, { backgroundColor: "#F8F3FA" }]}>
         <TouchableOpacity
           style={commonStyles.backButton}
-          onPress={() => navigation.navigate("More")}
+          onPress={() => navigation.goBack()}
           activeOpacity={0.8}
         >
           <Image
-            source={require("../../assets/back-icon.png")}
+            source={require("../../assets/close-icon.png")}
             style={commonStyles.backIcon}
             contentFit="contain"
           />

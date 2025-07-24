@@ -24,7 +24,6 @@ export const saveCardResult = async (cardData) => {
 
     return true;
   } catch (error) {
-    console.error("카드 결과 보관 실패:", error);
     return false;
   }
 };
@@ -35,7 +34,6 @@ export const getArchiveList = async () => {
     const archiveList = await AsyncStorage.getItem("card_archive_list");
     return archiveList ? JSON.parse(archiveList) : [];
   } catch (error) {
-    console.error("보관 목록 불러오기 실패:", error);
     return [];
   }
 };
@@ -46,7 +44,6 @@ export const getCardResult = async (archiveId) => {
     const cardData = await AsyncStorage.getItem(archiveId);
     return cardData ? JSON.parse(cardData) : null;
   } catch (error) {
-    console.error("카드 결과 불러오기 실패:", error);
     return null;
   }
 };
@@ -66,7 +63,6 @@ export const deleteCardResult = async (archiveId) => {
 
     return true;
   } catch (error) {
-    console.error("카드 결과 삭제 실패:", error);
     return false;
   }
 };
