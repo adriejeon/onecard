@@ -44,13 +44,6 @@ const DiaryInputScreen = ({ navigation, route }) => {
   selectedDateOnly.setHours(0, 0, 0, 0); // 선택된 날짜도 시간을 00:00:00으로 설정
   const isFutureDate = selectedDateOnly > today;
   const isPastDate = selectedDateOnly < today;
-
-  // 디버깅 로그
-  console.log("=== DiaryInputScreen Date Check ===");
-  console.log("Today:", today.toISOString());
-  console.log("Selected Date:", selectedDateOnly.toISOString());
-  console.log("Is Future Date:", isFutureDate);
-  console.log("Is Past Date:", isPastDate);
   const [diaryText, setDiaryText] = useState("");
   const [selectedEmotion, setSelectedEmotion] = useState(null);
   const [hasDailyCard, setHasDailyCard] = useState(false);
@@ -499,47 +492,38 @@ const DiaryInputScreen = ({ navigation, route }) => {
               )}
 
               {/* 미래 날짜가 아닌 경우에만 감정 선택과 일기 입력 표시 */}
-              {(() => {
-                console.log(
-                  "Rendering condition check - isFutureDate:",
-                  isFutureDate
-                );
-                if (!isFutureDate) {
-                  return (
-                    <>
-                      {/* 감정 선택 */}
-                      {renderEmotionSelector()}
+              {!isFutureDate && (
+                <>
+                  {/* 감정 선택 */}
+                  {renderEmotionSelector()}
 
-                      {/* 일기 내용 입력 */}
-                      <View style={styles.diaryContainer}>
-                        <TextInput
-                          style={styles.diaryInput}
-                          value={diaryText}
-                          onChangeText={handleTextChange}
-                          placeholder={i18n.t("diary.placeholder")}
-                          placeholderTextColor="#999999"
-                          multiline
-                          textAlignVertical="top"
-                          maxLength={2000}
-                          scrollEnabled={true}
-                          keyboardType="default"
-                          returnKeyType="default"
-                          blurOnSubmit={false}
-                          onFocus={() =>
-                            scrollViewRef.current?.scrollToEnd({
-                              animated: true,
-                            })
-                          }
-                        />
-                        <Text style={styles.characterCount}>
-                          {diaryText.length}/2000
-                        </Text>
-                      </View>
-                    </>
-                  );
-                }
-                return null;
-              })()}
+                  {/* 일기 내용 입력 */}
+                  <View style={styles.diaryContainer}>
+                    <TextInput
+                      style={styles.diaryInput}
+                      value={diaryText}
+                      onChangeText={handleTextChange}
+                      placeholder={i18n.t("diary.placeholder")}
+                      placeholderTextColor="#999999"
+                      multiline
+                      textAlignVertical="top"
+                      maxLength={2000}
+                      scrollEnabled={true}
+                      keyboardType="default"
+                      returnKeyType="default"
+                      blurOnSubmit={false}
+                      onFocus={() =>
+                        scrollViewRef.current?.scrollToEnd({
+                          animated: true,
+                        })
+                      }
+                    />
+                    <Text style={styles.characterCount}>
+                      {diaryText.length}/2000
+                    </Text>
+                  </View>
+                </>
+              )}
 
               {/* 미래 날짜인 경우 안내 메시지 표시 */}
               {isFutureDate && (
