@@ -30,6 +30,20 @@ import i18n from "../utils/i18n";
 
 const { width, height } = Dimensions.get("window");
 
+// 반응형 달력 크기 계산 함수 추가
+const getCalendarCellSize = () => {
+  const screenWidth = width;
+  const padding = 32; // 좌우 패딩 (16 * 2)
+  const availableWidth = screenWidth - padding;
+  const cellWidth = availableWidth / 7;
+
+  // iPad 등 넓은 화면에서도 적절한 크기 유지
+  const maxCellWidth = 80;
+  const minCellWidth = 35;
+
+  return Math.min(Math.max(cellWidth, minCellWidth), maxCellWidth);
+};
+
 const HomeScreen = ({ navigation, route }) => {
   const [greeting, setGreeting] = useState("");
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -242,50 +256,65 @@ const HomeScreen = ({ navigation, route }) => {
     const startDate = new Date(firstDay);
     startDate.setDate(startDate.getDate() - firstDay.getDay());
 
-    const calendarDays = [];
+    const calendarWeeks = [];
     const today = new Date();
 
-    for (let i = 0; i < 42; i++) {
-      const date = new Date(startDate);
-      date.setDate(startDate.getDate() + i);
+    // 6주 (42일)를 7일씩 나누어서 렌더링
+    for (let week = 0; week < 6; week++) {
+      const weekDays = [];
 
-      const isCurrentMonth = date.getMonth() === month;
-      const isToday = date.toDateString() === today.toDateString();
-      const diary = getDiaryForDate(date);
-      const hasDiary = diary && (diary.content || diary.emotion);
-      const hasEmotion =
-        hasDiary && diary.emotion && emotionIcons[diary.emotion];
+      for (let day = 0; day < 7; day++) {
+        const dayIndex = week * 7 + day;
+        const date = new Date(startDate);
+        date.setDate(startDate.getDate() + dayIndex);
 
-      calendarDays.push(
-        <TouchableOpacity
-          key={i}
-          style={[styles.calendarDay, !isCurrentMonth && styles.otherMonthDay]}
-          onPress={() => handleDateSelect(date)}
-          disabled={!isCurrentMonth}
-        >
-          {hasEmotion ? (
-            <Image
-              source={emotionIcons[diary.emotion]}
-              style={styles.emotionIcon}
-              contentFit="contain"
-            />
-          ) : (
-            <Text
-              style={[
-                styles.calendarDayText,
-                !isCurrentMonth && styles.otherMonthText,
-                isToday && styles.todayText,
-              ]}
-            >
-              {date.getDate()}
-            </Text>
-          )}
-          {isToday && <View style={styles.todayIndicator} />}
-        </TouchableOpacity>
+        const isCurrentMonth = date.getMonth() === month;
+        const isToday = date.toDateString() === today.toDateString();
+        const diary = getDiaryForDate(date);
+        const hasDiary = diary && (diary.content || diary.emotion);
+        const hasEmotion =
+          hasDiary && diary.emotion && emotionIcons[diary.emotion];
+
+        weekDays.push(
+          <TouchableOpacity
+            key={dayIndex}
+            style={[
+              styles.calendarDay,
+              !isCurrentMonth && styles.otherMonthDay,
+            ]}
+            onPress={() => handleDateSelect(date)}
+            disabled={!isCurrentMonth}
+          >
+            {hasEmotion ? (
+              <Image
+                source={emotionIcons[diary.emotion]}
+                style={styles.emotionIcon}
+                contentFit="contain"
+              />
+            ) : (
+              <Text
+                style={[
+                  styles.calendarDayText,
+                  !isCurrentMonth && styles.otherMonthText,
+                  isToday && styles.todayText,
+                ]}
+              >
+                {date.getDate()}
+              </Text>
+            )}
+            {isToday && <View style={styles.todayIndicator} />}
+          </TouchableOpacity>
+        );
+      }
+
+      calendarWeeks.push(
+        <View key={week} style={styles.calendarWeek}>
+          {weekDays}
+        </View>
       );
     }
 
-    return calendarDays;
+    return calendarWeeks;
   };
 
   const renderDateModal = () => {
@@ -545,7 +574,7 @@ const styles = StyleSheet.create({
   calendarContainer: {
     flex: 1,
     overflow: "hidden", // 달력 컨테이너 내부로 애니메이션 제한
-    paddingHorizontal: 16,
+    paddingHorizontal: 16, // 패딩 줄여서 더 많은 공간 활용
   },
   calendarHeader: {
     marginBottom: 20,
@@ -559,11 +588,14 @@ const styles = StyleSheet.create({
   calendarWeekHeader: {
     flexDirection: "row",
     marginBottom: 10,
+    justifyContent: "space-between", // 균등 분배
+    width: "100%",
   },
   calendarWeekHeaderDay: {
-    width: (width - 32) / 7,
+    width: getCalendarCellSize(),
     alignItems: "center",
     paddingVertical: 8,
+    flex: 1, // 균등 분배를 위한 flex
   },
   calendarWeekHeaderText: {
     fontSize: 16,
@@ -571,19 +603,26 @@ const styles = StyleSheet.create({
     color: "#474747",
   },
   calendarGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: "column", // 세로 방향으로 주 변경
+    width: "100%", // 전체 너비 사용
+  },
+  calendarWeek: {
+    flexDirection: "row", // 가로 방향으로 일 배치
+    justifyContent: "space-between", // 균등 분배
+    width: "100%",
+    marginBottom: 4, // 주 간격
   },
   calendarDay: {
-    width: (width - 32) / 7,
-    height: 52,
+    width: getCalendarCellSize(),
+    height: getCalendarCellSize() + 8, // 셀 크기에 비례한 높이
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 22.5,
+    borderRadius: getCalendarCellSize() / 2, // 원형 모양 유지
     position: "relative",
+    flex: 1, // 균등 분배를 위한 flex
   },
   calendarDayText: {
-    fontSize: 16,
+    fontSize: Math.max(14, getCalendarCellSize() * 0.25), // 셀 크기에 비례한 폰트 크기
     color: "#474747",
     fontWeight: "bold",
   },
@@ -615,9 +654,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   emotionIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: getCalendarCellSize() * 0.7, // 셀 크기에 비례한 아이콘 크기
+    height: getCalendarCellSize() * 0.7,
+    borderRadius: (getCalendarCellSize() * 0.7) / 2,
     borderWidth: 1,
     borderColor: colors.textLight,
   },

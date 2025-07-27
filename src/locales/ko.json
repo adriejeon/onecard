@@ -103,12 +103,16 @@
       "angry": "화남"
     },
     "dailyCardResult": "뽑았던 카드를 다시 확인해 볼까요?",
-    "dailyCardQuestion": "오늘은 어떤 날이 될까요?",
+    "dailyCardQuestion": "어떤 날이 될까요?",
     "dailyCardScore": "오늘의 운세 점수: {{score}}점",
     "cardName": "카드 이름",
     "keywords": "키워드",
     "placeholder": "특별한 하루를 기록해 보세요.",
-    "autoSaveMessage": "일기가 자동 저장되었어요. 안심하고 작성하세요."
+    "autoSaveMessage": "일기가 자동 저장되었어요. 안심하고 작성하세요.",
+    "futureDateMessage": "미래 날짜에는 데일리 카드만 뽑을 수 있습니다.",
+    "futureDateSubMessage": "해당 날짜가 되면 일기와 감정을 기록할 수 있습니다.",
+    "pastDateMessage": "과거 날짜에는 데일리 카드를 뽑을 수 없습니다.",
+    "pastDateSubMessage": "과거의 하루를 기록해보세요."
   },
   "home": {
     "greetingMorning": "좋은 아침입니다!",

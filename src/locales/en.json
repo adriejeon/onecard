@@ -103,12 +103,16 @@
       "angry": "Angry"
     },
     "dailyCardResult": "Check your drawn card?",
-    "dailyCardQuestion": "What kind of day will today be?",
+    "dailyCardQuestion": "What kind of day will it be?",
     "dailyCardScore": "Today's Fortune Score: {{score}}",
     "cardName": "Card Name",
     "keywords": "Keywords",
     "placeholder": "Record your special day here.",
-    "autoSaveMessage": "Your diary has been auto-saved. Write with peace of mind."
+    "autoSaveMessage": "Your diary has been auto-saved. Write with peace of mind.",
+    "futureDateMessage": "You can only draw daily cards for future dates.",
+    "futureDateSubMessage": "You can record your diary and emotions when that date arrives.",
+    "pastDateMessage": "You cannot draw daily cards for past dates.",
+    "pastDateSubMessage": "Record your past day here."
   },
   "home": {
     "greetingMorning": "Good morning!",

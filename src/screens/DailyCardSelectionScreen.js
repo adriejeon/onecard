@@ -115,6 +115,7 @@ const tarotImages = {
 
 const DailyCardSelectionScreen = ({ navigation, route }) => {
   const { selectedDate } = route.params || { selectedDate: new Date() };
+
   const [shuffledCards, setShuffledCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
@@ -183,25 +184,30 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
   // 컴포넌트 마운트 시 카드 생성 및 데일리 카드 확인
   useEffect(() => {
     const checkDailyCard = async () => {
-      // 특정 날짜의 데일리 카드 뽑기 가능 여부 확인
-      const dateKey = `dailyCard_${selectedDate.toISOString().split("T")[0]}`;
-      const existingCard = await AsyncStorage.getItem(dateKey);
+      try {
+        // 특정 날짜의 데일리 카드 뽑기 가능 여부 확인
+        const dateKey = `dailyCard_${selectedDate.toISOString().split("T")[0]}`;
 
-      if (existingCard) {
-        // 이미 해당 날짜에 뽑았으면 결과 페이지로 바로 이동
-        const cardData = JSON.parse(existingCard);
-        navigation.navigate("DailyResult", {
-          result: cardData.result,
-          cardType: "daily",
-          score: cardData.score,
-          cardData: cardData,
-        });
-        return;
+        const existingCard = await AsyncStorage.getItem(dateKey);
+
+        if (existingCard) {
+          // 이미 해당 날짜에 뽑았으면 결과 페이지로 바로 이동
+          const cardData = JSON.parse(existingCard);
+          navigation.navigate("DailyResult", {
+            result: cardData.result,
+            cardType: "daily",
+            score: cardData.score,
+            cardData: cardData,
+          });
+          return;
+        }
+
+        // 뽑기 가능하거나 카드 정보가 없으면 카드 생성
+        const cards = generateCards();
+        setShuffledCards(cards);
+      } catch (error) {
+        console.error("Error in checkDailyCard:", error); // 에러 로그
       }
-
-      // 뽑기 가능하거나 카드 정보가 없으면 카드 생성
-      const cards = generateCards();
-      setShuffledCards(cards);
     };
 
     checkDailyCard();
@@ -438,9 +444,11 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
+    minHeight: 400, // 최소 높이 설정
   },
   scrollContent: {
     paddingBottom: 20,
+    flexGrow: 1, // 내용이 적을 때도 전체 높이 사용
   },
   cardsContainer: {
     flexDirection: "row",
@@ -477,6 +485,7 @@ const styles = StyleSheet.create({
   cardImage: {
     width: "100%",
     height: "100%",
+    borderRadius: 8, // 카드 이미지에도 둥근 모서리 적용
   },
   bottomSection: {
     paddingBottom: 40,

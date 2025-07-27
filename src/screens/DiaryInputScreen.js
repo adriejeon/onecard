@@ -36,6 +36,21 @@ const DiaryInputScreen = ({ navigation, route }) => {
     selectedDate: new Date().toISOString().split("T")[0],
   };
   const selectedDate = new Date(selectedDateParam);
+
+  // 오늘 날짜와 비교하여 미래/과거 날짜인지 확인
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 설정
+  const selectedDateOnly = new Date(selectedDate);
+  selectedDateOnly.setHours(0, 0, 0, 0); // 선택된 날짜도 시간을 00:00:00으로 설정
+  const isFutureDate = selectedDateOnly > today;
+  const isPastDate = selectedDateOnly < today;
+
+  // 디버깅 로그
+  console.log("=== DiaryInputScreen Date Check ===");
+  console.log("Today:", today.toISOString());
+  console.log("Selected Date:", selectedDateOnly.toISOString());
+  console.log("Is Future Date:", isFutureDate);
+  console.log("Is Past Date:", isPastDate);
   const [diaryText, setDiaryText] = useState("");
   const [selectedEmotion, setSelectedEmotion] = useState(null);
   const [hasDailyCard, setHasDailyCard] = useState(false);
@@ -437,76 +452,118 @@ const DiaryInputScreen = ({ navigation, route }) => {
               nestedScrollEnabled={true}
               automaticallyAdjustKeyboardInsets={false}
             >
-              {/* 데일리 운세 버튼 */}
-              <View style={styles.dailyCardContainer}>
-                {/* 운세 점수 표시 */}
-                {hasDailyCard && dailyCardData && dailyCardData.result && (
-                  <View style={styles.scoreContainer}>
-                    {(() => {
-                      const cardInfo = getCardInfo(dailyCardData.result.id);
-                      return (
-                        <>
-                          <Text style={styles.scoreText}>
-                            {i18n.t("diary.dailyCardScore", {
-                              score: cardInfo.score,
-                            })}
-                          </Text>
-                          <Text style={styles.scoreText}>
-                            {i18n.t("diary.cardName")}: {cardInfo.title}
-                          </Text>
-                          <Text style={styles.scoreText}>
-                            {i18n.t("diary.keywords")}: {cardInfo.keywords}
-                          </Text>
-                        </>
-                      );
-                    })()}
-                  </View>
-                )}
+              {/* 데일리 운세 버튼 - 과거 날짜가 아닌 경우에만 표시 */}
+              {!isPastDate && (
+                <View style={styles.dailyCardContainer}>
+                  {/* 운세 점수 표시 */}
+                  {hasDailyCard && dailyCardData && dailyCardData.result && (
+                    <View style={styles.scoreContainer}>
+                      {(() => {
+                        const cardInfo = getCardInfo(dailyCardData.result.id);
+                        return (
+                          <>
+                            <Text style={styles.scoreText}>
+                              {i18n.t("diary.dailyCardScore", {
+                                score: cardInfo.score,
+                              })}
+                            </Text>
+                            <Text style={styles.scoreText}>
+                              {i18n.t("diary.cardName")}: {cardInfo.title}
+                            </Text>
+                            <Text style={styles.scoreText}>
+                              {i18n.t("diary.keywords")}: {cardInfo.keywords}
+                            </Text>
+                          </>
+                        );
+                      })()}
+                    </View>
+                  )}
 
-                <TouchableOpacity
-                  style={styles.dailyCardButton}
-                  onPress={handleDailyCardPress}
-                  activeOpacity={0.8}
-                >
-                  <Image
-                    source={require("../../assets/daily-icon.png")}
-                    style={styles.dailyCardIcon}
-                    contentFit="contain"
-                  />
-                  <Text style={styles.dailyCardText}>
-                    {hasDailyCard
-                      ? i18n.t("diary.dailyCardResult")
-                      : i18n.t("diary.dailyCardQuestion")}
+                  <TouchableOpacity
+                    style={styles.dailyCardButton}
+                    onPress={handleDailyCardPress}
+                    activeOpacity={0.8}
+                  >
+                    <Image
+                      source={require("../../assets/daily-icon.png")}
+                      style={styles.dailyCardIcon}
+                      contentFit="contain"
+                    />
+                    <Text style={styles.dailyCardText}>
+                      {hasDailyCard
+                        ? i18n.t("diary.dailyCardResult")
+                        : i18n.t("diary.dailyCardQuestion")}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+
+              {/* 미래 날짜가 아닌 경우에만 감정 선택과 일기 입력 표시 */}
+              {(() => {
+                console.log(
+                  "Rendering condition check - isFutureDate:",
+                  isFutureDate
+                );
+                if (!isFutureDate) {
+                  return (
+                    <>
+                      {/* 감정 선택 */}
+                      {renderEmotionSelector()}
+
+                      {/* 일기 내용 입력 */}
+                      <View style={styles.diaryContainer}>
+                        <TextInput
+                          style={styles.diaryInput}
+                          value={diaryText}
+                          onChangeText={handleTextChange}
+                          placeholder={i18n.t("diary.placeholder")}
+                          placeholderTextColor="#999999"
+                          multiline
+                          textAlignVertical="top"
+                          maxLength={2000}
+                          scrollEnabled={true}
+                          keyboardType="default"
+                          returnKeyType="default"
+                          blurOnSubmit={false}
+                          onFocus={() =>
+                            scrollViewRef.current?.scrollToEnd({
+                              animated: true,
+                            })
+                          }
+                        />
+                        <Text style={styles.characterCount}>
+                          {diaryText.length}/2000
+                        </Text>
+                      </View>
+                    </>
+                  );
+                }
+                return null;
+              })()}
+
+              {/* 미래 날짜인 경우 안내 메시지 표시 */}
+              {isFutureDate && (
+                <View style={styles.futureDateMessage}>
+                  <Text style={styles.futureDateSubText}>
+                    {i18n.t("diary.futureDateMessage")}
                   </Text>
-                </TouchableOpacity>
-              </View>
+                  <Text style={styles.futureDateSubText}>
+                    {i18n.t("diary.futureDateSubMessage")}
+                  </Text>
+                </View>
+              )}
 
-              {/* 감정 선택 */}
-              {renderEmotionSelector()}
-
-              {/* 일기 내용 입력 */}
-              <View style={styles.diaryContainer}>
-                <TextInput
-                  style={styles.diaryInput}
-                  value={diaryText}
-                  onChangeText={handleTextChange}
-                  placeholder={i18n.t("diary.placeholder")}
-                  placeholderTextColor="#999999"
-                  multiline
-                  textAlignVertical="top"
-                  maxLength={2000}
-                  scrollEnabled={true}
-                  keyboardType="default"
-                  returnKeyType="default"
-                  blurOnSubmit={false}
-                  onFocus={() =>
-                    scrollViewRef.current?.scrollToEnd({ animated: true })
-                  }
-                />
-                <Text style={styles.characterCount}>
-                  {diaryText.length}/2000
-                </Text>
-              </View>
+              {/* 과거 날짜인 경우 안내 메시지 표시 */}
+              {isPastDate && (
+                <View style={styles.futureDateMessage}>
+                  <Text style={styles.futureDateSubText}>
+                    {i18n.t("diary.pastDateMessage")}
+                  </Text>
+                  <Text style={styles.futureDateSubText}>
+                    {i18n.t("diary.pastDateSubMessage")}
+                  </Text>
+                </View>
+              )}
             </ScrollView>
           </View>
         </TouchableWithoutFeedback>
@@ -718,6 +775,17 @@ const styles = StyleSheet.create({
     color: "#474747",
     textAlign: "center",
     flex: 1,
+  },
+  futureDateMessage: {
+    padding: 20,
+    marginTop: 20,
+    alignItems: "center",
+  },
+  futureDateSubText: {
+    fontSize: 14,
+    color: "#AFAFAF",
+    textAlign: "center",
+    lineHeight: 20,
   },
 });
 
