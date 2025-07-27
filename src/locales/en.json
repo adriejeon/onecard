@@ -44,18 +44,11 @@
     "mainText": "Every day is a new opportunity.\nThe card you draw today\nwill lead you to new chances.",
     "start": "Start"
   },
-  "cardSelection": {
-    "subtitle": "Which card would you like to draw?",
-    "yesnoTitle": "Yes or No",
-    "yesnoDesc": "A question that can be answered with Yes or No",
-    "dailyTitle": "Daily Card",
-    "dailyDesc": "Check your fortune for today"
-  },
   "questionInput": {
-    "headerYesno": "Yes or No Oracle Tarot",
+    "headerYesno": "Ask Anything",
     "headerDaily": "Daily Card",
-    "gradientTitle": "Please tell us the question\nyou are curious about, whether it will be positive or negative.",
-    "placeholder": "Please enter your question.",
+    "gradientTitle": "What's on your mind right now?",
+    "placeholder": "Please enter your concern.",
     "next": "Next"
   },
   "dailyCardSelection": {
@@ -66,7 +59,7 @@
     "gradientTitleSuffix": "Think about it and draw a card.",
     "result": "View Result",
     "dailyTitle": "Daily Card",
-    "yesnoTitle": "Yes or No Oracle Tarot"
+    "yesnoTitle": "Ask Anything"
   },
   "result": {
     "archive": "Save",
@@ -99,6 +92,31 @@
     "shareFailTitle": "Share Failed",
     "shareFailMessage": "Share feature is not available."
   },
+  "diary": {
+    "emotionQuestion": "How are you feeling?",
+    "emotions": {
+      "great": "Great",
+      "good": "Good",
+      "okay": "Okay",
+      "not-great": "Not Great",
+      "bad": "Bad",
+      "angry": "Angry"
+    },
+    "dailyCardResult": "Check your drawn card?",
+    "dailyCardQuestion": "What kind of day will today be?",
+    "dailyCardScore": "Today's Fortune Score: {{score}}",
+    "cardName": "Card Name",
+    "keywords": "Keywords",
+    "placeholder": "Record your special day here.",
+    "autoSaveMessage": "Your diary has been auto-saved. Write with peace of mind."
+  },
+  "home": {
+    "greetingMorning": "Good morning!",
+    "greetingAfternoon": "Good afternoon!",
+    "greetingEvening": "Good evening!",
+    "greetingNight": "Good night!",
+    "worryButton": "Do you have any concerns?"
+  },
   "archive": {
     "emptyTitle": "No saved card results.",
     "emptySubtitle": "Press the \"Save\" button on the card result page\nto save results to your archive.",
@@ -116,8 +134,35 @@
     "title": "More",
     "version": "App Version: 1.1.0",
     "archive": "Card Archive",
+    "backup": "Backup/Restore",
     "privacy": "Privacy Policy",
     "contact": "Contact Developer"
+  },
+  "backupRestore": {
+    "title": "Backup/Restore",
+    "backupData": "Backup Data",
+    "backupSubtitle": "Export all data as JSON file",
+    "restoreData": "Restore Data",
+    "restoreSubtitle": "Import data from backup file",
+    "googleDrive": "Google Drive Sync",
+    "googleDriveSubtitle": "Auto backup to cloud (Coming Soon)",
+    "backupSuccess": "Backup Complete",
+    "backupSuccessMessage": "Data has been successfully backed up.",
+    "backupError": "Backup Failed",
+    "backupErrorMessage": "An error occurred during backup.",
+    "restoreWarning": "Restore Warning",
+    "restoreWarningMessage": "Current data will be overwritten by backup file. Continue?",
+    "restoreSuccess": "Restore Complete",
+    "restoreSuccessMessage": "Data has been successfully restored.",
+    "restoreError": "Restore Failed",
+    "restoreErrorMessage": "An error occurred during restore.",
+    "googleDriveTitle": "Google Drive Sync",
+    "googleDriveMessage": "This feature is coming soon. Stay tuned for updates.",
+    "infoText": "Keep your backup file in a safe place. You can use it to transfer data to another device or reinstall the app."
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel"
   },
   "contact": {
     "title": "What would you like to ask?",

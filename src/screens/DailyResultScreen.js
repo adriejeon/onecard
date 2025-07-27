@@ -116,7 +116,11 @@ const DailyResultScreen = ({ navigation, route }) => {
   };
 
   const handleBack = () => {
-    if (cardData) {
+    if (cardData && cardData.date) {
+      // 다이어리에서 온 경우 해당 날짜의 다이어리 스크린으로 돌아가기
+      const selectedDate = new Date(cardData.date);
+      navigation.navigate("DiaryInput", { selectedDate });
+    } else if (cardData) {
       // 보관함에서 온 경우 보관함으로 돌아가기
       navigation.goBack();
     } else {
@@ -383,6 +387,42 @@ const DailyResultScreen = ({ navigation, route }) => {
         <View style={commonStyles.buttonContainer}>
           {!cardData ? (
             // 새로운 카드 결과인 경우에만 보관하기 버튼 표시
+            <View style={commonStyles.topButtonRow}>
+              <TouchableOpacity
+                style={[
+                  commonStyles.archiveButton,
+                  (isArchived || isArchiving) && styles.archiveButtonDisabled,
+                ]}
+                onPress={handleArchive}
+                activeOpacity={0.8}
+                disabled={isArchived || isArchiving}
+              >
+                <Text
+                  style={[
+                    commonStyles.archiveButtonText,
+                    (isArchived || isArchiving) &&
+                      styles.archiveButtonTextDisabled,
+                  ]}
+                >
+                  {isArchiving
+                    ? i18n.t("result.archiving")
+                    : isArchived
+                    ? i18n.t("result.archived")
+                    : i18n.t("result.archive")}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={commonStyles.shareButton}
+                onPress={handleShare}
+                activeOpacity={0.8}
+              >
+                <Text style={commonStyles.shareButtonText}>
+                  {i18n.t("result.share")}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ) : cardData && cardData.date ? (
+            // 다이어리에서 온 경우 보관하기 + 공유하기 버튼 표시
             <View style={commonStyles.topButtonRow}>
               <TouchableOpacity
                 style={[

@@ -26,6 +26,8 @@ import {
   getTodayDailyCard,
 } from "../utils/dailyCardUtils";
 import i18n from "../utils/i18n";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import cardResults from "../assets/data/cardResults";
 
 const { width, height } = Dimensions.get("window");
 
@@ -112,11 +114,12 @@ const tarotImages = {
 };
 
 const DailyCardSelectionScreen = ({ navigation, route }) => {
+  const { selectedDate } = route.params || { selectedDate: new Date() };
+  const [shuffledCards, setShuffledCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [shuffledCards, setShuffledCards] = useState([]);
   const [showSelectedCard, setShowSelectedCard] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   // 카드 회전 애니메이션 값들 (react-native-reanimated 사용)
   const cardRotations = useRef(
@@ -180,19 +183,20 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
   // 컴포넌트 마운트 시 카드 생성 및 데일리 카드 확인
   useEffect(() => {
     const checkDailyCard = async () => {
-      // 데일리 카드 뽑기 가능 여부 확인
-      const canDrawDaily = await checkDailyCardAvailability();
+      // 특정 날짜의 데일리 카드 뽑기 가능 여부 확인
+      const dateKey = `dailyCard_${selectedDate.toISOString().split("T")[0]}`;
+      const existingCard = await AsyncStorage.getItem(dateKey);
 
-      if (!canDrawDaily) {
-        // 이미 오늘 뽑았으면 오늘 뽑은 데일리 카드 결과 페이지로 바로 이동
-        const todayCard = await getTodayDailyCard();
-        if (todayCard) {
-          navigation.navigate("DailyResult", {
-            result: todayCard.result,
-            cardType: "daily",
-          });
-          return;
-        }
+      if (existingCard) {
+        // 이미 해당 날짜에 뽑았으면 결과 페이지로 바로 이동
+        const cardData = JSON.parse(existingCard);
+        navigation.navigate("DailyResult", {
+          result: cardData.result,
+          cardType: "daily",
+          score: cardData.score,
+          cardData: cardData,
+        });
+        return;
       }
 
       // 뽑기 가능하거나 카드 정보가 없으면 카드 생성
@@ -201,7 +205,7 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
     };
 
     checkDailyCard();
-  }, [navigation]);
+  }, [navigation, selectedDate]);
 
   const handleCardPress = (card, index) => {
     if (isAnimating || showSelectedCard) return;
@@ -214,15 +218,36 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
     cardRotations[index].value = withTiming(1, { duration: 600 });
 
     // 애니메이션 완료 후 상태 업데이트
-    setTimeout(() => {
+    setTimeout(async () => {
       setIsAnimating(false);
       setShowSelectedCard(true);
-      // 데일리 카드 뽑기 완료 저장 (카드 정보 포함)
-      const cardDataToSave = {
-        result: card,
-        cardType: "daily",
+
+      // 특정 날짜에 데일리 카드 뽑기 완료 저장
+      const dateKey = `dailyCard_${selectedDate.toISOString().split("T")[0]}`;
+
+      // 카드 결과 정보 가져오기
+      const cardResult = cardResults[card.id] || {
+        score: "0",
+        isPositive: true,
       };
-      saveDailyCardDraw(cardDataToSave);
+
+      const cardDataToSave = {
+        result: {
+          ...card,
+          title: cardResult.title || card.id, // 카드 제목 추가
+        },
+        cardType: "daily",
+        date: selectedDate.toISOString().split("T")[0],
+        score: cardResult.score,
+        isPositive: cardResult.isPositive,
+        createdAt: new Date().toISOString(),
+      };
+
+      try {
+        await AsyncStorage.setItem(dateKey, JSON.stringify(cardDataToSave));
+      } catch (error) {
+        console.error("데일리 카드 저장 실패:", error);
+      }
     }, 600);
   };
 
@@ -231,6 +256,10 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
       navigation.navigate("DailyResult", {
         result: selectedCard,
         cardType: "daily",
+        cardData: {
+          date: selectedDate.toISOString().split("T")[0],
+          result: selectedCard,
+        },
       });
     }
   };

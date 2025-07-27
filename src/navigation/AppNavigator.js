@@ -4,7 +4,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 // 스크린들
 import HomeScreen from "../screens/HomeScreen";
-import CardSelectionScreen from "../screens/CardSelectionScreen";
 import QuestionInputScreen from "../screens/QuestionInputScreen";
 import CardDrawScreen from "../screens/CardDrawScreen";
 import ResultScreen from "../screens/ResultScreen";
@@ -14,6 +13,8 @@ import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
 import MoreScreen from "../screens/MoreScreen";
 import CardArchiveScreen from "../screens/CardArchiveScreen";
 import ContactDeveloperScreen from "../screens/ContactDeveloperScreen";
+import DiaryInputScreen from "../screens/DiaryInputScreen";
+import BackupRestoreScreen from "../screens/BackupRestoreScreen";
 
 const Stack = createStackNavigator();
 
@@ -35,7 +36,6 @@ const AppNavigator = () => {
             gestureEnabled: false,
           }}
         />
-        <Stack.Screen name="CardSelection" component={CardSelectionScreen} />
         <Stack.Screen name="QuestionInput" component={QuestionInputScreen} />
         <Stack.Screen name="CardDraw" component={CardDrawScreen} />
         <Stack.Screen name="Result" component={ResultScreen} />
@@ -58,6 +58,8 @@ const AppNavigator = () => {
           name="ContactDeveloper"
           component={ContactDeveloperScreen}
         />
+        <Stack.Screen name="DiaryInput" component={DiaryInputScreen} />
+        <Stack.Screen name="BackupRestore" component={BackupRestoreScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

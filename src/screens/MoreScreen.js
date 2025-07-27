@@ -22,6 +22,11 @@ const MoreScreen = ({ navigation }) => {
       onPress: () => navigation.navigate("CardArchive"),
     },
     {
+      id: "backup",
+      title: i18n.t("more.backup"),
+      onPress: () => navigation.navigate("BackupRestore"),
+    },
+    {
       id: "privacy",
       title: i18n.t("more.privacy"),
       onPress: () => navigation.navigate("PrivacyPolicy"),
