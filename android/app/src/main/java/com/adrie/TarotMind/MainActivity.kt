@@ -1,4 +1,4 @@
-package com.anonymous.OneCardApp
+package com.adrie.TarotMind
 
 import android.os.Build
 import android.os.Bundle
@@ -58,4 +58,4 @@ class MainActivity : ReactActivity() {
       // because it's doing more than [Activity.moveTaskToBack] in fact.
       super.invokeDefaultOnBackPressed()
   }
-}
+} 

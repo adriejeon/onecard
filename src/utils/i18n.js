@@ -8,7 +8,7 @@ import en from "../locales/en.json";
 I18n.translations = { ko, en };
 
 // 디바이스 언어 감지 및 설정
-let languageCode = "en"; // 기본값을 영어로 변경
+let languageCode = "ko"; // 기본값을 한국어로 변경
 
 try {
   // 1. expo-localization 시도
@@ -110,6 +110,6 @@ try {
 // 최종 언어 설정
 I18n.locale = languageCode;
 I18n.fallbacks = true;
-I18n.defaultLocale = "en";
+I18n.defaultLocale = "ko";
 
 export default I18n;

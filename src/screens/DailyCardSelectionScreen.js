@@ -8,6 +8,7 @@ import {
   ImageBackground,
   ScrollView,
   StatusBar,
+  Platform,
 } from "react-native";
 import { Image } from "expo-image";
 import Animated, {
@@ -186,7 +187,11 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
     const checkDailyCard = async () => {
       try {
         // 특정 날짜의 데일리 카드 뽑기 가능 여부 확인
-        const dateKey = `dailyCard_${selectedDate.toISOString().split("T")[0]}`;
+        const year = selectedDate.getFullYear();
+        const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+        const day = String(selectedDate.getDate()).padStart(2, "0");
+        const dateString = `${year}-${month}-${day}`;
+        const dateKey = `dailyCard_${dateString}`;
 
         const existingCard = await AsyncStorage.getItem(dateKey);
 
@@ -229,7 +234,11 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
       setShowSelectedCard(true);
 
       // 특정 날짜에 데일리 카드 뽑기 완료 저장
-      const dateKey = `dailyCard_${selectedDate.toISOString().split("T")[0]}`;
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+      const day = String(selectedDate.getDate()).padStart(2, "0");
+      const dateString = `${year}-${month}-${day}`;
+      const dateKey = `dailyCard_${dateString}`;
 
       // 카드 결과 정보 가져오기
       const cardResult = cardResults[card.id] || {
@@ -243,7 +252,7 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
           title: cardResult.title || card.id, // 카드 제목 추가
         },
         cardType: "daily",
-        date: selectedDate.toISOString().split("T")[0],
+        date: dateString,
         score: cardResult.score,
         isPositive: cardResult.isPositive,
         createdAt: new Date().toISOString(),
@@ -259,11 +268,16 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
 
   const handleViewResult = () => {
     if (selectedCard) {
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+      const day = String(selectedDate.getDate()).padStart(2, "0");
+      const dateString = `${year}-${month}-${day}`;
+
       navigation.navigate("DailyResult", {
         result: selectedCard,
         cardType: "daily",
         cardData: {
-          date: selectedDate.toISOString().split("T")[0],
+          date: dateString,
           result: selectedCard,
         },
       });
@@ -500,6 +514,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    minHeight: Platform.OS === "android" ? 56 : undefined,
   },
   resultButtonDisabled: {
     opacity: 0.2,

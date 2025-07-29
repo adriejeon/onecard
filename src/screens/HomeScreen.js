@@ -17,6 +17,7 @@ import {
   Modal,
   Alert,
   Animated,
+  Platform,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
@@ -118,22 +119,27 @@ const HomeScreen = ({ navigation, route }) => {
   }, []);
 
   const updateGreeting = useCallback(() => {
-    const now = new Date();
-    const hour = now.getHours();
+    try {
+      const now = new Date();
+      const hour = now.getHours();
 
-    let greetingText = "";
-    if (hour >= 5 && hour < 12) {
-      greetingText = i18n.t("home.greetingMorning");
-    } else if (hour >= 12 && hour < 18) {
-      greetingText = i18n.t("home.greetingAfternoon");
-    } else if (hour >= 18 && hour < 22) {
-      greetingText = i18n.t("home.greetingEvening");
-    } else {
-      greetingText = i18n.t("home.greetingNight");
+      let greetingText = "";
+      if (hour >= 5 && hour < 12) {
+        greetingText = i18n.t("home.greetingMorning");
+      } else if (hour >= 12 && hour < 18) {
+        greetingText = i18n.t("home.greetingAfternoon");
+      } else if (hour >= 18 && hour < 22) {
+        greetingText = i18n.t("home.greetingEvening");
+      } else {
+        greetingText = i18n.t("home.greetingNight");
+      }
+
+      setGreeting(greetingText);
+      setCurrentDate(now);
+    } catch (error) {
+      console.log("인사말 업데이트 에러:", error);
+      setGreeting("안녕하세요!");
     }
-
-    setGreeting(greetingText);
-    setCurrentDate(now);
   }, []);
 
   const handleWorryButton = () => {
@@ -200,9 +206,14 @@ const HomeScreen = ({ navigation, route }) => {
   const handleDateSelect = (date) => {
     setSelectedDate(date);
     setShowDateModal(false);
-    // 일기 입력 페이지로 이동
+    // 일기 입력 페이지로 이동 - 로컬 시간대 사용
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const dateString = `${year}-${month}-${day}`;
+
     navigation.navigate("DiaryInput", {
-      selectedDate: date.toISOString().split("T")[0],
+      selectedDate: dateString,
     });
   };
 
@@ -244,7 +255,10 @@ const HomeScreen = ({ navigation, route }) => {
   };
 
   const getDiaryForDate = (date) => {
-    const dateString = date.toISOString().split("T")[0];
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const dateString = `${year}-${month}-${day}`;
     return diaryData[dateString];
   };
 
@@ -446,7 +460,11 @@ const HomeScreen = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.mainContainer}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         {/* 상단 인사 */}
         <View style={styles.greetingContainer}>
           <View style={styles.gradientContainer}>
@@ -515,7 +533,7 @@ const HomeScreen = ({ navigation, route }) => {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
 
       {/* 날짜 선택 모달 */}
       {renderDateModal()}
@@ -534,27 +552,24 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingTop: 20, // 헤더 아래 여백
     paddingHorizontal: 20,
-  },
-  mainContainer: {
-    flex: 1,
-    paddingTop: 20,
+    paddingBottom: 20, // 하단 여백 줄임
   },
   symbolImage: {
     width: 30,
     height: 30,
   },
   greetingContainer: {
-    flex: 1,
     justifyContent: "flex-start",
     paddingTop: 20,
-    paddingHorizontal: 24,
+    paddingHorizontal: 12,
+    marginBottom: 20,
   },
   gradientContainer: {
     width: "100%",
   },
   greetingText: {
     fontSize: 28,
-    fontWeight: "bold",
+    fontWeight: "normal",
     textAlign: "left",
   },
   dateText: {
@@ -564,7 +579,6 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   calendarWrapper: {
-    flex: 1,
     marginBottom: 20,
     overflow: "hidden", // 스와이프가 다른 영역에 영향을 주지 않도록 제한
     backgroundColor: "rgba(255, 255, 255, 0.05)", // 달력 영역을 시각적으로 구분 (선택사항)
@@ -572,7 +586,6 @@ const styles = StyleSheet.create({
     minHeight: 340, // 최소 높이 설정
   },
   calendarContainer: {
-    flex: 1,
     overflow: "hidden", // 달력 컨테이너 내부로 애니메이션 제한
     paddingHorizontal: 16, // 패딩 줄여서 더 많은 공간 활용
   },
@@ -598,7 +611,7 @@ const styles = StyleSheet.create({
     flex: 1, // 균등 분배를 위한 flex
   },
   calendarWeekHeaderText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
     color: "#474747",
   },
@@ -661,11 +674,11 @@ const styles = StyleSheet.create({
     borderColor: colors.textLight,
   },
   buttonContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-    paddingBottom: 20,
+    justifyContent: "center",
+    paddingTop: 10,
     paddingHorizontal: 16,
-    marginBottom: 20,
+    marginTop: 10,
+    marginBottom: 10,
   },
   worryButton: {
     borderRadius: 15,
@@ -675,9 +688,11 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     borderWidth: 1,
     backgroundColor: "transparent",
+    minHeight: Platform.OS === "android" ? 56 : undefined,
+    justifyContent: "center",
   },
   worryButtonText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: colors.primary,
     textAlign: "center",

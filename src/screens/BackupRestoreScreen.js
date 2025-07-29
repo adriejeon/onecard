@@ -68,9 +68,12 @@ const BackupRestoreScreen = ({ navigation }) => {
       };
 
       const backupJson = JSON.stringify(backupData, null, 2);
-      const fileName = `tarot_diary_backup_${
-        new Date().toISOString().split("T")[0]
-      }.json`;
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
+      const dateString = `${year}-${month}-${day}`;
+      const fileName = `tarot_diary_backup_${dateString}.json`;
 
       // 모든 플랫폼에서 파일로 저장
       const fileUri = `${FileSystem.documentDirectory}${fileName}`;
@@ -247,9 +250,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#F8F3FA",
   },
   menuContainer: {
-    flex: 1,
     paddingHorizontal: 24,
     paddingTop: 12,
+    paddingBottom: 20,
   },
   menuItem: {
     flexDirection: "row",
@@ -258,7 +261,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   menuText: {
-    fontSize: 16,
+    fontSize: 14,
     color: colors.textPrimary,
     fontWeight: "500",
   },
@@ -269,7 +272,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     paddingHorizontal: 24,
-    paddingBottom: 40,
+    paddingBottom: 20,
     paddingTop: 20,
   },
   infoText: {

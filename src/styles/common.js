@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 import { colors } from "./colors";
 
 const { width, height } = Dimensions.get("window");
@@ -48,7 +48,7 @@ export const commonStyles = StyleSheet.create({
 
   // 공통 텍스트 스타일
   gradientTitle: {
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 28,
@@ -79,9 +79,11 @@ export const commonStyles = StyleSheet.create({
     flex: 1,
     borderColor: colors.textPrimary,
     borderWidth: 1,
+    minHeight: Platform.OS === "android" ? 56 : undefined,
+    justifyContent: "center",
   },
   shareButtonText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "600",
     color: colors.textPrimary,
     textAlign: "center",
@@ -93,9 +95,11 @@ export const commonStyles = StyleSheet.create({
     flex: 1,
     borderColor: colors.primary,
     borderWidth: 1,
+    minHeight: Platform.OS === "android" ? 56 : undefined,
+    justifyContent: "center",
   },
   archiveButtonText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: colors.primary,
     textAlign: "center",
@@ -107,9 +111,11 @@ export const commonStyles = StyleSheet.create({
     flex: 1,
     borderColor: "#EA1B63",
     borderWidth: 1,
+    minHeight: Platform.OS === "android" ? 56 : undefined,
+    justifyContent: "center",
   },
   deleteButtonText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "600",
     color: "#EA1B63",
     textAlign: "center",
@@ -121,9 +127,11 @@ export const commonStyles = StyleSheet.create({
     flex: 1,
     borderColor: colors.textPrimary,
     borderWidth: 1,
+    minHeight: Platform.OS === "android" ? 56 : undefined,
+    justifyContent: "center",
   },
   retryButtonText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "600",
     color: colors.textPrimary,
     textAlign: "center",
@@ -146,9 +154,10 @@ export const commonStyles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    minHeight: Platform.OS === "android" ? 56 : undefined,
   },
   startButtonText: {
-    fontSize: 22,
+    fontSize: 16,
     fontWeight: "bold",
     color: colors.textLight,
     textAlign: "center",
@@ -161,9 +170,10 @@ export const commonStyles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    minHeight: Platform.OS === "android" ? 56 : undefined,
   },
   nextButtonText: {
-    fontSize: 22,
+    fontSize: 16,
     fontWeight: "bold",
     color: colors.textLight,
     textAlign: "center",
@@ -253,12 +263,12 @@ export const commonStyles = StyleSheet.create({
 
   // 공통 텍스트 스타일
   cardTitle: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "bold",
     textAlign: "center",
   },
   explanationText: {
-    fontSize: 16,
+    fontSize: 14,
     color: colors.textPrimary,
     textAlign: "center",
     lineHeight: 28,
@@ -277,7 +287,7 @@ export const commonStyles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: "bold",
     color: colors.textPrimary,
     textAlign: "center",
@@ -325,7 +335,7 @@ export const commonStyles = StyleSheet.create({
     borderRadius: 12,
     paddingHorizontal: 20,
     paddingVertical: 15,
-    fontSize: 16,
+    fontSize: 14,
     color: colors.textPrimary,
     minHeight: 120,
     textAlignVertical: "top",
@@ -414,7 +424,7 @@ export const commonStyles = StyleSheet.create({
     borderWidth: 1,
   },
   archiveButtonText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "600",
     color: colors.primary,
   },

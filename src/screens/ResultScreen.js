@@ -11,7 +11,9 @@ import {
   StatusBar,
   Alert,
   Linking,
+  BackHandler,
 } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { Image } from "expo-image";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
@@ -97,6 +99,30 @@ const ResultScreen = ({ navigation, route }) => {
       useNativeDriver: true,
     }).start();
   }, []);
+
+  // 안드로이드 하단 앱바 뒤로가기 버튼 제어
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        // 결과 화면에서 뒤로가기 시 홈으로 이동
+        if (route.params.fromArchive) {
+          // 보관함에서 온 경우 보관함으로 돌아가기
+          navigation.goBack();
+        } else {
+          // 새로운 카드 결과인 경우 홈으로 이동
+          navigation.navigate("Home");
+        }
+        return true; // 기본 뒤로가기 동작 방지
+      };
+
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        onBackPress
+      );
+
+      return () => backHandler.remove();
+    }, [navigation, route.params.fromArchive])
+  );
 
   const handleShare = async () => {
     try {

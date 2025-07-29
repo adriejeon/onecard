@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "bold",
     color: colors.textPrimary,
     textAlign: "center",
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   description: {
-    fontSize: 16,
+    fontSize: 14,
     color: colors.textSecondary,
     textAlign: "center",
     lineHeight: 24,
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.9)",
     borderRadius: 12,
     padding: 16,
-    fontSize: 16,
+    fontSize: 14,
     color: colors.textPrimary,
     borderWidth: 1,
     borderColor: "rgba(0, 0, 0, 0.1)",

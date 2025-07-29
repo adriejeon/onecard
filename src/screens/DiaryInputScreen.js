@@ -33,7 +33,13 @@ const { width, height } = Dimensions.get("window");
 
 const DiaryInputScreen = ({ navigation, route }) => {
   const { selectedDate: selectedDateParam } = route.params || {
-    selectedDate: new Date().toISOString().split("T")[0],
+    selectedDate: (() => {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    })(),
   };
   const selectedDate = new Date(selectedDateParam);
 
@@ -132,7 +138,11 @@ const DiaryInputScreen = ({ navigation, route }) => {
 
   const loadExistingDiary = useCallback(async () => {
     try {
-      const dateKey = `diary_${selectedDate.toISOString().split("T")[0]}`;
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+      const day = String(selectedDate.getDate()).padStart(2, "0");
+      const dateString = `${year}-${month}-${day}`;
+      const dateKey = `diary_${dateString}`;
       const existingDiary = await AsyncStorage.getItem(dateKey);
       if (existingDiary) {
         const diary = JSON.parse(existingDiary);
@@ -147,7 +157,11 @@ const DiaryInputScreen = ({ navigation, route }) => {
 
   const checkDailyCardStatus = useCallback(async () => {
     try {
-      const dateKey = `dailyCard_${selectedDate.toISOString().split("T")[0]}`;
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+      const day = String(selectedDate.getDate()).padStart(2, "0");
+      const dateString = `${year}-${month}-${day}`;
+      const dateKey = `dailyCard_${dateString}`;
 
       const dailyCard = await AsyncStorage.getItem(dateKey);
 
@@ -197,7 +211,11 @@ const DiaryInputScreen = ({ navigation, route }) => {
 
   const handleDeleteDiary = async () => {
     try {
-      const dateKey = `diary_${selectedDate.toISOString().split("T")[0]}`;
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+      const day = String(selectedDate.getDate()).padStart(2, "0");
+      const dateString = `${year}-${month}-${day}`;
+      const dateKey = `diary_${dateString}`;
       await AsyncStorage.removeItem(dateKey);
 
       // 상태 초기화
@@ -223,15 +241,20 @@ const DiaryInputScreen = ({ navigation, route }) => {
     }
 
     try {
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+      const day = String(selectedDate.getDate()).padStart(2, "0");
+      const dateString = `${year}-${month}-${day}`;
+
       const diaryData = {
-        date: selectedDate.toISOString().split("T")[0],
+        date: dateString,
         content: diaryText.trim(),
         emotion: selectedEmotion,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
 
-      const dateKey = `diary_${diaryData.date}`;
+      const dateKey = `diary_${dateString}`;
       await AsyncStorage.setItem(dateKey, JSON.stringify(diaryData));
 
       // 스낵바 표시
@@ -294,15 +317,20 @@ const DiaryInputScreen = ({ navigation, route }) => {
         }
 
         try {
+          const year = selectedDate.getFullYear();
+          const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+          const day = String(selectedDate.getDate()).padStart(2, "0");
+          const dateString = `${year}-${month}-${day}`;
+
           const diaryData = {
-            date: selectedDate.toISOString().split("T")[0],
+            date: dateString,
             content: diaryText.trim(),
             emotion: newEmotion,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
           };
 
-          const dateKey = `diary_${diaryData.date}`;
+          const dateKey = `diary_${dateString}`;
           await AsyncStorage.setItem(dateKey, JSON.stringify(diaryData));
 
           // 스낵바 표시
@@ -540,10 +568,20 @@ const DiaryInputScreen = ({ navigation, route }) => {
               {/* 과거 날짜인 경우 안내 메시지 표시 */}
               {isPastDate && (
                 <View style={styles.futureDateMessage}>
-                  <Text style={styles.futureDateSubText}>
+                  <Text
+                    style={[
+                      styles.futureDateSubText,
+                      Platform.OS === "android" && styles.androidText,
+                    ]}
+                  >
                     {i18n.t("diary.pastDateMessage")}
                   </Text>
-                  <Text style={styles.futureDateSubText}>
+                  <Text
+                    style={[
+                      styles.futureDateSubText,
+                      Platform.OS === "android" && styles.androidText,
+                    ]}
+                  >
                     {i18n.t("diary.pastDateSubMessage")}
                   </Text>
                 </View>
@@ -654,6 +692,7 @@ const styles = StyleSheet.create({
   emotionButton: {
     width: (width - 60) / 3,
     alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 10,
     marginBottom: 10,
     backgroundColor: "rgba(255, 255, 255, 0.7)",
@@ -669,15 +708,20 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     marginBottom: 5,
+    alignSelf: "center",
   },
   emotionLabel: {
     fontSize: 12,
     color: "#666666",
     fontWeight: "500",
+    textAlign: "center",
+    textAlignVertical: "center",
   },
   emotionLabelSelected: {
     color: "#3100BB",
     fontWeight: "bold",
+    textAlign: "center",
+    textAlignVertical: "center",
   },
   diaryContainer: {
     minHeight: 200,
@@ -692,6 +736,14 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     minHeight: 200,
     textAlignVertical: "top",
+    textShadowColor: "transparent",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 0,
+    elevation: 0,
+    shadowColor: "transparent",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0,
+    shadowRadius: 0,
   },
   characterCount: {
     fontSize: 12,
@@ -734,6 +786,7 @@ const styles = StyleSheet.create({
   snackbarText: {
     color: "#ffffff",
     fontSize: 14,
+    textAlign: "center",
   },
   customHeader: {
     flexDirection: "row",
@@ -770,6 +823,33 @@ const styles = StyleSheet.create({
     color: "#AFAFAF",
     textAlign: "center",
     lineHeight: 20,
+    fontWeight: "normal",
+    textShadowColor: "transparent",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 0,
+    elevation: 0,
+    shadowColor: "transparent",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    includeFontPadding: false,
+    textAlignVertical: "center",
+  },
+  androidText: {
+    color: "#AFAFAF",
+    textShadowColor: "transparent",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 0,
+    elevation: 0,
+    shadowColor: "transparent",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    includeFontPadding: false,
+    textAlignVertical: "center",
+    backgroundColor: "transparent",
+    fontFamily: Platform.OS === "android" ? "sans-serif" : undefined,
+    fontWeight: "400",
   },
 });
 

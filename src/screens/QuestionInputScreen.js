@@ -237,6 +237,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    minHeight: Platform.OS === "android" ? 56 : undefined,
   },
   nextButtonDisabled: {
     opacity: 0.2,

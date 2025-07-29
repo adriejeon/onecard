@@ -9,7 +9,7 @@ import CardDrawScreen from "../screens/CardDrawScreen";
 import ResultScreen from "../screens/ResultScreen";
 import DailyCardSelectionScreen from "../screens/DailyCardSelectionScreen";
 import DailyResultScreen from "../screens/DailyResultScreen";
-import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
+
 import MoreScreen from "../screens/MoreScreen";
 import CardArchiveScreen from "../screens/CardArchiveScreen";
 import ContactDeveloperScreen from "../screens/ContactDeveloperScreen";
@@ -44,7 +44,7 @@ const AppNavigator = () => {
           component={DailyCardSelectionScreen}
         />
         <Stack.Screen name="DailyResult" component={DailyResultScreen} />
-        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
+
         <Stack.Screen
           name="More"
           component={MoreScreen}

@@ -27,11 +27,6 @@ const MoreScreen = ({ navigation }) => {
       onPress: () => navigation.navigate("BackupRestore"),
     },
     {
-      id: "privacy",
-      title: i18n.t("more.privacy"),
-      onPress: () => navigation.navigate("PrivacyPolicy"),
-    },
-    {
       id: "contact",
       title: i18n.t("more.contact"),
       onPress: () => navigation.navigate("ContactDeveloper"),
@@ -111,9 +106,9 @@ const styles = StyleSheet.create({
     height: 36,
   },
   menuContainer: {
-    flex: 1,
     paddingHorizontal: 24,
     paddingTop: 12,
+    paddingBottom: 20,
   },
   menuItem: {
     flexDirection: "row",
@@ -122,7 +117,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   menuText: {
-    fontSize: 16,
+    fontSize: 14,
     color: colors.textPrimary,
     fontWeight: "500",
   },
@@ -133,7 +128,7 @@ const styles = StyleSheet.create({
   },
   versionContainer: {
     alignItems: "center",
-    paddingBottom: 40,
+    paddingBottom: 20,
     paddingTop: 20,
   },
   versionText: {

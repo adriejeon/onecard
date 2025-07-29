@@ -8,6 +8,7 @@ import {
   ImageBackground,
   ScrollView,
   StatusBar,
+  Platform,
 } from "react-native";
 import { Image } from "expo-image";
 import Animated, {
@@ -402,6 +403,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
+    minHeight: Platform.OS === "android" ? 56 : undefined,
   },
   resultButtonDisabled: {
     opacity: 0.2,

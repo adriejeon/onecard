@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "타로 일기",
+    "name": "나의 타로 일기",
     "slug": "TarotMind",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,9 +15,14 @@
     "jsEngine": "jsc",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.TarotMind",
+      "bundleIdentifier": "com.adrie.TarotMind",
+      "buildNumber": "1",
       "infoPlist": {
-        "CFBundleDisplayName": "타로 일기"
+        "CFBundleDisplayName": "나의 타로 일기",
+        "NSCameraUsageDescription": "이 앱은 카메라 접근 권한이 필요하지 않습니다.",
+        "NSPhotoLibraryUsageDescription": "이 앱은 사진 라이브러리 접근 권한이 필요하지 않습니다.",
+        "NSMicrophoneUsageDescription": "이 앱은 마이크 접근 권한이 필요하지 않습니다.",
+        "NSLocationWhenInUseUsageDescription": "이 앱은 위치 접근 권한이 필요하지 않습니다."
       },
       "splash": {
         "image": "./assets/splash-new.png",
@@ -26,7 +31,7 @@
       }
     },
     "android": {
-      "package": "com.anonymous.TarotMind",
+      "package": "com.adrie.TarotMind",
       "versionCode": 1,
       "permissions": [],
       "adaptiveIcon": {
@@ -39,8 +44,22 @@
         "resizeMode": "contain",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "allowBackup": true,
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION"
+      ]
     },
-    "plugins": ["expo-mail-composer"]
+    "plugins": [
+      "expo-mail-composer"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "aa09e1d4-28e9-4936-b7de-87fbc00ece18"
+      }
+    }
   }
 }
