@@ -11,6 +11,7 @@ import DailyCardSelectionScreen from "../screens/DailyCardSelectionScreen";
 import DailyResultScreen from "../screens/DailyResultScreen";
 
 import MoreScreen from "../screens/MoreScreen";
+import LanguageSelectionScreen from "../screens/LanguageSelectionScreen";
 import CardArchiveScreen from "../screens/CardArchiveScreen";
 import ContactDeveloperScreen from "../screens/ContactDeveloperScreen";
 import DiaryInputScreen from "../screens/DiaryInputScreen";
@@ -48,6 +49,14 @@ const AppNavigator = () => {
         <Stack.Screen
           name="More"
           component={MoreScreen}
+          options={{
+            presentation: "modal",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="LanguageSelection"
+          component={LanguageSelectionScreen}
           options={{
             presentation: "modal",
             headerShown: false,

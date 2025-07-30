@@ -86,14 +86,24 @@
       "question": "Question: {{question}}",
       "answer": "Answer: {{percentage}} {{text}}",
       "description": "{{description}}",
-      "invite": "Find your destiny's answer with OneCard app!"
+      "invite": "Find your destiny's answer with Tarot Diary app!"
     },
-    "shareTitle": "OneCard Result",
+    "shareTitle": "Tarot Diary Result",
     "shareFailTitle": "Share Failed",
     "shareFailMessage": "Share feature is not available."
   },
   "diary": {
     "emotionQuestion": "How are you feeling?",
+    "emotionQuestionPast": "How were you feeling?",
+    "todayTodoTitle": "Tasks to Do",
+    "addTodo": "Add",
+    "todoPlaceholder": "Enter your task",
+    "cardAdvice": {
+      "low": "Today, try to rest as much as possible.",
+      "medium": "Today, it's better not to push yourself too hard.",
+      "high": "Today, let's give it a go!",
+      "veryHigh": "Today, the harder you work, the better the results will be."
+    },
     "emotions": {
       "great": "Great",
       "good": "Good",
@@ -108,7 +118,13 @@
     "cardName": "Card Name",
     "keywords": "Keywords",
     "placeholder": "Record your special day here.",
+    "addPhoto": "Add Photos",
+    "photoLimitMessage": "You can add up to 3 photos.",
     "autoSaveMessage": "Your diary has been auto-saved. Write with peace of mind.",
+    "todoAutoSaveMessage": "Todo list has been auto-saved.",
+    "todoCompleteMessage1": "You completed one task. Keep going!",
+    "todoCompleteMessage2": "You completed the second task. Keep going to the end!",
+    "todoCompleteMessage3": "You completed the last task. Great job!",
     "futureDateMessage": "You can only draw daily cards for future dates.",
     "futureDateSubMessage": "You can record your diary and emotions when that date arrives.",
     "pastDateMessage": "You cannot draw daily cards for past dates.",
@@ -119,7 +135,61 @@
     "greetingAfternoon": "Good afternoon!",
     "greetingEvening": "Good evening!",
     "greetingNight": "Good night!",
-    "worryButton": "Do you have any concerns?"
+    "worryButton": "Any concerns?",
+    "dateFormat": "{{month}}/{{day}}/{{year}} ({{dayOfWeek}})",
+    "yearFormat": "{{year}}",
+    "monthFormat": "{{month}}",
+    "calendarHeader": "{{month}} {{year}}",
+    "dayOfWeek": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    },
+    "monthNames": {
+      "1": "Jan",
+      "2": "Feb",
+      "3": "Mar",
+      "4": "Apr",
+      "5": "May",
+      "6": "Jun",
+      "7": "Jul",
+      "8": "Aug",
+      "9": "Sep",
+      "10": "Oct",
+      "11": "Nov",
+      "12": "Dec"
+    },
+    "diaryDateFormat": "{{month}} {{day}}, {{dayOfWeek}}"
+  },
+  "todo": {
+    "title": "Today's Todo List",
+    "subtitle": "Goals suggested by today's card",
+    "addTodo": "Add Todo",
+    "placeholder": "Enter your task",
+    "intention": "Today's Intention",
+    "intentionPlaceholder": "Write your mindset for today",
+    "completionRate": "Completion: {{completed}}/{{total}}",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "completed": "Completed",
+    "incomplete": "Incomplete",
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "suggestions": {
+      "highScore": "Set challenging goals with high fortune score",
+      "lowScore": "Take it step by step with a stable mindset",
+      "positiveCard": "Try something new with positive energy",
+      "challengeCard": "Take one step further with a challenging spirit"
+    }
   },
   "archive": {
     "emptyTitle": "No saved card results.",
@@ -137,6 +207,11 @@
   "more": {
     "title": "More",
     "version": "App Version: 1.1.0",
+    "language": "Language Settings",
+    "languageChangeTitle": "Change Language",
+    "languageChangeMessage": "Do you want to change the language? You need to restart the app after changing.",
+    "languageChangedTitle": "Language Changed",
+    "languageChangedMessage": "Language has been changed. Please restart the app to apply the changes.",
     "archive": "Card Archive",
     "backup": "Backup/Restore",
     "privacy": "Privacy Policy",
@@ -179,7 +254,7 @@
     "errorTitle": "Error",
     "mailUnavailable": "Mail app is not available on this device.",
     "ok": "OK",
-    "mailSubject": "OneCard App - User Feedback",
+    "mailSubject": "Tarot Diary App - User Feedback",
     "mailBody": "User Feedback",
     "sendTime": "Sent at",
     "sendComplete": "Sent Successfully",
@@ -750,8 +825,8 @@
     "gradientTitle": "Today's Card Result",
     "title": "Today's Fortune",
     "todayCard": "Today's Card",
-    "shareApp": "Find your destiny's answer with OneCard app!",
-    "shareTitle": "OneCard Result",
+    "shareApp": "Find your destiny's answer with Tarot Diary app!",
+    "shareTitle": "Tarot Diary Result",
     "shareFailTitle": "Share Failed",
     "shareFailMessage": "Share feature is not available."
   }

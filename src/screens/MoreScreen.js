@@ -11,11 +11,24 @@ import { Image } from "expo-image";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 import i18n from "../utils/i18n";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const { width } = Dimensions.get("window");
 
 const MoreScreen = ({ navigation }) => {
+  const { currentLanguage } = useLanguage();
+
+  const handleLanguagePress = () => {
+    navigation.navigate("LanguageSelection");
+  };
+
   const menuItems = [
+    {
+      id: "language",
+      title: i18n.t("more.language"),
+      subtitle: currentLanguage === "ko" ? "한국어" : "English",
+      onPress: handleLanguagePress,
+    },
     {
       id: "archive",
       title: i18n.t("more.archive"),
@@ -78,7 +91,12 @@ const MoreScreen = ({ navigation }) => {
             onPress={item.onPress}
             activeOpacity={0.7}
           >
-            <Text style={styles.menuText}>{item.title}</Text>
+            <View style={styles.menuTextContainer}>
+              <Text style={styles.menuText}>{item.title}</Text>
+              {item.subtitle && (
+                <Text style={styles.menuSubtitle}>{item.subtitle}</Text>
+              )}
+            </View>
             <Image
               source={require("../../assets/back-icon.png")}
               style={styles.arrowIcon}
@@ -116,10 +134,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 16,
   },
+  menuTextContainer: {
+    flex: 1,
+  },
   menuText: {
     fontSize: 14,
     color: colors.textPrimary,
     fontWeight: "500",
+  },
+  menuSubtitle: {
+    fontSize: 12,
+    color: colors.textPrimary,
+    opacity: 0.6,
+    marginTop: 2,
   },
   arrowIcon: {
     width: 16,

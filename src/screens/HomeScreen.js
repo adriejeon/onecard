@@ -28,6 +28,12 @@ import { useFocusEffect } from "@react-navigation/native";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 import i18n from "../utils/i18n";
+import { useLanguage } from "../contexts/LanguageContext";
+import {
+  loadTodoData,
+  calculateCompletionRate,
+  saveTodoData,
+} from "../utils/todoUtils";
 
 const { width, height } = Dimensions.get("window");
 
@@ -46,6 +52,7 @@ const getCalendarCellSize = () => {
 };
 
 const HomeScreen = ({ navigation, route }) => {
+  const { currentLanguage } = useLanguage();
   const [greeting, setGreeting] = useState("");
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -53,6 +60,7 @@ const HomeScreen = ({ navigation, route }) => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [diaryData, setDiaryData] = useState({}); // 일기 데이터 저장
+  const [todoData, setTodoData] = useState(null); // 투두리스트 데이터
 
   // 애니메이션 관련 상태
   const translateY = useRef(new Animated.Value(0)).current;
@@ -75,13 +83,15 @@ const HomeScreen = ({ navigation, route }) => {
     updateGreeting();
     const interval = setInterval(updateGreeting, 60000); // 1분마다 업데이트
     loadDiaryData(); // 일기 데이터 로드
+    loadTodayTodoData(); // 오늘의 투두리스트 로드
     return () => clearInterval(interval);
-  }, []);
+  }, [currentLanguage]); // 언어 변경 시에도 업데이트
 
-  // 화면이 포커스될 때마다 일기 데이터 다시 로드
+  // 화면이 포커스될 때마다 일기 데이터와 투두리스트 다시 로드
   useFocusEffect(
     useCallback(() => {
       loadDiaryData();
+      loadTodayTodoData();
     }, [])
   );
 
@@ -118,6 +128,16 @@ const HomeScreen = ({ navigation, route }) => {
     }
   }, []);
 
+  const loadTodayTodoData = useCallback(async () => {
+    try {
+      const today = new Date();
+      const todoData = await loadTodoData(today);
+      setTodoData(todoData);
+    } catch (error) {
+      console.error("투두리스트 로드 실패:", error);
+    }
+  }, []);
+
   const updateGreeting = useCallback(() => {
     try {
       const now = new Date();
@@ -137,13 +157,42 @@ const HomeScreen = ({ navigation, route }) => {
       setGreeting(greetingText);
       setCurrentDate(now);
     } catch (error) {
-      console.log("인사말 업데이트 에러:", error);
       setGreeting("안녕하세요!");
     }
   }, []);
 
   const handleWorryButton = () => {
     navigation.navigate("QuestionInput");
+  };
+
+  // 테스트용 임시 투두리스트 생성 함수
+  const createTestTodoData = async () => {
+    try {
+      const today = new Date();
+      const testTodoData = {
+        date: `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
+          2,
+          "0"
+        )}-${String(today.getDate()).padStart(2, "0")}`,
+        cardId: "test_card",
+        cardScore: 7,
+        todos: [
+          { id: 1, text: "새로운 기술 배우기", completed: false },
+          { id: 2, text: "운동하기", completed: true },
+          { id: 3, text: "책 읽기", completed: false },
+        ],
+        intention: "긍정적인 마음가짐으로",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      const success = await saveTodoData(testTodoData);
+      if (success) {
+        setTodoData(testTodoData);
+      }
+    } catch (error) {
+      console.error("테스트 투두리스트 생성 실패:", error);
+    }
   };
 
   const handleHomePress = () => {
@@ -249,9 +298,15 @@ const HomeScreen = ({ navigation, route }) => {
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    const dayOfWeek = ["일", "월", "화", "수", "목", "금", "토"][date.getDay()];
+    const dayOfWeekKeys = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+    const dayOfWeek = i18n.t(`home.dayOfWeek.${dayOfWeekKeys[date.getDay()]}`);
 
-    return `${year}년 ${month}월 ${day}일 (${dayOfWeek})`;
+    return i18n.t("home.dateFormat", {
+      year: year,
+      month: month,
+      day: day,
+      dayOfWeek: dayOfWeek,
+    });
   };
 
   const getDiaryForDate = (date) => {
@@ -504,14 +559,19 @@ const HomeScreen = ({ navigation, route }) => {
                 onPress={handleDatePress}
               >
                 <Text style={styles.calendarTitle}>
-                  {selectedYear}년 {selectedMonth + 1}월
+                  {i18n.t("home.calendarHeader", {
+                    year: selectedYear,
+                    month: i18n.t(`home.monthNames.${selectedMonth + 1}`),
+                  })}
                 </Text>
               </TouchableOpacity>
               <View style={styles.calendarWeekHeader}>
-                {["일", "월", "화", "수", "목", "금", "토"].map(
-                  (day, index) => (
+                {["sun", "mon", "tue", "wed", "thu", "fri", "sat"].map(
+                  (dayKey, index) => (
                     <View key={index} style={styles.calendarWeekHeaderDay}>
-                      <Text style={styles.calendarWeekHeaderText}>{day}</Text>
+                      <Text style={styles.calendarWeekHeaderText}>
+                        {i18n.t(`home.dayOfWeek.${dayKey}`)}
+                      </Text>
                     </View>
                   )
                 )}
@@ -584,6 +644,91 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.05)", // 달력 영역을 시각적으로 구분 (선택사항)
     borderRadius: 15, // 달력 영역을 둥글게
     minHeight: 340, // 최소 높이 설정
+  },
+  todoContainer: {
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    borderRadius: 15,
+    padding: 16,
+    marginBottom: 20,
+  },
+  todoHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  todoTitle: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#fff",
+  },
+  todoCompletionRate: {
+    fontSize: 14,
+    color: "#ccc",
+  },
+  todoItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  todoCheckbox: {
+    width: 20,
+    height: 20,
+    borderWidth: 2,
+    borderColor: "#ccc",
+    borderRadius: 10,
+    marginRight: 12,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  todoCheckboxCompleted: {
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
+  },
+  todoCheckmark: {
+    color: "#fff",
+    fontSize: 12,
+    fontWeight: "bold",
+  },
+  todoText: {
+    flex: 1,
+    fontSize: 14,
+    color: "#fff",
+  },
+  todoTextCompleted: {
+    textDecorationLine: "line-through",
+    color: "#ccc",
+  },
+  todoMoreText: {
+    fontSize: 12,
+    color: "#ccc",
+    textAlign: "center",
+    marginTop: 8,
+  },
+  todoEmptyText: {
+    fontSize: 14,
+    color: "#ccc",
+    textAlign: "center",
+    marginTop: 8,
+  },
+  todoEmptySubText: {
+    fontSize: 12,
+    color: "#999",
+    textAlign: "center",
+    marginTop: 4,
+  },
+  testButton: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
+    marginTop: 12,
+    alignSelf: "center",
+  },
+  testButtonText: {
+    color: "#fff",
+    fontSize: 12,
+    fontWeight: "600",
   },
   calendarContainer: {
     overflow: "hidden", // 달력 컨테이너 내부로 애니메이션 제한
@@ -667,9 +812,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   emotionIcon: {
-    width: getCalendarCellSize() * 0.7, // 셀 크기에 비례한 아이콘 크기
-    height: getCalendarCellSize() * 0.7,
-    borderRadius: (getCalendarCellSize() * 0.7) / 2,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: colors.textLight,
   },
@@ -678,7 +823,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingHorizontal: 16,
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 20,
   },
   worryButton: {
     borderRadius: 15,

@@ -21,12 +21,16 @@ import {
   Keyboard,
   ScrollView,
   Animated,
+  Modal,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Image } from "expo-image";
+import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 import i18n from "../utils/i18n";
+
 import cardResults from "../assets/data/cardResults";
 
 const { width, height } = Dimensions.get("window");
@@ -57,70 +61,73 @@ const DiaryInputScreen = ({ navigation, route }) => {
   const [dailyCardData, setDailyCardData] = useState(null);
   const [hasExistingDiary, setHasExistingDiary] = useState(false);
   const [autoSaveTimeout, setAutoSaveTimeout] = useState(null);
+
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
   const snackbarOpacity = useState(new Animated.Value(0))[0];
   const scrollViewRef = useRef(null);
+
+  // 사진 관련 상태
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const emotions = useMemo(
     () => [
       {
         id: "great",
         image: require("../../assets/great.png"),
-        label: i18n.t("diary.emotions.great"),
+        label: "diary.emotions.great",
       },
       {
         id: "good",
         image: require("../../assets/good.png"),
-        label: i18n.t("diary.emotions.good"),
+        label: "diary.emotions.good",
       },
       {
         id: "okay",
         image: require("../../assets/okay.png"),
-        label: i18n.t("diary.emotions.okay"),
+        label: "diary.emotions.okay",
       },
       {
         id: "not-great",
         image: require("../../assets/not-great.png"),
-        label: i18n.t("diary.emotions.not-great"),
+        label: "diary.emotions.not-great",
       },
       {
         id: "bad",
         image: require("../../assets/bad.png"),
-        label: i18n.t("diary.emotions.bad"),
+        label: "diary.emotions.bad",
       },
       {
         id: "angry",
         image: require("../../assets/angry.png"),
-        label: i18n.t("diary.emotions.angry"),
+        label: "diary.emotions.angry",
       },
     ],
-    [i18n.locale]
+    []
   );
 
   // 카드 정보 가져오기 함수 - 메모이제이션
-  const getCardInfo = useCallback(
-    (cardId) => {
-      const cardResult = cardResults[cardId];
+  const getCardInfo = useCallback((cardId) => {
+    const cardResult = cardResults[cardId];
 
-      if (cardResult) {
-        const result = {
-          score: cardResult.score || "0",
-          title: i18n.t(`cards.${cardId}.title`) || cardResult.title || cardId,
-          keywords:
-            i18n.t(`cards.${cardId}.keywords`) || cardResult.keywords || "",
-        };
-        return result;
-      }
-
-      const fallback = {
-        score: "0",
-        title: cardId,
-        keywords: "",
+    if (cardResult) {
+      const result = {
+        score: cardResult.score || "0",
+        title: cardResult.title || cardId,
+        keywords: cardResult.keywords || "",
       };
-      return fallback;
-    },
-    [i18n.locale]
-  );
+      return result;
+    }
+
+    const fallback = {
+      score: "0",
+      title: cardId,
+      keywords: "",
+    };
+    return fallback;
+  }, []);
 
   useEffect(() => {
     // 기존 일기가 있는지 확인하고 로드
@@ -136,6 +143,17 @@ const DiaryInputScreen = ({ navigation, route }) => {
     };
   }, [loadExistingDiary, checkDailyCardStatus]);
 
+  // 사진 변경 시 자동 저장
+  useEffect(() => {
+    if (selectedImages.length > 0) {
+      const timeoutId = setTimeout(() => {
+        autoSave();
+      }, 1000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [selectedImages, autoSave]);
+
   const loadExistingDiary = useCallback(async () => {
     try {
       const year = selectedDate.getFullYear();
@@ -148,7 +166,10 @@ const DiaryInputScreen = ({ navigation, route }) => {
         const diary = JSON.parse(existingDiary);
         setDiaryText(diary.content || "");
         setSelectedEmotion(diary.emotion || null);
+        setSelectedImages(diary.images || []);
         setHasExistingDiary(true);
+      } else {
+        setSelectedImages([]);
       }
     } catch (error) {
       console.error("기존 일기 로드 실패:", error);
@@ -221,6 +242,7 @@ const DiaryInputScreen = ({ navigation, route }) => {
       // 상태 초기화
       setDiaryText("");
       setSelectedEmotion(null);
+      setSelectedImages([]);
       setHasExistingDiary(false);
 
       Alert.alert("일기 삭제 완료", "일기가 삭제되었습니다.", [
@@ -236,25 +258,47 @@ const DiaryInputScreen = ({ navigation, route }) => {
   };
 
   const autoSave = useCallback(async () => {
-    if (!diaryText.trim() && !selectedEmotion) {
-      return; // 내용이 없으면 저장하지 않음
-    }
+    // 실제로 변경된 내용이 있는지 확인
+    const hasContent = diaryText.trim().length > 0;
+    const hasEmotion = selectedEmotion !== null;
+    const hasImages = selectedImages.length > 0;
+
+    // 기존 데이터와 비교하여 변경사항이 있는지 확인
+    const currentSelectedDate = selectedDate;
+    const year = currentSelectedDate.getFullYear();
+    const month = String(currentSelectedDate.getMonth() + 1).padStart(2, "0");
+    const day = String(currentSelectedDate.getDate()).padStart(2, "0");
+    const dateString = `${year}-${month}-${day}`;
+    const dateKey = `diary_${dateString}`;
 
     try {
-      const year = selectedDate.getFullYear();
-      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
-      const day = String(selectedDate.getDate()).padStart(2, "0");
-      const dateString = `${year}-${month}-${day}`;
+      const existingData = await AsyncStorage.getItem(dateKey);
+      let hasChanges = false;
+
+      if (existingData) {
+        const existing = JSON.parse(existingData);
+        hasChanges =
+          existing.content !== diaryText.trim() ||
+          existing.emotion !== selectedEmotion ||
+          JSON.stringify(existing.images) !== JSON.stringify(selectedImages);
+      } else {
+        // 새로 생성되는 경우
+        hasChanges = hasContent || hasEmotion || hasImages;
+      }
+
+      if (!hasChanges) {
+        return; // 변경사항이 없으면 저장하지 않음
+      }
 
       const diaryData = {
         date: dateString,
         content: diaryText.trim(),
         emotion: selectedEmotion,
+        images: selectedImages,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
 
-      const dateKey = `diary_${dateString}`;
       await AsyncStorage.setItem(dateKey, JSON.stringify(diaryData));
 
       // 스낵바 표시
@@ -262,9 +306,10 @@ const DiaryInputScreen = ({ navigation, route }) => {
     } catch (error) {
       console.error("자동 저장 실패:", error);
     }
-  }, [diaryText, selectedEmotion, selectedDate]);
+  }, [diaryText, selectedEmotion, selectedImages]);
 
-  const showAutoSaveSnackbar = useCallback(() => {
+  const showAutoSaveSnackbar = useCallback((message) => {
+    setSnackbarMessage(message || i18n.t("diary.autoSaveMessage"));
     setShowSnackbar(true);
 
     // 스낵바 페이드 인
@@ -284,7 +329,7 @@ const DiaryInputScreen = ({ navigation, route }) => {
         setShowSnackbar(false);
       });
     }, 4000);
-  }, [snackbarOpacity]);
+  }, []);
 
   const handleTextChange = (text) => {
     setDiaryText(text);
@@ -359,29 +404,83 @@ const DiaryInputScreen = ({ navigation, route }) => {
     }
   };
 
-  const formatDate = (date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const dayOfWeek = date.getDay();
+  // 사진 선택 함수
+  const pickImage = async () => {
+    try {
+      // 권한 요청
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if (i18n.locale === "ko") {
-      const koreanDays = ["일", "월", "화", "수", "목", "금", "토"];
-      return `${year}년 ${month}월 ${day}일 ${koreanDays[dayOfWeek]}요일`;
-    } else {
-      const englishDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-      const formattedMonth = month.toString().padStart(2, "0");
-      const formattedDay = day.toString().padStart(2, "0");
-      return `${year}.${formattedMonth}.${formattedDay} ${englishDays[dayOfWeek]}`;
+      if (status !== "granted") {
+        Alert.alert("권한 필요", "사진 접근 권한이 필요합니다.");
+        return;
+      }
+
+      // 이미지 선택
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: false, // 여러 장 선택 시 편집 비활성화
+        allowsMultipleSelection: true, // 여러 장 선택 가능
+        selectionLimit: 3, // 최대 3장까지 선택 가능
+        quality: 0.8,
+      });
+
+      if (!result.canceled && result.assets.length > 0) {
+        const newImages = result.assets;
+
+        // 현재 선택된 이미지와 새로 선택한 이미지의 총 개수 확인
+        const totalImages = selectedImages.length + newImages.length;
+
+        if (totalImages > 3) {
+          Alert.alert("사진 제한", i18n.t("diary.photoLimitMessage"));
+          return;
+        }
+
+        setSelectedImages((prev) => [...prev, ...newImages]);
+      }
+    } catch (error) {
+      console.error("사진 선택 실패:", error);
+      Alert.alert("오류", "사진을 선택하는 중 오류가 발생했습니다.");
     }
   };
 
+  // 사진 삭제 함수
+  const removeImage = (index) => {
+    setSelectedImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  // 사진 전체화면 보기 함수
+  const openImageModal = (index) => {
+    setSelectedImageIndex(index);
+    setShowImageModal(true);
+  };
+
+  // 사진 모달 닫기 함수
+  const closeImageModal = () => {
+    setShowImageModal(false);
+  };
+
+  const formatDate = (date) => {
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const dayOfWeekKeys = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+    const dayOfWeek = i18n.t(`home.dayOfWeek.${dayOfWeekKeys[date.getDay()]}`);
+
+    return i18n.t("home.diaryDateFormat", {
+      month: i18n.t(`home.monthNames.${month}`),
+      day: day,
+      dayOfWeek: dayOfWeek,
+    });
+  };
+
   const renderEmotionSelector = () => {
+    const emotionQuestion = isPastDate
+      ? i18n.t("diary.emotionQuestionPast")
+      : i18n.t("diary.emotionQuestion");
+
     return (
       <View style={styles.emotionContainer}>
-        <Text style={styles.emotionTitle}>
-          {i18n.t("diary.emotionQuestion")}
-        </Text>
+        <Text style={styles.emotionTitle}>{emotionQuestion}</Text>
         <View style={styles.emotionGrid}>
           {emotions.map((emotion, index) => (
             <TouchableOpacity
@@ -403,12 +502,46 @@ const DiaryInputScreen = ({ navigation, route }) => {
                   selectedEmotion === emotion.id && styles.emotionLabelSelected,
                 ]}
               >
-                {emotion.label}
+                {i18n.t(emotion.label)}
               </Text>
             </TouchableOpacity>
           ))}
         </View>
       </View>
+    );
+  };
+
+  const renderImageModal = () => {
+    if (!showImageModal || selectedImages.length === 0) return null;
+
+    return (
+      <Modal
+        visible={showImageModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={closeImageModal}
+      >
+        <View style={styles.imageModalOverlay}>
+          <View style={styles.imageModalContainer}>
+            <TouchableOpacity
+              style={styles.imageModalCloseButton}
+              onPress={closeImageModal}
+            >
+              <Image
+                source={require("../../assets/close-icon.png")}
+                style={styles.imageModalCloseIcon}
+                contentFit="contain"
+              />
+            </TouchableOpacity>
+            <Image
+              source={{ uri: selectedImages[selectedImageIndex].uri }}
+              style={styles.imageModalImage}
+              contentFit="contain"
+              cachePolicy="memory-disk"
+            />
+          </View>
+        </View>
+      </Modal>
     );
   };
 
@@ -473,33 +606,209 @@ const DiaryInputScreen = ({ navigation, route }) => {
               nestedScrollEnabled={true}
               automaticallyAdjustKeyboardInsets={false}
             >
-              {/* 데일리 운세 버튼 - 과거 날짜가 아닌 경우에만 표시 */}
-              {!isPastDate && (
-                <View style={styles.dailyCardContainer}>
-                  {/* 운세 점수 표시 */}
-                  {hasDailyCard && dailyCardData && dailyCardData.result && (
-                    <View style={styles.scoreContainer}>
-                      {(() => {
-                        const cardInfo = getCardInfo(dailyCardData.result.id);
-                        return (
-                          <>
-                            <Text style={styles.scoreText}>
-                              {i18n.t("diary.dailyCardScore", {
-                                score: cardInfo.score,
-                              })}
-                            </Text>
-                            <Text style={styles.scoreText}>
-                              {i18n.t("diary.cardName")}: {cardInfo.title}
-                            </Text>
-                            <Text style={styles.scoreText}>
-                              {i18n.t("diary.keywords")}: {cardInfo.keywords}
-                            </Text>
-                          </>
-                        );
-                      })()}
-                    </View>
-                  )}
+              {/* 과거 날짜: 감정 선택 + 일기 입력 */}
+              {isPastDate && (
+                <>
+                  {/* 감정 선택 */}
+                  {renderEmotionSelector()}
 
+                  {/* 일기 내용 입력 */}
+                  <View style={styles.diaryContainer}>
+                    <View style={styles.inputWrapper}>
+                      {/* 선택된 이미지들 표시 */}
+                      {selectedImages.length > 0 && (
+                        <View style={styles.photoGrid}>
+                          {selectedImages.map((image, index) => (
+                            <View key={index} style={styles.photoItem}>
+                              <TouchableOpacity
+                                onPress={() => openImageModal(index)}
+                                activeOpacity={0.8}
+                              >
+                                <Image
+                                  source={{ uri: image.uri }}
+                                  style={styles.photoImage}
+                                  contentFit="cover"
+                                />
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                                style={styles.photoDeleteButton}
+                                onPress={() => removeImage(index)}
+                              >
+                                <Image
+                                  source={require("../../assets/close-icon.png")}
+                                  style={styles.photoDeleteIcon}
+                                  contentFit="contain"
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          ))}
+                        </View>
+                      )}
+
+                      <TextInput
+                        style={styles.diaryInput}
+                        value={diaryText}
+                        onChangeText={handleTextChange}
+                        placeholder={i18n.t("diary.placeholder")}
+                        placeholderTextColor="#999999"
+                        multiline
+                        textAlignVertical="top"
+                        maxLength={2000}
+                        scrollEnabled={true}
+                        keyboardType="default"
+                        returnKeyType="default"
+                        blurOnSubmit={false}
+                        onFocus={() =>
+                          scrollViewRef.current?.scrollToEnd({
+                            animated: true,
+                          })
+                        }
+                      />
+
+                      {/* 사진 추가 버튼 */}
+                      {selectedImages.length < 3 && (
+                        <TouchableOpacity
+                          style={styles.addPhotoButton}
+                          onPress={pickImage}
+                          activeOpacity={0.8}
+                        >
+                          <Image
+                            source={require("../../assets/photo-icon.png")}
+                            style={styles.photoIcon}
+                            contentFit="contain"
+                          />
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                  </View>
+                </>
+              )}
+
+              {/* 오늘 날짜: 데일리 카드 + 투두리스트 + 감정 선택 + 일기 입력 */}
+              {!isPastDate && !isFutureDate && (
+                <>
+                  {/* 데일리 카드 섹션 */}
+                  <View style={styles.dailyCardContainer}>
+                    {/* 운세 점수 표시 */}
+                    {hasDailyCard && dailyCardData && dailyCardData.result && (
+                      <View style={styles.scoreContainer}>
+                        {(() => {
+                          const cardInfo = getCardInfo(dailyCardData.result.id);
+                          return (
+                            <>
+                              <Text style={styles.scoreText}>
+                                {i18n.t("diary.dailyCardScore", {
+                                  score: cardInfo.score,
+                                })}
+                              </Text>
+                              <Text style={styles.scoreText}>
+                                {i18n.t("diary.cardName")}: {cardInfo.title}
+                              </Text>
+                              <Text style={styles.scoreText}>
+                                {i18n.t("diary.keywords")}: {cardInfo.keywords}
+                              </Text>
+                            </>
+                          );
+                        })()}
+                      </View>
+                    )}
+
+                    <TouchableOpacity
+                      style={styles.dailyCardButton}
+                      onPress={handleDailyCardPress}
+                      activeOpacity={0.8}
+                    >
+                      <Image
+                        source={require("../../assets/daily-icon.png")}
+                        style={styles.dailyCardIcon}
+                        contentFit="contain"
+                      />
+                      <Text style={styles.dailyCardText}>
+                        {hasDailyCard
+                          ? i18n.t("diary.dailyCardResult")
+                          : i18n.t("diary.dailyCardQuestion")}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  {/* 감정 선택 */}
+                  {renderEmotionSelector()}
+
+                  {/* 일기 내용 입력 */}
+                  <View style={styles.diaryContainer}>
+                    <View style={styles.inputWrapper}>
+                      {/* 선택된 이미지들 표시 */}
+                      {selectedImages.length > 0 && (
+                        <View style={styles.photoGrid}>
+                          {selectedImages.map((image, index) => (
+                            <View key={index} style={styles.photoItem}>
+                              <TouchableOpacity
+                                onPress={() => openImageModal(index)}
+                                activeOpacity={0.8}
+                              >
+                                <Image
+                                  source={{ uri: image.uri }}
+                                  style={styles.photoImage}
+                                  contentFit="cover"
+                                />
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                                style={styles.photoDeleteButton}
+                                onPress={() => removeImage(index)}
+                              >
+                                <Image
+                                  source={require("../../assets/close-icon.png")}
+                                  style={styles.photoDeleteIcon}
+                                  contentFit="contain"
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          ))}
+                        </View>
+                      )}
+
+                      <TextInput
+                        style={styles.diaryInput}
+                        value={diaryText}
+                        onChangeText={handleTextChange}
+                        placeholder={i18n.t("diary.placeholder")}
+                        placeholderTextColor="#999999"
+                        multiline
+                        textAlignVertical="top"
+                        maxLength={2000}
+                        scrollEnabled={true}
+                        keyboardType="default"
+                        returnKeyType="default"
+                        blurOnSubmit={false}
+                        onFocus={() =>
+                          scrollViewRef.current?.scrollToEnd({
+                            animated: true,
+                          })
+                        }
+                      />
+
+                      {/* 사진 추가 버튼 */}
+                      {selectedImages.length < 3 && (
+                        <TouchableOpacity
+                          style={styles.addPhotoButton}
+                          onPress={pickImage}
+                          activeOpacity={0.8}
+                        >
+                          <Image
+                            source={require("../../assets/photo-icon.png")}
+                            style={styles.photoIcon}
+                            contentFit="contain"
+                          />
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                  </View>
+                </>
+              )}
+
+              {/* 미래 날짜: 데일리 카드만 */}
+              {isFutureDate && (
+                <View style={styles.dailyCardContainer}>
                   <TouchableOpacity
                     style={styles.dailyCardButton}
                     onPress={handleDailyCardPress}
@@ -517,40 +826,6 @@ const DiaryInputScreen = ({ navigation, route }) => {
                     </Text>
                   </TouchableOpacity>
                 </View>
-              )}
-
-              {/* 미래 날짜가 아닌 경우에만 감정 선택과 일기 입력 표시 */}
-              {!isFutureDate && (
-                <>
-                  {/* 감정 선택 */}
-                  {renderEmotionSelector()}
-
-                  {/* 일기 내용 입력 */}
-                  <View style={styles.diaryContainer}>
-                    <TextInput
-                      style={styles.diaryInput}
-                      value={diaryText}
-                      onChangeText={handleTextChange}
-                      placeholder={i18n.t("diary.placeholder")}
-                      placeholderTextColor="#999999"
-                      multiline
-                      textAlignVertical="top"
-                      maxLength={2000}
-                      scrollEnabled={true}
-                      keyboardType="default"
-                      returnKeyType="default"
-                      blurOnSubmit={false}
-                      onFocus={() =>
-                        scrollViewRef.current?.scrollToEnd({
-                          animated: true,
-                        })
-                      }
-                    />
-                    <Text style={styles.characterCount}>
-                      {diaryText.length}/2000
-                    </Text>
-                  </View>
-                </>
               )}
 
               {/* 미래 날짜인 경우 안내 메시지 표시 */}
@@ -600,11 +875,12 @@ const DiaryInputScreen = ({ navigation, route }) => {
               },
             ]}
           >
-            <Text style={styles.snackbarText}>
-              {i18n.t("diary.autoSaveMessage")}
-            </Text>
+            <Text style={styles.snackbarText}>{snackbarMessage}</Text>
           </Animated.View>
         )}
+
+        {/* 이미지 전체화면 모달 */}
+        {renderImageModal()}
       </KeyboardAvoidingView>
     </ImageBackground>
   );
@@ -660,6 +936,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#474747",
   },
+  adviceText: {
+    fontSize: 14,
+    color: "#666",
+    fontStyle: "italic",
+    marginTop: 8,
+    textAlign: "center",
+  },
+
   scoreContainer: {
     paddingVertical: 15,
     paddingHorizontal: 20,
@@ -723,14 +1007,102 @@ const styles = StyleSheet.create({
     textAlign: "center",
     textAlignVertical: "center",
   },
+  photoGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+    marginBottom: 8,
+    paddingBottom: 5,
+  },
+  photoItem: {
+    position: "relative",
+    width: 80,
+    height: 80,
+  },
+  photoImage: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 8,
+  },
+  photoDeleteButton: {
+    position: "absolute",
+    top: -5,
+    right: -5,
+    backgroundColor: "#ff6b6b",
+    borderRadius: 10,
+    width: 20,
+    height: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  photoDeleteIcon: {
+    width: 12,
+    height: 12,
+  },
+  addPhotoButton: {
+    position: "absolute",
+    bottom: 10,
+    left: 10,
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    borderRadius: 8,
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  photoIcon: {
+    width: 20,
+    height: 20,
+  },
+  imageModalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.9)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  imageModalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    paddingHorizontal: 20,
+  },
+  imageModalCloseButton: {
+    position: "absolute",
+    top: 50,
+    right: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1000,
+  },
+  imageModalCloseIcon: {
+    width: 20,
+    height: 20,
+  },
+  imageModalImage: {
+    width: width,
+    height: height * 0.8,
+    resizeMode: "contain",
+  },
   diaryContainer: {
     minHeight: 200,
     marginBottom: 30,
+    position: "relative",
   },
-  diaryInput: {
+  inputWrapper: {
     backgroundColor: "rgba(255, 255, 255, 0.9)",
     borderRadius: 15,
     padding: 20,
+    position: "relative",
+    minHeight: 300,
+  },
+  diaryInput: {
+    backgroundColor: "transparent",
+    borderRadius: 0,
+    padding: 0,
     fontSize: 16,
     color: "#474747",
     lineHeight: 24,
@@ -819,10 +1191,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   futureDateSubText: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#AFAFAF",
     textAlign: "center",
-    lineHeight: 20,
+    lineHeight: 18,
     fontWeight: "normal",
     textShadowColor: "transparent",
     textShadowOffset: { width: 0, height: 0 },

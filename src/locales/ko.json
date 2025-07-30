@@ -86,14 +86,24 @@
       "question": "질문: {{question}}",
       "answer": "답: {{percentage}} {{text}}",
       "description": "{{description}}",
-      "invite": "원카드 앱으로 운명의 답을 찾아보세요!"
+      "invite": "타로 일기 앱으로 운명의 답을 찾아보세요!"
     },
-    "shareTitle": "원카드 결과",
+    "shareTitle": "타로 일기 결과",
     "shareFailTitle": "공유 실패",
     "shareFailMessage": "공유 기능을 사용할 수 없습니다."
   },
   "diary": {
-    "emotionQuestion": "마음이 어떠세요?",
+    "emotionQuestion": "기분이 어떠세요?",
+    "emotionQuestionPast": "기분이 어떠셨어요?",
+    "todayTodoTitle": "해야할 일",
+    "addTodo": "추가",
+    "todoPlaceholder": "할 일을 입력하세요",
+    "cardAdvice": {
+      "low": "오늘은 가능한 편히 쉬세요.",
+      "medium": "오늘은 무리하지 않는게 좋겠어요",
+      "high": "오늘은 좀 달려볼까요?",
+      "veryHigh": "오늘은 열심히하면 할수록 결과가 좋겠어요."
+    },
     "emotions": {
       "great": "최고",
       "good": "좋음",
@@ -108,7 +118,13 @@
     "cardName": "카드 이름",
     "keywords": "키워드",
     "placeholder": "특별한 하루를 기록해 보세요.",
+    "addPhoto": "사진 곁들이기",
+    "photoLimitMessage": "최대 3장까지 추가할 수 있습니다.",
     "autoSaveMessage": "일기가 자동 저장되었어요. 안심하고 작성하세요.",
+    "todoAutoSaveMessage": "투두리스트가 자동 저장되었어요.",
+    "todoCompleteMessage1": "할일 하나를 완료했어요. 좀 더 힘내세요!",
+    "todoCompleteMessage2": "두 번째 할일도 완료했어요. 마지막까지 힘내세요!",
+    "todoCompleteMessage3": "마지막 할일도 완료했어요. 고생 많으셨어요!",
     "futureDateMessage": "미래 날짜에는 데일리 카드만 뽑을 수 있습니다.",
     "futureDateSubMessage": "해당 날짜가 되면 일기와 감정을 기록할 수 있습니다.",
     "pastDateMessage": "과거 날짜에는 데일리 카드를 뽑을 수 없습니다.",
@@ -119,7 +135,61 @@
     "greetingAfternoon": "좋은 오후입니다!",
     "greetingEvening": "좋은 저녁입니다!",
     "greetingNight": "좋은 밤입니다!",
-    "worryButton": "고민이 있으세요?"
+    "worryButton": "고민 있으세요?",
+    "dateFormat": "{{year}}년 {{month}}월 {{day}}일 ({{dayOfWeek}})",
+    "yearFormat": "{{year}}년",
+    "monthFormat": "{{month}}월",
+    "calendarHeader": "{{year}}년 {{month}}",
+    "dayOfWeek": {
+      "sun": "일",
+      "mon": "월",
+      "tue": "화",
+      "wed": "수",
+      "thu": "목",
+      "fri": "금",
+      "sat": "토"
+    },
+    "monthNames": {
+      "1": "1월",
+      "2": "2월",
+      "3": "3월",
+      "4": "4월",
+      "5": "5월",
+      "6": "6월",
+      "7": "7월",
+      "8": "8월",
+      "9": "9월",
+      "10": "10월",
+      "11": "11월",
+      "12": "12월"
+    },
+    "diaryDateFormat": "{{month}} {{day}}일 {{dayOfWeek}}요일"
+  },
+  "todo": {
+    "title": "오늘의 투두리스트",
+    "subtitle": "오늘의 카드가 알려주는 목표",
+    "addTodo": "투두 추가",
+    "placeholder": "할 일을 입력하세요",
+    "intention": "오늘의 의도",
+    "intentionPlaceholder": "오늘의 마음가짐을 적어보세요",
+    "completionRate": "완료율: {{completed}}/{{total}}",
+    "save": "저장",
+    "cancel": "취소",
+    "delete": "삭제",
+    "edit": "수정",
+    "completed": "완료",
+    "incomplete": "미완료",
+    "difficulty": {
+      "easy": "쉬움",
+      "medium": "보통",
+      "hard": "어려움"
+    },
+    "suggestions": {
+      "highScore": "높은 운세 점수로 도전적인 목표를 세워보세요",
+      "lowScore": "안정적인 마음가짐으로 차근차근 진행해보세요",
+      "positiveCard": "긍정적인 에너지로 새로운 시도를 해보세요",
+      "challengeCard": "도전 정신으로 한 걸음 더 나아가보세요"
+    }
   },
   "archive": {
     "emptyTitle": "보관된 카드 결과가 없습니다.",
@@ -137,6 +207,11 @@
   "more": {
     "title": "더보기",
     "version": "앱 버전: 1.1.0",
+    "language": "언어 설정",
+    "languageChangeTitle": "언어 변경",
+    "languageChangeMessage": "언어를 변경하시겠습니까? 변경 후 앱을 다시 시작해야 합니다.",
+    "languageChangedTitle": "언어 변경 완료",
+    "languageChangedMessage": "언어가 변경되었습니다. 변경사항을 적용하려면 앱을 다시 시작해주세요.",
     "archive": "카드 결과 보관함",
     "backup": "백업/복원",
     "privacy": "개인정보처리방침",
@@ -179,7 +254,7 @@
     "errorTitle": "오류",
     "mailUnavailable": "이 기기에서는 메일 앱을 사용할 수 없습니다.",
     "ok": "확인",
-    "mailSubject": "원카드 앱 - 사용자 의견",
+    "mailSubject": "타로 일기 앱 - 사용자 의견",
     "mailBody": "사용자 의견",
     "sendTime": "전송 시간",
     "sendComplete": "전송 완료",
@@ -751,8 +826,8 @@
     "gradientTitle": "오늘의 카드 결과",
     "title": "오늘의 운세",
     "todayCard": "오늘의 카드",
-    "shareApp": "원카드 앱으로 운명의 답을 찾아보세요!",
-    "shareTitle": "원카드 결과",
+    "shareApp": "타로 일기 앱으로 운명의 답을 찾아보세요!",
+    "shareTitle": "타로 일기 결과",
     "shareFailTitle": "공유 실패",
     "shareFailMessage": "공유 기능을 사용할 수 없습니다."
   }
