@@ -165,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MoreScreen;
+export default React.memo(MoreScreen);

@@ -24,7 +24,7 @@ const LanguageSelectionScreen = ({ navigation, route }) => {
     await changeLanguage(language);
     setIsVisible(false);
 
-    // 모달 닫기만 하고 홈으로 이동하지 않음
+    // 언어 변경 후 이전 화면으로 돌아가되, 강제 리렌더링을 위해 약간의 지연 후 이동
     setTimeout(() => {
       navigation.goBack();
     }, 300);

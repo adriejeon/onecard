@@ -3,14 +3,17 @@ import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AppNavigator from "./src/navigation/AppNavigator";
 import { LanguageProvider } from "./src/contexts/LanguageContext";
+import ErrorBoundary from "./src/components/ErrorBoundary";
 
 export default function App() {
   return (
-    <LanguageProvider>
-      <SafeAreaProvider>
-        <StatusBar style="light" />
-        <AppNavigator />
-      </SafeAreaProvider>
-    </LanguageProvider>
+    <ErrorBoundary>
+      <LanguageProvider>
+        <SafeAreaProvider>
+          <StatusBar style="light" />
+          <AppNavigator />
+        </SafeAreaProvider>
+      </LanguageProvider>
+    </ErrorBoundary>
   );
 }

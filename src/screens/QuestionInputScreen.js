@@ -19,8 +19,10 @@ import { commonStyles } from "../styles/common";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import i18n from "../utils/i18n";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const QuestionInputScreen = ({ navigation, route }) => {
+  const { currentLanguage } = useLanguage(); // 언어 변경 감지를 위한 훅 추가
   const [question, setQuestion] = useState("");
 
   // 라우트 파라미터에서 카드 타입 확인
@@ -250,4 +252,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QuestionInputScreen;
+export default React.memo(QuestionInputScreen);

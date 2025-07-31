@@ -22,6 +22,7 @@ import { commonStyles } from "../styles/common";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import i18n from "../utils/i18n";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const { width, height } = Dimensions.get("window");
 
@@ -62,6 +63,7 @@ const cardImages = {
 };
 
 const CardDrawScreen = ({ navigation, route }) => {
+  const { currentLanguage } = useLanguage(); // 언어 변경 감지를 위한 훅 추가
   const { question, cardType } = route.params;
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);

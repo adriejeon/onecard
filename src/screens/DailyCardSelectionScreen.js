@@ -27,6 +27,7 @@ import {
   getTodayDailyCard,
 } from "../utils/dailyCardUtils";
 import i18n from "../utils/i18n";
+import { useLanguage } from "../contexts/LanguageContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import cardResults from "../assets/data/cardResults";
 
@@ -115,6 +116,7 @@ const tarotImages = {
 };
 
 const DailyCardSelectionScreen = ({ navigation, route }) => {
+  const { currentLanguage } = useLanguage(); // 언어 변경 감지를 위한 훅 추가
   const { selectedDate } = route.params || { selectedDate: new Date() };
 
   const [shuffledCards, setShuffledCards] = useState([]);

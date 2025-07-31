@@ -23,6 +23,7 @@ import MaskedView from "@react-native-masked-view/masked-view";
 import cardResults from "../assets/data/cardResults";
 import { saveCardResult, deleteCardResult } from "../utils/cardArchiveUtils";
 import i18n from "../utils/i18n";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const { width } = Dimensions.get("window");
 
@@ -39,6 +40,7 @@ const getCardKeyById = (id) => {
 };
 
 const DailyResultScreen = ({ navigation, route }) => {
+  const { currentLanguage } = useLanguage(); // 언어 변경 감지를 위한 훅 추가
   const { result, cardData } = route.params;
 
   // cardData가 있으면 그것을 사용하고, 없으면 result를 사용

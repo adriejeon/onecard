@@ -20,6 +20,7 @@ import {
   truncateQuestion,
 } from "../utils/cardArchiveUtils";
 import i18n from "../utils/i18n";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const CardArchiveScreen = ({ navigation }) => {
   const [archiveList, setArchiveList] = useState([]);

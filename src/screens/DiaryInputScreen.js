@@ -30,12 +30,14 @@ import * as FileSystem from "expo-file-system";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 import i18n from "../utils/i18n";
+import { useLanguage } from "../contexts/LanguageContext";
 
 import cardResults from "../assets/data/cardResults";
 
 const { width, height } = Dimensions.get("window");
 
 const DiaryInputScreen = ({ navigation, route }) => {
+  const { currentLanguage } = useLanguage(); // 언어 변경 감지를 위한 훅 추가
   const { selectedDate: selectedDateParam } = route.params || {
     selectedDate: (() => {
       const today = new Date();
@@ -404,9 +406,15 @@ const DiaryInputScreen = ({ navigation, route }) => {
     }
   };
 
-  // 사진 선택 함수
+  // 사진 선택 함수 (expo-image-picker 사용)
   const pickImage = async () => {
     try {
+      // 현재 선택된 이미지 개수 확인
+      if (selectedImages.length >= 3) {
+        Alert.alert("사진 제한", "최대 3장까지 선택할 수 있습니다.");
+        return;
+      }
+
       // 권한 요청
       const { status } =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -418,25 +426,21 @@ const DiaryInputScreen = ({ navigation, route }) => {
 
       // 이미지 선택
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: false, // 여러 장 선택 시 편집 비활성화
-        allowsMultipleSelection: true, // 여러 장 선택 가능
-        selectionLimit: 3, // 최대 3장까지 선택 가능
+        mediaTypes: ["images"],
+        allowsEditing: false,
+        allowsMultipleSelection: false, // 한 번에 하나씩 선택
         quality: 0.8,
       });
 
-      if (!result.canceled && result.assets.length > 0) {
-        const newImages = result.assets;
+      if (!result.canceled && result.assets && result.assets.length > 0) {
+        const newImage = {
+          uri: result.assets[0].uri,
+          width: result.assets[0].width,
+          height: result.assets[0].height,
+          type: result.assets[0].type,
+        };
 
-        // 현재 선택된 이미지와 새로 선택한 이미지의 총 개수 확인
-        const totalImages = selectedImages.length + newImages.length;
-
-        if (totalImages > 3) {
-          Alert.alert("사진 제한", i18n.t("diary.photoLimitMessage"));
-          return;
-        }
-
-        setSelectedImages((prev) => [...prev, ...newImages]);
+        setSelectedImages((prev) => [...prev, newImage]);
       }
     } catch (error) {
       console.error("사진 선택 실패:", error);

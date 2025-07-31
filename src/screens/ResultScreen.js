@@ -21,6 +21,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { saveCardResult, deleteCardResult } from "../utils/cardArchiveUtils";
 import i18n from "../utils/i18n";
+import { useLanguage } from "../contexts/LanguageContext";
 import cardResults from "../assets/data/cardResults";
 
 const { width, height } = Dimensions.get("window");
@@ -36,6 +37,7 @@ const getCardKeyById = (id) => {
 };
 
 const ResultScreen = ({ navigation, route }) => {
+  const { currentLanguage } = useLanguage(); // 언어 변경 감지를 위한 훅 추가
   const { question, result, cardType } = route.params;
 
   // 애니메이션 값들

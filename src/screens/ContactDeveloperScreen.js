@@ -18,6 +18,7 @@ import * as MailComposer from "expo-mail-composer";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 import i18n from "../utils/i18n";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const ContactDeveloperScreen = ({ navigation }) => {
   const [feedback, setFeedback] = useState("");

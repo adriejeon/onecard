@@ -45,12 +45,19 @@ export const LanguageProvider = ({ children }) => {
       }
     } catch (error) {
       console.error("언어 초기화 실패:", error);
+      // 에러 발생 시 기본값으로 설정
+      setCurrentLanguage("ko");
     }
   };
 
   const changeLanguage = async (language) => {
     await setLanguageUtil(language);
     setCurrentLanguage(language);
+
+    // 언어 변경 시 한 번만 강제 리렌더링 (성능 최적화)
+    setTimeout(() => {
+      setCurrentLanguage(language);
+    }, 10);
   };
 
   const value = {

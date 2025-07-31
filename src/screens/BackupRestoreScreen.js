@@ -7,8 +7,8 @@ import {
   Dimensions,
   StatusBar,
   Alert,
-  Share,
   Platform,
+  Share,
 } from "react-native";
 import { Image } from "expo-image";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -17,6 +17,7 @@ import * as DocumentPicker from "expo-document-picker";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 import i18n from "../utils/i18n";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const { width } = Dimensions.get("window");
 
@@ -266,19 +267,19 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   arrowIcon: {
-    width: 16,
-    height: 16,
+    width: 20,
+    height: 20,
     transform: [{ rotate: "180deg" }],
   },
   infoContainer: {
     paddingHorizontal: 24,
-    paddingBottom: 20,
     paddingTop: 20,
+    alignItems: "center",
   },
   infoText: {
     fontSize: 12,
     color: colors.textPrimary,
-    opacity: 0.6,
+    opacity: 0.7,
     textAlign: "center",
     lineHeight: 18,
   },
