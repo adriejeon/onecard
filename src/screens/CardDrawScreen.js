@@ -60,11 +60,14 @@ const cardImages = {
   30: require("../../assets/oracleCard/30.png"),
   31: require("../../assets/oracleCard/31.png"),
   32: require("../../assets/oracleCard/32.png"),
+  33: require("../../assets/oracleCard/33.png"),
+  34: require("../../assets/oracleCard/34.png"),
+  35: require("../../assets/oracleCard/35.png"),
 };
 
 const CardDrawScreen = ({ navigation, route }) => {
   const { currentLanguage } = useLanguage(); // 언어 변경 감지를 위한 훅 추가
-  const { question, cardType } = route.params;
+  const { question, cardType } = route.params || {};
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -73,14 +76,14 @@ const CardDrawScreen = ({ navigation, route }) => {
 
   // 카드 회전 애니메이션 값들 (react-native-reanimated 사용)
   const cardRotations = useRef(
-    Array(32)
+    Array(12)
       .fill(0)
       .map(() => useSharedValue(0))
   ).current;
 
   // 모든 카드에 대한 애니메이션 스타일을 미리 생성
   const backCardAnimatedStyles = useRef(
-    Array(32)
+    Array(12)
       .fill(0)
       .map((_, index) =>
         useAnimatedStyle(() => {
@@ -98,7 +101,7 @@ const CardDrawScreen = ({ navigation, route }) => {
   ).current;
 
   const frontCardAnimatedStyles = useRef(
-    Array(32)
+    Array(12)
       .fill(0)
       .map((_, index) =>
         useAnimatedStyle(() => {
@@ -115,10 +118,10 @@ const CardDrawScreen = ({ navigation, route }) => {
       )
   ).current;
 
-  // 32장의 카드 데이터 생성
+  // 35장의 카드 데이터 생성
   const generateCards = () => {
     const cards = [];
-    for (let i = 1; i <= 32; i++) {
+    for (let i = 1; i <= 35; i++) {
       cards.push({
         id: i,
         backImage: require("../../assets/card-back.png"),
@@ -126,6 +129,16 @@ const CardDrawScreen = ({ navigation, route }) => {
       });
     }
     return cards;
+  };
+
+  // 12장의 카드를 랜덤으로 선택
+  const selectRandomCards = (allCards) => {
+    const shuffled = [...allCards];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled.slice(0, 12);
   };
 
   // 카드 셔플 함수
@@ -140,8 +153,9 @@ const CardDrawScreen = ({ navigation, route }) => {
 
   // 컴포넌트 마운트 시 카드 셔플
   useEffect(() => {
-    const cards = generateCards();
-    setShuffledCards(shuffleCards(cards));
+    const allCards = generateCards();
+    const selectedCards = selectRandomCards(allCards);
+    setShuffledCards(selectedCards);
   }, []);
 
   // 동적 타이틀 생성
@@ -230,15 +244,12 @@ const CardDrawScreen = ({ navigation, route }) => {
         >
           {/* 상단 텍스트 */}
           <View style={styles.headerContainer}>
+            {/* 질문 텍스트 */}
             <View style={styles.gradientContainer}>
               <MaskedView
                 style={{ width: "100%" }}
                 maskElement={
-                  <Text style={styles.gradientTitle}>
-                    {question}
-                    {"\n"}
-                    {i18n.t("cardDraw.gradientTitleSuffix")}
-                  </Text>
+                  <Text style={styles.questionTitle}>{question}</Text>
                 }
               >
                 <LinearGradient
@@ -246,24 +257,31 @@ const CardDrawScreen = ({ navigation, route }) => {
                   start={{ x: 0, y: 0 }}
                   end={{ x: 0.8, y: 0 }}
                 >
-                  <Text style={[styles.gradientTitle, { opacity: 0 }]}>
+                  <Text style={[styles.questionTitle, { opacity: 0 }]}>
                     {question}
-                    {"\n"}
-                    {i18n.t("cardDraw.gradientTitleSuffix")}
                   </Text>
                 </LinearGradient>
               </MaskedView>
             </View>
+
+            {/* 안내 텍스트 */}
+            <Text style={styles.instructionText}>
+              {i18n.t("cardDraw.gradientTitleSuffix")}
+            </Text>
           </View>
 
           <View style={styles.cardsContainer}>
             {shuffledCards.map((card, index) => {
               const isSelected = selectedCardIndex === index;
+              const isLastCardInRow = (index + 1) % 4 === 0; // 4의 배수 번째 카드는 마지막 카드
 
               return (
                 <TouchableOpacity
                   key={`${card.id}-${index}`}
-                  style={styles.cardWrapper}
+                  style={[
+                    styles.cardWrapper,
+                    isLastCardInRow && { marginRight: 0 }, // 마지막 카드는 오른쪽 마진 제거
+                  ]}
                   onPress={() => handleCardPress(card, index)}
                   activeOpacity={0.8}
                   disabled={isAnimating || showSelectedCard}
@@ -343,12 +361,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
-  gradientTitle: {
+  questionTitle: {
     fontSize: 26,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 28,
+    marginBottom: 8,
     lineHeight: 34,
+  },
+  instructionText: {
+    fontSize: 16,
+    fontWeight: "400",
+    textAlign: "center",
+    marginBottom: 28,
+    lineHeight: 22,
+    color: colors.textSecondary,
   },
   scrollContainer: {
     flex: 1,
@@ -359,14 +385,15 @@ const styles = StyleSheet.create({
   cardsContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "flex-start",
-    paddingHorizontal: 4,
+    paddingHorizontal: 0,
   },
   cardWrapper: {
-    width: (width - 56) / 4, // 4개씩 배치, 좌우 패딩과 간격 고려
+    width: (width - 40 - 12) / 4, // 4개씩 배치, 좌우 패딩과 카드 간 간격(3개 * 4px) 고려
     aspectRatio: 0.7, // 카드 비율
-    marginBottom: 8,
+    marginBottom: 12, // 행 간격 증가
+    marginRight: 4, // 카드 간 간격
   },
   card: {
     flex: 1,

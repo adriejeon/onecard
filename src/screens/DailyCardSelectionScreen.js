@@ -189,9 +189,13 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
     const checkDailyCard = async () => {
       try {
         // 특정 날짜의 데일리 카드 뽑기 가능 여부 확인
-        const year = selectedDate.getFullYear();
-        const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
-        const day = String(selectedDate.getDate()).padStart(2, "0");
+        // 한국 시간 기준으로 날짜 문자열 생성
+        const koreanTime = new Date(
+          selectedDate.getTime() + 9 * 60 * 60 * 1000
+        ); // UTC+9
+        const year = koreanTime.getFullYear();
+        const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
+        const day = String(koreanTime.getDate()).padStart(2, "0");
         const dateString = `${year}-${month}-${day}`;
         const dateKey = `dailyCard_${dateString}`;
 
@@ -236,9 +240,11 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
       setShowSelectedCard(true);
 
       // 특정 날짜에 데일리 카드 뽑기 완료 저장
-      const year = selectedDate.getFullYear();
-      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
-      const day = String(selectedDate.getDate()).padStart(2, "0");
+      // 한국 시간 기준으로 날짜 문자열 생성
+      const koreanTime = new Date(selectedDate.getTime() + 9 * 60 * 60 * 1000); // UTC+9
+      const year = koreanTime.getFullYear();
+      const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
+      const day = String(koreanTime.getDate()).padStart(2, "0");
       const dateString = `${year}-${month}-${day}`;
       const dateKey = `dailyCard_${dateString}`;
 
@@ -270,9 +276,11 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
 
   const handleViewResult = () => {
     if (selectedCard) {
-      const year = selectedDate.getFullYear();
-      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
-      const day = String(selectedDate.getDate()).padStart(2, "0");
+      // 한국 시간 기준으로 날짜 문자열 생성
+      const koreanTime = new Date(selectedDate.getTime() + 9 * 60 * 60 * 1000); // UTC+9
+      const year = koreanTime.getFullYear();
+      const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
+      const day = String(koreanTime.getDate()).padStart(2, "0");
       const dateString = `${year}-${month}-${day}`;
 
       navigation.navigate("DailyResult", {

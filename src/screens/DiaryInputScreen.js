@@ -41,9 +41,11 @@ const DiaryInputScreen = ({ navigation, route }) => {
   const { selectedDate: selectedDateParam } = route.params || {
     selectedDate: (() => {
       const today = new Date();
-      const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, "0");
-      const day = String(today.getDate()).padStart(2, "0");
+      // 한국 시간 기준으로 날짜 문자열 생성
+      const koreanTime = new Date(today.getTime() + 9 * 60 * 60 * 1000); // UTC+9
+      const year = koreanTime.getFullYear();
+      const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
+      const day = String(koreanTime.getDate()).padStart(2, "0");
       return `${year}-${month}-${day}`;
     })(),
   };
@@ -158,9 +160,11 @@ const DiaryInputScreen = ({ navigation, route }) => {
 
   const loadExistingDiary = useCallback(async () => {
     try {
-      const year = selectedDate.getFullYear();
-      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
-      const day = String(selectedDate.getDate()).padStart(2, "0");
+      // 한국 시간 기준으로 날짜 문자열 생성
+      const koreanTime = new Date(selectedDate.getTime() + 9 * 60 * 60 * 1000); // UTC+9
+      const year = koreanTime.getFullYear();
+      const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
+      const day = String(koreanTime.getDate()).padStart(2, "0");
       const dateString = `${year}-${month}-${day}`;
       const dateKey = `diary_${dateString}`;
       const existingDiary = await AsyncStorage.getItem(dateKey);
@@ -180,9 +184,11 @@ const DiaryInputScreen = ({ navigation, route }) => {
 
   const checkDailyCardStatus = useCallback(async () => {
     try {
-      const year = selectedDate.getFullYear();
-      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
-      const day = String(selectedDate.getDate()).padStart(2, "0");
+      // 한국 시간 기준으로 날짜 문자열 생성
+      const koreanTime = new Date(selectedDate.getTime() + 9 * 60 * 60 * 1000); // UTC+9
+      const year = koreanTime.getFullYear();
+      const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
+      const day = String(koreanTime.getDate()).padStart(2, "0");
       const dateString = `${year}-${month}-${day}`;
       const dateKey = `dailyCard_${dateString}`;
 
@@ -234,9 +240,11 @@ const DiaryInputScreen = ({ navigation, route }) => {
 
   const handleDeleteDiary = async () => {
     try {
-      const year = selectedDate.getFullYear();
-      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
-      const day = String(selectedDate.getDate()).padStart(2, "0");
+      // 한국 시간 기준으로 날짜 문자열 생성
+      const koreanTime = new Date(selectedDate.getTime() + 9 * 60 * 60 * 1000); // UTC+9
+      const year = koreanTime.getFullYear();
+      const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
+      const day = String(koreanTime.getDate()).padStart(2, "0");
       const dateString = `${year}-${month}-${day}`;
       const dateKey = `diary_${dateString}`;
       await AsyncStorage.removeItem(dateKey);
@@ -267,9 +275,13 @@ const DiaryInputScreen = ({ navigation, route }) => {
 
     // 기존 데이터와 비교하여 변경사항이 있는지 확인
     const currentSelectedDate = selectedDate;
-    const year = currentSelectedDate.getFullYear();
-    const month = String(currentSelectedDate.getMonth() + 1).padStart(2, "0");
-    const day = String(currentSelectedDate.getDate()).padStart(2, "0");
+    // 한국 시간 기준으로 날짜 문자열 생성
+    const koreanTime = new Date(
+      currentSelectedDate.getTime() + 9 * 60 * 60 * 1000
+    ); // UTC+9
+    const year = koreanTime.getFullYear();
+    const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
+    const day = String(koreanTime.getDate()).padStart(2, "0");
     const dateString = `${year}-${month}-${day}`;
     const dateKey = `diary_${dateString}`;
 

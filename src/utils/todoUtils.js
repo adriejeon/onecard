@@ -2,9 +2,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // 투두리스트 데이터 구조
 export const createTodoData = (date, cardData) => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
+  // 한국 시간 기준으로 날짜 문자열 생성
+  const koreanTime = new Date(date.getTime() + 9 * 60 * 60 * 1000); // UTC+9
+  const year = koreanTime.getFullYear();
+  const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
+  const day = String(koreanTime.getDate()).padStart(2, "0");
   const dateString = `${year}-${month}-${day}`;
 
   return {
@@ -33,9 +35,11 @@ export const saveTodoData = async (todoData) => {
 // 투두리스트 불러오기
 export const loadTodoData = async (date) => {
   try {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
+    // 한국 시간 기준으로 날짜 문자열 생성
+    const koreanTime = new Date(date.getTime() + 9 * 60 * 60 * 1000); // UTC+9
+    const year = koreanTime.getFullYear();
+    const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
+    const day = String(koreanTime.getDate()).padStart(2, "0");
     const dateString = `${year}-${month}-${day}`;
 
     const key = `todo_${dateString}`;
@@ -50,9 +54,11 @@ export const loadTodoData = async (date) => {
 // 투두리스트 삭제
 export const deleteTodoData = async (date) => {
   try {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
+    // 한국 시간 기준으로 날짜 문자열 생성
+    const koreanTime = new Date(date.getTime() + 9 * 60 * 60 * 1000); // UTC+9
+    const year = koreanTime.getFullYear();
+    const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
+    const day = String(koreanTime.getDate()).padStart(2, "0");
     const dateString = `${year}-${month}-${day}`;
 
     const key = `todo_${dateString}`;

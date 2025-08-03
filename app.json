@@ -32,7 +32,7 @@
     },
     "android": {
       "package": "com.adrie.TarotMind",
-      "versionCode": 5,
+      "versionCode": 4,
       "permissions": [
         "CAMERA",
         "READ_EXTERNAL_STORAGE",

@@ -56,10 +56,11 @@
     "result": "결과 보기"
   },
   "cardDraw": {
-    "gradientTitleSuffix": "를 생각하며 한 장 뽑아주세요.",
+    "gradientTitleSuffix": "질문을 생각하며 한 장 뽑아주세요.",
     "result": "결과 보기",
     "dailyTitle": "데일리 카드",
-    "yesnoTitle": "무엇이든 물어보세요"
+    "yesnoTitle": "무엇이든 물어보세요",
+    "cardSuffix": "카드"
   },
   "result": {
     "archive": "보관하기",
@@ -661,164 +662,214 @@
   },
   "oracleResults": {
     "1": {
+      "name": "탄생",
       "text": "YES",
       "percentage": "100%",
       "description": "태양의 가호를 받은 태양 카드는 모든 일의 출발과 시작입니다. 될 일은 결코 이루어집니다."
     },
     "2": {
+      "name": "상승",
       "text": "YES",
       "percentage": "100%",
       "description": "위로 올라가는 상승 카드는 하는 일에 승리가 따를 것을 보여줍니다."
     },
     "3": {
+      "name": "명예",
       "text": "YES",
       "percentage": "100%",
       "description": "명예 카드는 질문이 곧 나의 명예를 상승시켜 줄 수 있음을 보여줍니다."
     },
     "4": {
+      "name": "리더쉽",
       "text": "YES",
       "percentage": "84%",
       "description": "리더쉽 카드는 나의 자리가 견고함을 보여줍니다. 질문이 긍정적인 방향으로 갈 것을 알려줍니다."
     },
     "5": {
+      "name": "우울",
       "text": "NO",
       "percentage": "73%",
       "description": "우울 카드는 고민이 많아지는 것을 보여줍니다. 질문의 방향이 좋지 않은 쪽으로 흘러갈 가능성이 있습니다."
     },
     "6": {
+      "name": "변덕/불안정",
       "text": "NO",
       "percentage": "86%",
       "description": "변덕 카드는 불안정한 상태를 보여줍니다. 질문의 미래가 불투명해질 수 있습니다."
     },
     "7": {
+      "name": "가족",
       "text": "YES",
       "percentage": "80%",
       "description": "가족 카드는 든든한 울타리 안에 있음을 보여줍니다. 질문의 미래가 안정적이라고 볼 수 있습니다."
     },
     "8": {
+      "name": "엄마",
       "text": "YES",
       "percentage": "90%",
       "description": "엄마 카드는 언제나 따뜻하게 품어주는 엄마와 같습니다. 질문이 긍정적인 방향으로 흘러갈 수 있습니다."
     },
     "9": {
+      "name": "질병",
       "text": "NO",
       "percentage": "94%",
       "description": "질병 카드는 뜻과 같이 일이 진행되지 않음을 보여줍니다. 결과가 좋지 않을 수 있습니다."
     },
     "10": {
+      "name": "변화",
       "text": "NO",
       "percentage": "56%",
       "description": "변화 카드는 변화를 암시합니다. 변화는 잘 대응하면 긍정적이지만 대체로 부정적입니다."
     },
     "11": {
+      "name": "지성",
       "text": "YES",
       "percentage": "73%",
       "description": "지성 카드는 꽤 긍정적입니다. 지성을 발휘하여 문제를 해결해 나갈 수 있습니다."
     },
     "12": {
+      "name": "도둑질",
       "text": "NO",
       "percentage": "95%",
       "description": "도둑질 카드는 부정적인 카드입니다. 내 생각과 다르게 타인의 부정 행위에 의해 좌절될 수 있습니다."
     },
     "13": {
+      "name": "거래",
       "text": "YES",
       "percentage": "64%",
       "description": "트레이드 카드는 꽤 긍정적입니다. 협상이 발생할 수 있지만 긍정적인 쪽으로 타협할 수 있습니다."
     },
     "14": {
+      "name": "즐거움",
       "text": "YES",
       "percentage": "82%",
       "description": "즐거움 카드는 상당히 긍정적입니다. 결과가 어찌되든 자신이 느끼는 행복과 즐거움이 따릅니다."
     },
     "15": {
+      "name": "평화",
       "text": "YES",
       "percentage": "100%",
       "description": "평화 카드는 무척 긍정적입니다. 결과는 결국 긍정적인 방향으로 종결되고 평화가 찾아올 것입니다."
     },
     "16": {
+      "name": "돈",
       "text": "YES",
       "percentage": "88%",
       "description": "돈 카드는 긍정에 가깝습니다. 금전적으로 해결되는 일, 혹은 금전이 되어 돌아오는 일 생길 수 있습니다."
     },
     "17": {
+      "name": "사랑",
       "text": "YES",
       "percentage": "100%",
       "description": "사랑 카드는 긍정입니다. 연애와 관련한 질문이었다면 결국 사랑의 화합으로 이어질 것입니다."
     },
     "18": {
+      "name": "음식과 음료",
       "text": "YES",
       "percentage": "88%",
       "description": "음식과 음료 카드는 긍정입니다. 맛있는걸 먹고 마시며 즐거운 시간으로 이어질 것입니다."
     },
     "19": {
+      "name": "악의",
       "text": "NO",
       "percentage": "100%",
       "description": "악의 카드는 부정적입니다. 내 뜻과 달리 타인의 개입이나 악의로 인해 좌절될 수 있습니다."
     },
     "20": {
+      "name": "전쟁",
       "text": "NO",
       "percentage": "100%",
       "description": "전쟁 카드는 부정적입니다. 서로 충돌하고 싸우고 오해하는 일이 생길 수 있습니다."
     },
     "21": {
+      "name": "적",
       "text": "NO",
       "percentage": "100%",
       "description": "적 카드는 부정적입니다. 나를 해치고 음해하는 적이 가까운 곳에 있을 수 있습니다."
     },
     "22": {
+      "name": "불/재난",
       "text": "NO",
       "percentage": "100%",
       "description": "재난 카드는 부정적입니다. 내 뜻과 다른 재해와 가까운 외부 변수로 인해 좌절될 수 있습니다."
     },
     "23": {
+      "name": "사고",
       "text": "NO",
       "percentage": "100%",
       "description": "사고 카드는 부정적입니다. 갑작스러운 이슈가 생길 수 있습니다."
     },
     "24": {
+      "name": "지원/후원",
       "text": "YES",
       "percentage": "70%",
       "description": "성찰 카드는 긍정적입니다. 자아 성찰을 통해 더 나은 미래로 나아갈 수 있습니다."
     },
     "25": {
+      "name": "좋은 기회",
       "text": "YES",
       "percentage": "100%",
       "description": "좋은 기회 카드는 무척 긍정적입니다. 생각하지 못한 좋은 기회가 가까운 곳에서 기다리고 있을 수 있습니다."
     },
     "26": {
+      "name": "명성",
       "text": "YES",
       "percentage": "100%",
       "description": "명성 카드는 무척 긍정적입니다. 주변에 나의 좋은 소식, 명성이 올라가는 긍정적인 이벤트가 있을 수 있습니다."
     },
     "27": {
+      "name": "불운",
       "text": "NO",
       "percentage": "100%",
       "description": "불운 카드는 부정적입니다. 내 실수나 잘못을 떠나서 찾아오는 불운이 생길 수 있습니다."
     },
     "28": {
+      "name": "비극",
       "text": "NO",
       "percentage": "100%",
       "description": "비극 카드는 부정적입니다. 이름에서 느껴지듯 비극적인 결론으로 이어질 수 있으니 주의가 필요합니다."
     },
     "29": {
+      "name": "파멸",
       "text": "NO",
       "percentage": "100%",
       "description": "파멸 카드는 부정적입니다. 이름에서 느껴지듯 파멸로 향하며 끝날 수 있습니다."
     },
     "30": {
+      "name": "지연/고통",
       "text": "NO",
       "percentage": "60%",
       "description": "지연 카드는 꽤 부정적입니다. 일의 지연과 막힘이 있을 수 있습니다."
     },
     "31": {
+      "name": "고립",
       "text": "NO",
       "percentage": "70%",
       "description": "고립 카드는 꽤 부정적입니다. 혼자 고립되어 외롭고 고독한 시간을 보낼 수 있습니다."
     },
     "32": {
+      "name": "대화/유머",
       "text": "YES",
       "percentage": "80%",
       "description": "유머 카드는 꽤 긍정적입니다. 누군가와 즐겁게 대화하고 웃을 수 있는 시간이 있을 수 있습니다."
+    },
+    "33": {
+      "name": "지혜",
+      "text": "YES",
+      "percentage": "89%",
+      "description": "지혜 카드는 지혜로 어려움이나 난관을 헤쳐나갈 수 있음을 보여줍니다. 긍정적입니다."
+    },
+    "34": {
+      "name": "행복",
+      "text": "YES",
+      "percentage": "100%",
+      "description": "행복 카드는 곧 행복의 감정이 찾아올 것을 보여줍니다. 행복은 멀리 있지 않습니다."
+    },
+    "35": {
+      "name": "건강한 가치관",
+      "text": "YES",
+      "percentage": "84%",
+      "description": "마음 깊이 자리 잡은 건강한 가치관으로 어려움을 이겨내고 극복할 수 있음을 보여줍니다. 무척 긍정적입니다."
     }
   },
   "dailyResult": {

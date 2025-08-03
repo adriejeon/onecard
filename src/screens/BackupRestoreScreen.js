@@ -70,9 +70,11 @@ const BackupRestoreScreen = ({ navigation }) => {
 
       const backupJson = JSON.stringify(backupData, null, 2);
       const today = new Date();
-      const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, "0");
-      const day = String(today.getDate()).padStart(2, "0");
+      // 한국 시간 기준으로 날짜 문자열 생성
+      const koreanTime = new Date(today.getTime() + 9 * 60 * 60 * 1000); // UTC+9
+      const year = koreanTime.getFullYear();
+      const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
+      const day = String(koreanTime.getDate()).padStart(2, "0");
       const dateString = `${year}-${month}-${day}`;
       const fileName = `tarot_diary_backup_${dateString}.json`;
 

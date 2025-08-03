@@ -169,11 +169,12 @@ const HomeScreen = ({ navigation, route }) => {
   const createTestTodoData = async () => {
     try {
       const today = new Date();
+      // 한국 시간 기준으로 날짜 문자열 생성
+      const koreanTime = new Date(today.getTime() + 9 * 60 * 60 * 1000); // UTC+9
       const testTodoData = {
-        date: `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
-          2,
-          "0"
-        )}-${String(today.getDate()).padStart(2, "0")}`,
+        date: `${koreanTime.getFullYear()}-${String(
+          koreanTime.getMonth() + 1
+        ).padStart(2, "0")}-${String(koreanTime.getDate()).padStart(2, "0")}`,
         cardId: "test_card",
         cardScore: 7,
         todos: [
@@ -255,10 +256,11 @@ const HomeScreen = ({ navigation, route }) => {
   const handleDateSelect = (date) => {
     setSelectedDate(date);
     setShowDateModal(false);
-    // 일기 입력 페이지로 이동 - 로컬 시간대 사용
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
+    // 일기 입력 페이지로 이동 - 한국 시간 기준 사용
+    const koreanTime = new Date(date.getTime() + 9 * 60 * 60 * 1000); // UTC+9
+    const year = koreanTime.getFullYear();
+    const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
+    const day = String(koreanTime.getDate()).padStart(2, "0");
     const dateString = `${year}-${month}-${day}`;
 
     navigation.navigate("DiaryInput", {
@@ -310,9 +312,11 @@ const HomeScreen = ({ navigation, route }) => {
   };
 
   const getDiaryForDate = (date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
+    // 한국 시간 기준으로 날짜 문자열 생성
+    const koreanTime = new Date(date.getTime() + 9 * 60 * 60 * 1000); // UTC+9
+    const year = koreanTime.getFullYear();
+    const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
+    const day = String(koreanTime.getDate()).padStart(2, "0");
     const dateString = `${year}-${month}-${day}`;
     return diaryData[dateString];
   };
@@ -554,17 +558,31 @@ const HomeScreen = ({ navigation, route }) => {
                 },
               ]}
             >
-              <TouchableOpacity
-                style={styles.calendarHeader}
-                onPress={handleDatePress}
-              >
-                <Text style={styles.calendarTitle}>
-                  {i18n.t("home.calendarHeader", {
-                    year: selectedYear,
-                    month: i18n.t(`home.monthNames.${selectedMonth + 1}`),
-                  })}
-                </Text>
-              </TouchableOpacity>
+              <View style={styles.calendarHeader}>
+                <TouchableOpacity
+                  style={styles.calendarTitleContainer}
+                  onPress={handleDatePress}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.calendarTitle}>
+                    {i18n.t("home.calendarHeader", {
+                      year: selectedYear,
+                      month: i18n.t(`home.monthNames.${selectedMonth + 1}`),
+                    })}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.calendarArrowButton}
+                  onPress={handleDatePress}
+                  activeOpacity={0.8}
+                >
+                  <Image
+                    source={require("../../assets/arrowDownIcon.png")}
+                    style={styles.calendarArrowIcon}
+                    contentFit="contain"
+                  />
+                </TouchableOpacity>
+              </View>
               <View style={styles.calendarWeekHeader}>
                 {["sun", "mon", "tue", "wed", "thu", "fri", "sat"].map(
                   (dayKey, index) => (
@@ -735,7 +753,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16, // 패딩 줄여서 더 많은 공간 활용
   },
   calendarHeader: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
     marginBottom: 20,
+  },
+  calendarTitleContainer: {
+    marginRight: 4,
+  },
+  calendarArrowButton: {
+    width: 20,
+    height: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  calendarArrowIcon: {
+    width: 16,
+    height: 16,
   },
   calendarTitle: {
     fontSize: 18,
@@ -812,9 +846,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   emotionIcon: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: 36,
+    height: 36,
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: colors.textLight,
   },

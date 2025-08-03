@@ -56,10 +56,11 @@
     "result": "View Result"
   },
   "cardDraw": {
-    "gradientTitleSuffix": "Think about it and draw a card.",
+    "gradientTitleSuffix": "Think about your question and draw a card.",
     "result": "View Result",
     "dailyTitle": "Daily Card",
-    "yesnoTitle": "Ask Anything"
+    "yesnoTitle": "Ask Anything",
+    "cardSuffix": "Card"
   },
   "result": {
     "archive": "Save",
@@ -660,164 +661,214 @@
   },
   "oracleResults": {
     "1": {
+      "name": "Birth",
       "text": "YES",
       "percentage": "100%",
       "description": "The Sun card, blessed by the sun, marks the start and beginning of all things. What is meant to be will surely come true."
     },
     "2": {
+      "name": "Rising",
       "text": "YES",
       "percentage": "100%",
       "description": "The Rising card shows that victory will follow in what you do."
     },
     "3": {
+      "name": "Honor",
       "text": "YES",
       "percentage": "100%",
       "description": "The Honor card shows that your question can elevate your honor."
     },
     "4": {
+      "name": "Leadership",
       "text": "YES",
       "percentage": "84%",
       "description": "The Leadership card shows that your position is solid. It indicates your question will go in a positive direction."
     },
     "5": {
+      "name": "Melancholy",
       "text": "NO",
       "percentage": "73%",
       "description": "The Melancholy card shows that you may have many worries. The direction of your question may flow in a negative way."
     },
     "6": {
+      "name": "Fickle/Unstable",
       "text": "NO",
       "percentage": "86%",
       "description": "The Fickle card shows an unstable state. The future of your question may become unclear."
     },
     "7": {
+      "name": "Family",
       "text": "YES",
       "percentage": "80%",
       "description": "The Family card shows that you are within a strong fence. The future of your question can be considered stable."
     },
     "8": {
+      "name": "Mother",
       "text": "YES",
       "percentage": "90%",
       "description": "The Mother card is always like a warm embrace. Your question can flow in a positive direction."
     },
     "9": {
+      "name": "Disease",
       "text": "NO",
       "percentage": "94%",
       "description": "The Disease card shows that things are not going as intended. The result may not be good."
     },
     "10": {
+      "name": "Change",
       "text": "NO",
       "percentage": "56%",
       "description": "The Change card suggests change. If you respond well, it can be positive, but generally it is negative."
     },
     "11": {
+      "name": "Intelligence",
       "text": "YES",
       "percentage": "73%",
       "description": "The Intelligence card is quite positive. You can solve problems by using your intelligence."
     },
     "12": {
+      "name": "Theft",
       "text": "NO",
       "percentage": "95%",
       "description": "The Theft card is negative. Things may be frustrated by the negative actions of others, not your own thoughts."
     },
     "13": {
+      "name": "Trade",
       "text": "YES",
       "percentage": "64%",
       "description": "The Trade card is quite positive. Negotiations may occur, but you can compromise positively."
     },
     "14": {
+      "name": "Joy",
       "text": "YES",
       "percentage": "82%",
       "description": "The Joy card is very positive. Whatever the result, happiness and joy will follow."
     },
     "15": {
+      "name": "Peace",
       "text": "YES",
       "percentage": "100%",
       "description": "The Peace card is very positive. The result will eventually end positively and peace will come."
     },
     "16": {
+      "name": "Money",
       "text": "YES",
       "percentage": "88%",
       "description": "The Money card is close to positive. There may be things resolved financially or money coming back to you."
     },
     "17": {
+      "name": "Love",
       "text": "YES",
       "percentage": "100%",
       "description": "The Love card is positive. If your question was about romance, it will eventually lead to a union of love."
     },
     "18": {
+      "name": "Food and Drink",
       "text": "YES",
       "percentage": "88%",
       "description": "The Food and Drink card is positive. You will have a good time eating and drinking delicious things."
     },
     "19": {
+      "name": "Malice",
       "text": "NO",
       "percentage": "100%",
       "description": "The Malice card is negative. Things may be frustrated by the intervention or malice of others, not your own will."
     },
     "20": {
+      "name": "War",
       "text": "NO",
       "percentage": "100%",
       "description": "The War card is negative. There may be conflicts, fights, and misunderstandings."
     },
     "21": {
+      "name": "Enemy",
       "text": "NO",
       "percentage": "100%",
       "description": "The Enemy card is negative. There may be an enemy close by who harms or slanders you."
     },
     "22": {
+      "name": "Fire/Disaster",
       "text": "NO",
       "percentage": "100%",
       "description": "The Disaster card is negative. Things may be frustrated by disasters or external variables beyond your control."
     },
     "23": {
+      "name": "Accident",
       "text": "NO",
       "percentage": "100%",
       "description": "The Accident card is negative. Sudden issues may arise."
     },
     "24": {
+      "name": "Support/Sponsorship",
       "text": "YES",
       "percentage": "70%",
       "description": "The Reflection card is positive. Through self-reflection, you can move toward a better future."
     },
     "25": {
+      "name": "Good Opportunity",
       "text": "YES",
       "percentage": "100%",
       "description": "The Good Opportunity card is very positive. Unexpected good opportunities may be waiting nearby."
     },
     "26": {
+      "name": "Fame",
       "text": "YES",
       "percentage": "100%",
       "description": "The Fame card is very positive. There may be positive events where your good news and reputation rise."
     },
     "27": {
+      "name": "Misfortune",
       "text": "NO",
       "percentage": "100%",
       "description": "The Misfortune card is negative. Misfortune may come regardless of your mistakes or faults."
     },
     "28": {
+      "name": "Tragedy",
       "text": "NO",
       "percentage": "100%",
       "description": "The Tragedy card is negative. As the name suggests, it may lead to a tragic conclusion, so be careful."
     },
     "29": {
+      "name": "Ruin",
       "text": "NO",
       "percentage": "100%",
       "description": "The Ruin card is negative. As the name suggests, it may end in ruin."
     },
     "30": {
+      "name": "Delay/Pain",
       "text": "NO",
       "percentage": "60%",
       "description": "The Delay card is quite negative. There may be delays and blockages."
     },
     "31": {
+      "name": "Isolation",
       "text": "NO",
       "percentage": "70%",
       "description": "The Isolation card is quite negative. You may spend lonely and solitary times in isolation."
     },
     "32": {
+      "name": "Conversation/Humor",
       "text": "YES",
       "percentage": "80%",
       "description": "The Humor card is quite positive. There may be times when you have fun conversations and laugh with someone."
+    },
+    "33": {
+      "name": "Wisdom",
+      "text": "YES",
+      "percentage": "89%",
+      "description": "The Wisdom card shows that you can overcome difficulties and obstacles with wisdom. It is positive."
+    },
+    "34": {
+      "name": "Happiness",
+      "text": "YES",
+      "percentage": "100%",
+      "description": "The Happiness card shows that the feeling of happiness will soon come. Happiness is not far away."
+    },
+    "35": {
+      "name": "Healthy Values",
+      "text": "YES",
+      "percentage": "84%",
+      "description": "With the healthy values deeply rooted in your heart, you can overcome and conquer difficulties. It is very positive."
     }
   },
   "dailyResult": {

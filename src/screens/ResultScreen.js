@@ -69,6 +69,7 @@ const ResultScreen = ({ navigation, route }) => {
       isPositive: i18n.t(`oracleResults.${cardId}.text`) === "YES",
       percentage: i18n.t(`oracleResults.${cardId}.percentage`),
       text: i18n.t(`oracleResults.${cardId}.text`),
+      name: i18n.t(`oracleResults.${cardId}.name`),
       description: i18n.t(`oracleResults.${cardId}.description`),
     };
   };
@@ -352,6 +353,19 @@ const ResultScreen = ({ navigation, route }) => {
           </Animated.View>
         </View>
 
+        {/* 카드 이름 */}
+        <Animated.View
+          style={[
+            styles.cardNameContainer,
+            {
+              opacity: resultOpacity,
+              transform: [{ scale: resultScale }],
+            },
+          ]}
+        >
+          <Text style={styles.cardNameText}>{cardResult.name} {i18n.t("cardDraw.cardSuffix")}</Text>
+        </Animated.View>
+
         {/* YES/NO 퍼센트 텍스트 */}
         <Animated.View
           style={[
@@ -499,6 +513,16 @@ const styles = StyleSheet.create({
   resultCardImage: {
     width: "100%",
     height: "100%",
+  },
+  cardNameContainer: {
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  cardNameText: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: colors.textPrimary,
+    textAlign: "center",
   },
   percentageContainer: {
     alignItems: "center",
