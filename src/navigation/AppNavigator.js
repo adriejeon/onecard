@@ -37,14 +37,45 @@ const AppNavigator = () => {
             gestureEnabled: false,
           }}
         />
-        <Stack.Screen name="QuestionInput" component={QuestionInputScreen} />
-        <Stack.Screen name="CardDraw" component={CardDrawScreen} />
-        <Stack.Screen name="Result" component={ResultScreen} />
+        <Stack.Screen
+          name="QuestionInput"
+          component={QuestionInputScreen}
+          options={{
+            gestureEnabled: true,
+            gestureResponseDistance: 50,
+          }}
+        />
+        <Stack.Screen
+          name="CardDraw"
+          component={CardDrawScreen}
+          options={{
+            gestureEnabled: true,
+            gestureResponseDistance: 50,
+          }}
+        />
+        <Stack.Screen
+          name="Result"
+          component={ResultScreen}
+          options={{
+            gestureEnabled: true,
+            gestureResponseDistance: 50,
+          }}
+        />
         <Stack.Screen
           name="DailyCardSelection"
           component={DailyCardSelectionScreen}
+          options={{
+            gestureEnabled: true,
+            gestureResponseDistance: 50,
+          }}
         />
-        <Stack.Screen name="DailyResult" component={DailyResultScreen} />
+        <Stack.Screen
+          name="DailyResult"
+          component={DailyResultScreen}
+          options={{
+            gestureEnabled: false,
+          }}
+        />
 
         <Stack.Screen
           name="More"
@@ -67,7 +98,14 @@ const AppNavigator = () => {
           name="ContactDeveloper"
           component={ContactDeveloperScreen}
         />
-        <Stack.Screen name="DiaryInput" component={DiaryInputScreen} />
+        <Stack.Screen
+          name="DiaryInput"
+          component={DiaryInputScreen}
+          options={{
+            gestureEnabled: true,
+            gestureResponseDistance: 50,
+          }}
+        />
         <Stack.Screen name="BackupRestore" component={BackupRestoreScreen} />
       </Stack.Navigator>
     </NavigationContainer>

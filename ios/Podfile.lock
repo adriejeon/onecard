@@ -1355,7 +1355,7 @@ PODS:
     - React-jsiexecutor
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
-  - react-native-safe-area-context (5.4.0):
+  - react-native-safe-area-context (5.6.0):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -1369,8 +1369,8 @@ PODS:
     - React-ImageManager
     - React-jsc
     - React-jsi
-    - react-native-safe-area-context/common (= 5.4.0)
-    - react-native-safe-area-context/fabric (= 5.4.0)
+    - react-native-safe-area-context/common (= 5.6.0)
+    - react-native-safe-area-context/fabric (= 5.6.0)
     - React-NativeModulesApple
     - React-RCTFabric
     - React-renderercss
@@ -1380,7 +1380,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-safe-area-context/common (5.4.0):
+  - react-native-safe-area-context/common (5.6.0):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -1403,7 +1403,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-safe-area-context/fabric (5.4.0):
+  - react-native-safe-area-context/fabric (5.6.0):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -2005,7 +2005,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNShare (12.1.0):
+  - RNShare (12.2.0):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -2028,7 +2028,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNSVG (15.11.2):
+  - RNSVG (15.12.1):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -2050,9 +2050,9 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNSVG/common (= 15.11.2)
+    - RNSVG/common (= 15.12.1)
     - Yoga
-  - RNSVG/common (15.11.2):
+  - RNSVG/common (15.12.1):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -2075,7 +2075,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNVectorIcons (10.2.0):
+  - RNVectorIcons (10.3.0):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -2410,9 +2410,9 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
+  boost: 1dca942403ed9342f98334bf4c3621f011aa7946
   BVLinearGradient: cb006ba232a1f3e4f341bb62c42d1098c284da70
-  DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
+  DoubleConversion: f16ae600a246532c4020132d54af21d0ddb2a385
   EXConstants: 98bcf0f22b820f9b28f9fee55ff2daededadd2f8
   EXImageLoader: 4d3d3284141f1a45006cc4d0844061c182daf7ee
   Expo: ad449665420b9fe5e907bd97e79aec2e47f98785
@@ -2429,7 +2429,7 @@ SPEC CHECKSUMS:
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
   FBLazyVector: d2a9cd223302b6c9aa4aa34c1a775e9db609eb52
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
-  glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
+  glog: 08b301085f15bcbb6ff8632a8ebaf239aae04e6a
   libavif: 84bbb62fb232c3018d6f1bab79beea87e35de7b7
   libdav1d: 23581a4d8ec811ff171ed5e2e05cd27bad64c39f
   libwebp: 02b23773aedb6ff1fd38cec7a77b81414c6842a8
@@ -2464,7 +2464,7 @@ SPEC CHECKSUMS:
   React-logger: 85fa3509931497c72ccd2547fcc91e7299d8591e
   React-Mapbuffer: 96a2f2a176268581733be182fa6eebab1c0193be
   React-microtasksnativemodule: 11b292232f1626567a79d58136689f1b911c605f
-  react-native-safe-area-context: b0ee54c424896b916aab46212b884cb8794308d7
+  react-native-safe-area-context: 26f8341d77762efc31b101297c302f573f4b045e
   React-NativeModulesApple: 494c38599b82392ed14b2c0118fca162425bb618
   React-oscompat: 0592889a9fcf0eacb205532028e4a364e22907dd
   React-perflogger: c584fa50e422a46f37404d083fad12eb289d5de4
@@ -2502,9 +2502,9 @@ SPEC CHECKSUMS:
   RNReactNativeHapticFeedback: 6a35ca0dedbf89e276d8167d12c7775d7c47af5f
   RNReanimated: 79c239f5562adcf2406b681830f716f1e7d76081
   RNScreens: dd9a329b21412c5322a5447fc2c3ae6471cf6e5a
-  RNShare: 43ca21a6884546b6e056c375085810d8868ac805
-  RNSVG: 57225e3832e15933a2e18e15b9db2d0455610465
-  RNVectorIcons: a6b0ef90022e1383800ece67d832535d57625aa5
+  RNShare: d89d06f3e254b365cef8d1e4c3c4be510bd676fb
+  RNSVG: 820687c168d70d90a47d96a0cd5e263905fc67d9
+  RNVectorIcons: e8b1657fe26c7d7338c7ac827395dc3af8dd0870
   SDWebImage: f29024626962457f3470184232766516dee8dfea
   SDWebImageAVIFCoder: 00310d246aab3232ce77f1d8f0076f8c4b021d90
   SDWebImageSVGCoder: 15a300a97ec1c8ac958f009c02220ac0402e936c

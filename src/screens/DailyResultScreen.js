@@ -13,8 +13,11 @@ import {
   Linking,
   ScrollView,
   BackHandler,
+  Platform,
+  PanResponder,
 } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+
+import { useFocusEffect, CommonActions } from "@react-navigation/native";
 import { Image } from "expo-image";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
@@ -96,33 +99,89 @@ const DailyResultScreen = ({ navigation, route }) => {
     }).start();
   }, []);
 
+  // 안드로이드 하드웨어 뒤로가기 버튼 처리
+  useFocusEffect(
+    React.useCallback(() => {
+      if (Platform.OS === "android") {
+        const onBackPress = () => {
+          handleBack();
+          return true; // 기본 뒤로가기 동작 방지
+        };
+
+        BackHandler.addEventListener("hardwareBackPress", onBackPress);
+
+        return () =>
+          BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+      }
+    }, [])
+  );
+
   // 안드로이드 하단 앱바 뒤로가기 버튼 제어
   useFocusEffect(
     React.useCallback(() => {
-      const onBackPress = () => {
-        // 데일리 결과 화면에서 뒤로가기 시 적절한 화면으로 이동
-        if (cardData && cardData.date) {
-          // 다이어리에서 온 경우 해당 날짜의 다이어리 스크린으로 돌아가기
-          const selectedDate = new Date(cardData.date);
-          navigation.navigate("DiaryInput", { selectedDate });
-        } else if (cardData) {
-          // 보관함에서 온 경우 보관함으로 돌아가기
-          navigation.goBack();
-        } else {
-          // 새로운 카드 결과인 경우 홈으로 이동
-          navigation.navigate("Home");
-        }
-        return true; // 기본 뒤로가기 동작 방지
-      };
+      if (Platform.OS === "android") {
+        const onBackPress = () => {
+          // 데일리 결과 화면에서 뒤로가기 시 적절한 화면으로 이동
+          if (cardData && cardData.date) {
+            // 다이어리에서 온 경우 해당 날짜의 다이어리 스크린으로 돌아가기
+            navigation.replace("DiaryInput", { selectedDate: cardData.date });
+          } else if (cardData) {
+            // 보관함에서 온 경우 보관함으로 돌아가기
+            navigation.goBack();
+          } else {
+            // 새로운 카드 결과인 경우 홈으로 이동
+            navigation.replace("Home");
+          }
+          return true; // 기본 뒤로가기 동작 방지
+        };
 
-      const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        onBackPress
-      );
+        const backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+          onBackPress
+        );
 
-      return () => backHandler.remove();
+        return () => backHandler.remove();
+      }
     }, [navigation, cardData])
   );
+
+  // 커스텀 스와이핑 제스처 처리
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => false, // 시작 시에는 반응하지 않음
+      onMoveShouldSetPanResponder: (evt, gestureState) => {
+        // 왼쪽으로 스와이핑할 때만 반응 (수평 이동이 수직 이동보다 클 때)
+        return (
+          gestureState.dx < -20 && // 왼쪽으로 20px 이상 이동
+          Math.abs(gestureState.dx) > Math.abs(gestureState.dy) * 2 // 수평 이동이 수직 이동의 2배 이상
+        );
+      },
+      onPanResponderGrant: () => {
+        // 제스처 시작 시 처리
+      },
+      onPanResponderMove: () => {
+        // 제스처 이동 중 처리 (필요시 애니메이션 추가 가능)
+      },
+      onPanResponderRelease: (evt, gestureState) => {
+        // 왼쪽으로 충분히 스와이핑했을 때 (50px 이상)
+        if (gestureState.dx < -50) {
+          if (cardData && cardData.date) {
+            // 다이어리에서 온 경우 해당 날짜의 다이어리 스크린으로 돌아가기
+            navigation.replace("DiaryInput", { selectedDate: cardData.date });
+          } else if (cardData) {
+            // 보관함에서 온 경우 보관함으로 돌아가기
+            navigation.goBack();
+          } else {
+            // 새로운 카드 결과인 경우 홈으로 이동
+            navigation.replace("Home");
+          }
+        }
+      },
+      onPanResponderTerminate: () => {
+        // 제스처 종료 시 처리
+      },
+    })
+  ).current;
 
   const handleShare = async () => {
     try {
@@ -150,14 +209,13 @@ const DailyResultScreen = ({ navigation, route }) => {
   const handleBack = () => {
     if (cardData && cardData.date) {
       // 다이어리에서 온 경우 해당 날짜의 다이어리 스크린으로 돌아가기
-      const selectedDate = new Date(cardData.date);
-      navigation.navigate("DiaryInput", { selectedDate });
+      navigation.replace("DiaryInput", { selectedDate: cardData.date });
     } else if (cardData) {
       // 보관함에서 온 경우 보관함으로 돌아가기
       navigation.goBack();
     } else {
       // 새로운 카드 결과인 경우 홈으로 이동
-      navigation.navigate("Home");
+      navigation.replace("Home");
     }
   };
 
@@ -257,273 +315,275 @@ const DailyResultScreen = ({ navigation, route }) => {
   const cardResult = getCardResult(selectedCard.id);
 
   return (
-    <ImageBackground
-      source={getBackgroundImage()}
-      style={styles.container}
-      resizeMode="cover"
-    >
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor="transparent"
-        translucent
-      />
-      {/* 상단 헤더 */}
-      <View style={[commonStyles.header, { position: "relative" }]}>
-        <TouchableOpacity
-          style={[commonStyles.backButton, { zIndex: 2 }]}
-          onPress={handleBack}
-          activeOpacity={0.8}
-        >
-          <Image
-            source={require("../../assets/back-icon.png")}
-            style={commonStyles.backIcon}
-            contentFit="contain"
-          />
-        </TouchableOpacity>
-        <Text
-          style={[
-            commonStyles.headerTitle,
-            {
-              position: "absolute",
-              left: 0,
-              right: 0,
-              top: 60,
-              zIndex: 1,
-            },
-          ]}
-        >
-          {i18n.t("dailyResult.title")}
-        </Text>
-        {!cardData ? (
+    <View {...panResponder.panHandlers} style={styles.container}>
+      <ImageBackground
+        source={getBackgroundImage()}
+        style={styles.container}
+        resizeMode="cover"
+      >
+        <StatusBar
+          barStyle="dark-content"
+          backgroundColor="transparent"
+          translucent
+        />
+        {/* 상단 헤더 */}
+        <View style={[commonStyles.header, { position: "relative" }]}>
           <TouchableOpacity
-            style={[commonStyles.infoButton, { zIndex: 2 }]}
-            onPress={() => navigation.navigate("More")}
+            style={[commonStyles.backButton, { zIndex: 2 }]}
+            onPress={handleBack}
             activeOpacity={0.8}
           >
             <Image
-              source={require("../../assets/info-icon-dark.png")}
-              style={commonStyles.infoIcon}
+              source={require("../../assets/back-icon.png")}
+              style={commonStyles.backIcon}
               contentFit="contain"
             />
           </TouchableOpacity>
-        ) : (
-          <View style={[commonStyles.infoButton, { zIndex: 2 }]} />
-        )}
-      </View>
-
-      <ScrollView
-        style={commonStyles.scrollView}
-        contentContainerStyle={commonStyles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* 상단 텍스트 */}
-        <View style={commonStyles.headerContainer}>
-          <View style={commonStyles.gradientContainer}>
-            <MaskedView
-              style={{ width: "100%" }}
-              maskElement={
-                <Text style={commonStyles.gradientTitle}>
-                  {i18n.t("dailyResult.gradientTitle")}
-                </Text>
-              }
-            >
-              <LinearGradient
-                colors={["#612CC9", "#C53D93"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 0.8, y: 0 }}
-              >
-                <Text style={[commonStyles.gradientTitle, { opacity: 0 }]}>
-                  {i18n.t("dailyResult.gradientTitle")}
-                </Text>
-              </LinearGradient>
-            </MaskedView>
-          </View>
-        </View>
-
-        {/* 결과 카드 */}
-        <View style={commonStyles.resultContainer}>
-          <Animated.View
+          <Text
             style={[
-              commonStyles.resultCard,
+              commonStyles.headerTitle,
               {
-                transform: [{ scale: cardScale }],
-                opacity: resultOpacity,
+                position: "absolute",
+                left: 0,
+                right: 0,
+                top: 60,
+                zIndex: 1,
               },
             ]}
           >
-            <Image
-              source={selectedCard.frontImage}
-              style={commonStyles.resultCardImage}
-              contentFit="contain"
-            />
-          </Animated.View>
+            {i18n.t("dailyResult.title")}
+          </Text>
+          {!cardData ? (
+            <TouchableOpacity
+              style={[commonStyles.infoButton, { zIndex: 2 }]}
+              onPress={() => navigation.navigate("More")}
+              activeOpacity={0.8}
+            >
+              <Image
+                source={require("../../assets/info-icon-dark.png")}
+                style={commonStyles.infoIcon}
+                contentFit="contain"
+              />
+            </TouchableOpacity>
+          ) : (
+            <View style={[commonStyles.infoButton, { zIndex: 2 }]} />
+          )}
         </View>
 
-        {/* 카드 제목 + 점수 */}
-        <Animated.View
-          style={[
-            commonStyles.titleContainer,
-            {
-              opacity: resultOpacity,
-              transform: [{ scale: resultScale }],
-            },
-          ]}
+        <ScrollView
+          style={commonStyles.scrollView}
+          contentContainerStyle={commonStyles.scrollContent}
+          showsVerticalScrollIndicator={false}
         >
-          <Text
+          {/* 상단 텍스트 */}
+          <View style={commonStyles.headerContainer}>
+            <View style={commonStyles.gradientContainer}>
+              <MaskedView
+                style={{ width: "100%" }}
+                maskElement={
+                  <Text style={commonStyles.gradientTitle}>
+                    {i18n.t("dailyResult.gradientTitle")}
+                  </Text>
+                }
+              >
+                <LinearGradient
+                  colors={["#612CC9", "#C53D93"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 0.8, y: 0 }}
+                >
+                  <Text style={[commonStyles.gradientTitle, { opacity: 0 }]}>
+                    {i18n.t("dailyResult.gradientTitle")}
+                  </Text>
+                </LinearGradient>
+              </MaskedView>
+            </View>
+          </View>
+
+          {/* 결과 카드 */}
+          <View style={commonStyles.resultContainer}>
+            <Animated.View
+              style={[
+                commonStyles.resultCard,
+                {
+                  transform: [{ scale: cardScale }],
+                  opacity: resultOpacity,
+                },
+              ]}
+            >
+              <Image
+                source={selectedCard.frontImage}
+                style={commonStyles.resultCardImage}
+                contentFit="contain"
+              />
+            </Animated.View>
+          </View>
+
+          {/* 카드 제목 + 점수 */}
+          <Animated.View
             style={[
-              commonStyles.cardTitle,
-              { color: cardResult.isPositive ? colors.primary : "#E91B64" },
+              commonStyles.titleContainer,
+              {
+                opacity: resultOpacity,
+                transform: [{ scale: resultScale }],
+              },
             ]}
           >
-            {cardResult.score}
-            {i18n.t("dailyResult.scoreSuffix")}{" "}
-            {i18n.t(`cards.${getCardKeyById(selectedCard.id)}.title`)}
-          </Text>
-        </Animated.View>
-
-        {/* 결과 설명 */}
-        <Animated.View
-          style={[
-            commonStyles.explanationContainer,
-            {
-              opacity: resultOpacity,
-              transform: [{ scale: resultScale }],
-            },
-          ]}
-        >
-          {i18n.t(`cards.${getCardKeyById(selectedCard.id)}.keywords`) && (
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={commonStyles.keywordsContainer}
-              style={{ marginBottom: 12 }}
+            <Text
+              style={[
+                commonStyles.cardTitle,
+                { color: cardResult.isPositive ? colors.primary : "#E91B64" },
+              ]}
             >
-              {i18n
-                .t(`cards.${getCardKeyById(selectedCard.id)}.keywords`)
-                .split(", ")
-                .map((keyword, index) => (
-                  <View key={index} style={commonStyles.keywordChip}>
-                    <Text style={commonStyles.keywordText}>
-                      {keyword.trim()}
-                    </Text>
-                  </View>
-                ))}
-            </ScrollView>
-          )}
-          <Text style={commonStyles.explanationText}>
-            {i18n.t(`cards.${getCardKeyById(selectedCard.id)}.description`)}
-          </Text>
-        </Animated.View>
-
-        {/* 버튼들 */}
-        <View style={commonStyles.buttonContainer}>
-          {!cardData ? (
-            // 새로운 카드 결과인 경우에만 보관하기 버튼 표시
-            <View style={commonStyles.topButtonRow}>
-              <TouchableOpacity
-                style={[
-                  commonStyles.archiveButton,
-                  (isArchived || isArchiving) && styles.archiveButtonDisabled,
-                ]}
-                onPress={handleArchive}
-                activeOpacity={0.8}
-                disabled={isArchived || isArchiving}
-              >
-                <Text
-                  style={[
-                    commonStyles.archiveButtonText,
-                    (isArchived || isArchiving) &&
-                      styles.archiveButtonTextDisabled,
-                  ]}
-                >
-                  {isArchiving
-                    ? i18n.t("result.archiving")
-                    : isArchived
-                    ? i18n.t("result.archived")
-                    : i18n.t("result.archive")}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={commonStyles.shareButton}
-                onPress={handleShare}
-                activeOpacity={0.8}
-              >
-                <Text style={commonStyles.shareButtonText}>
-                  {i18n.t("result.share")}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          ) : cardData && cardData.date ? (
-            // 다이어리에서 온 경우 보관하기 + 공유하기 버튼 표시
-            <View style={commonStyles.topButtonRow}>
-              <TouchableOpacity
-                style={[
-                  commonStyles.archiveButton,
-                  (isArchived || isArchiving) && styles.archiveButtonDisabled,
-                ]}
-                onPress={handleArchive}
-                activeOpacity={0.8}
-                disabled={isArchived || isArchiving}
-              >
-                <Text
-                  style={[
-                    commonStyles.archiveButtonText,
-                    (isArchived || isArchiving) &&
-                      styles.archiveButtonTextDisabled,
-                  ]}
-                >
-                  {isArchiving
-                    ? i18n.t("result.archiving")
-                    : isArchived
-                    ? i18n.t("result.archived")
-                    : i18n.t("result.archive")}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={commonStyles.shareButton}
-                onPress={handleShare}
-                activeOpacity={0.8}
-              >
-                <Text style={commonStyles.shareButtonText}>
-                  {i18n.t("result.share")}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            // 보관함에서 온 경우 공유하기 + 삭제하기 버튼 표시
-            <View style={commonStyles.topButtonRow}>
-              <TouchableOpacity
-                style={commonStyles.shareButton}
-                onPress={handleShare}
-                activeOpacity={0.8}
-              >
-                <Text style={commonStyles.shareButtonText}>
-                  {i18n.t("result.share")}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={commonStyles.deleteButton}
-                onPress={handleDelete}
-                activeOpacity={0.8}
-              >
-                <Text style={commonStyles.deleteButtonText}>
-                  {i18n.t("result.delete")}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
-
-          <TouchableOpacity
-            style={commonStyles.homeButton}
-            onPress={handleHome}
-          >
-            <Text style={commonStyles.homeButtonText}>
-              {i18n.t("result.home")}
+              {cardResult.score}
+              {i18n.t("dailyResult.scoreSuffix")}{" "}
+              {i18n.t(`cards.${getCardKeyById(selectedCard.id)}.title`)}
             </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </ImageBackground>
+          </Animated.View>
+
+          {/* 결과 설명 */}
+          <Animated.View
+            style={[
+              commonStyles.explanationContainer,
+              {
+                opacity: resultOpacity,
+                transform: [{ scale: resultScale }],
+              },
+            ]}
+          >
+            {i18n.t(`cards.${getCardKeyById(selectedCard.id)}.keywords`) && (
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={commonStyles.keywordsContainer}
+                style={{ marginBottom: 12 }}
+              >
+                {i18n
+                  .t(`cards.${getCardKeyById(selectedCard.id)}.keywords`)
+                  .split(", ")
+                  .map((keyword, index) => (
+                    <View key={index} style={commonStyles.keywordChip}>
+                      <Text style={commonStyles.keywordText}>
+                        {keyword.trim()}
+                      </Text>
+                    </View>
+                  ))}
+              </ScrollView>
+            )}
+            <Text style={commonStyles.explanationText}>
+              {i18n.t(`cards.${getCardKeyById(selectedCard.id)}.description`)}
+            </Text>
+          </Animated.View>
+
+          {/* 버튼들 */}
+          <View style={commonStyles.buttonContainer}>
+            {!cardData ? (
+              // 새로운 카드 결과인 경우에만 보관하기 버튼 표시
+              <View style={commonStyles.topButtonRow}>
+                <TouchableOpacity
+                  style={[
+                    commonStyles.archiveButton,
+                    (isArchived || isArchiving) && styles.archiveButtonDisabled,
+                  ]}
+                  onPress={handleArchive}
+                  activeOpacity={0.8}
+                  disabled={isArchived || isArchiving}
+                >
+                  <Text
+                    style={[
+                      commonStyles.archiveButtonText,
+                      (isArchived || isArchiving) &&
+                        styles.archiveButtonTextDisabled,
+                    ]}
+                  >
+                    {isArchiving
+                      ? i18n.t("result.archiving")
+                      : isArchived
+                      ? i18n.t("result.archived")
+                      : i18n.t("result.archive")}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={commonStyles.shareButton}
+                  onPress={handleShare}
+                  activeOpacity={0.8}
+                >
+                  <Text style={commonStyles.shareButtonText}>
+                    {i18n.t("result.share")}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ) : cardData && cardData.date ? (
+              // 다이어리에서 온 경우 보관하기 + 공유하기 버튼 표시
+              <View style={commonStyles.topButtonRow}>
+                <TouchableOpacity
+                  style={[
+                    commonStyles.archiveButton,
+                    (isArchived || isArchiving) && styles.archiveButtonDisabled,
+                  ]}
+                  onPress={handleArchive}
+                  activeOpacity={0.8}
+                  disabled={isArchived || isArchiving}
+                >
+                  <Text
+                    style={[
+                      commonStyles.archiveButtonText,
+                      (isArchived || isArchiving) &&
+                        styles.archiveButtonTextDisabled,
+                    ]}
+                  >
+                    {isArchiving
+                      ? i18n.t("result.archiving")
+                      : isArchived
+                      ? i18n.t("result.archived")
+                      : i18n.t("result.archive")}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={commonStyles.shareButton}
+                  onPress={handleShare}
+                  activeOpacity={0.8}
+                >
+                  <Text style={commonStyles.shareButtonText}>
+                    {i18n.t("result.share")}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              // 보관함에서 온 경우 공유하기 + 삭제하기 버튼 표시
+              <View style={commonStyles.topButtonRow}>
+                <TouchableOpacity
+                  style={commonStyles.shareButton}
+                  onPress={handleShare}
+                  activeOpacity={0.8}
+                >
+                  <Text style={commonStyles.shareButtonText}>
+                    {i18n.t("result.share")}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={commonStyles.deleteButton}
+                  onPress={handleDelete}
+                  activeOpacity={0.8}
+                >
+                  <Text style={commonStyles.deleteButtonText}>
+                    {i18n.t("result.delete")}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+
+            <TouchableOpacity
+              style={commonStyles.homeButton}
+              onPress={handleHome}
+            >
+              <Text style={commonStyles.homeButtonText}>
+                {i18n.t("result.home")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </ImageBackground>
+    </View>
   );
 };
 

@@ -184,7 +184,7 @@ const CardDrawScreen = ({ navigation, route }) => {
 
   const handleViewResult = () => {
     if (selectedCard) {
-      navigation.navigate("Result", {
+      navigation.replace("Result", {
         question,
         result: selectedCard,
       });

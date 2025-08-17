@@ -117,7 +117,12 @@ const tarotImages = {
 
 const DailyCardSelectionScreen = ({ navigation, route }) => {
   const { currentLanguage } = useLanguage(); // 언어 변경 감지를 위한 훅 추가
-  const { selectedDate } = route.params || { selectedDate: new Date() };
+  const { selectedDate: selectedDateParam } = route.params || {
+    selectedDate: new Date().toISOString().split("T")[0],
+  };
+
+  // selectedDate를 문자열로 유지 (Date 객체로 변환하지 않음)
+  const selectedDate = selectedDateParam;
 
   const [shuffledCards, setShuffledCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
@@ -188,15 +193,8 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
   useEffect(() => {
     const checkDailyCard = async () => {
       try {
-        // 특정 날짜의 데일리 카드 뽑기 가능 여부 확인
-        // 한국 시간 기준으로 날짜 문자열 생성
-        const koreanTime = new Date(
-          selectedDate.getTime() + 9 * 60 * 60 * 1000
-        ); // UTC+9
-        const year = koreanTime.getFullYear();
-        const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
-        const day = String(koreanTime.getDate()).padStart(2, "0");
-        const dateString = `${year}-${month}-${day}`;
+        // selectedDate는 이미 문자열 형태 (YYYY-MM-DD)
+        const dateString = selectedDate;
         const dateKey = `dailyCard_${dateString}`;
 
         const existingCard = await AsyncStorage.getItem(dateKey);
@@ -204,7 +202,7 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
         if (existingCard) {
           // 이미 해당 날짜에 뽑았으면 결과 페이지로 바로 이동
           const cardData = JSON.parse(existingCard);
-          navigation.navigate("DailyResult", {
+          navigation.replace("DailyResult", {
             result: cardData.result,
             cardType: "daily",
             score: cardData.score,
@@ -240,12 +238,8 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
       setShowSelectedCard(true);
 
       // 특정 날짜에 데일리 카드 뽑기 완료 저장
-      // 한국 시간 기준으로 날짜 문자열 생성
-      const koreanTime = new Date(selectedDate.getTime() + 9 * 60 * 60 * 1000); // UTC+9
-      const year = koreanTime.getFullYear();
-      const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
-      const day = String(koreanTime.getDate()).padStart(2, "0");
-      const dateString = `${year}-${month}-${day}`;
+      // selectedDate는 이미 문자열 형태 (YYYY-MM-DD)
+      const dateString = selectedDate;
       const dateKey = `dailyCard_${dateString}`;
 
       // 카드 결과 정보 가져오기
@@ -276,14 +270,10 @@ const DailyCardSelectionScreen = ({ navigation, route }) => {
 
   const handleViewResult = () => {
     if (selectedCard) {
-      // 한국 시간 기준으로 날짜 문자열 생성
-      const koreanTime = new Date(selectedDate.getTime() + 9 * 60 * 60 * 1000); // UTC+9
-      const year = koreanTime.getFullYear();
-      const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
-      const day = String(koreanTime.getDate()).padStart(2, "0");
-      const dateString = `${year}-${month}-${day}`;
+      // selectedDate는 이미 문자열 형태 (YYYY-MM-DD)
+      const dateString = selectedDate;
 
-      navigation.navigate("DailyResult", {
+      navigation.replace("DailyResult", {
         result: selectedCard,
         cardType: "daily",
         cardData: {

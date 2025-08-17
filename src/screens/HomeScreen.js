@@ -256,11 +256,10 @@ const HomeScreen = ({ navigation, route }) => {
   const handleDateSelect = (date) => {
     setSelectedDate(date);
     setShowDateModal(false);
-    // 일기 입력 페이지로 이동 - 한국 시간 기준 사용
-    const koreanTime = new Date(date.getTime() + 9 * 60 * 60 * 1000); // UTC+9
-    const year = koreanTime.getFullYear();
-    const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
-    const day = String(koreanTime.getDate()).padStart(2, "0");
+    // 일기 입력 페이지로 이동 - 선택한 날짜를 그대로 사용
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
     const dateString = `${year}-${month}-${day}`;
 
     navigation.navigate("DiaryInput", {
@@ -312,11 +311,10 @@ const HomeScreen = ({ navigation, route }) => {
   };
 
   const getDiaryForDate = (date) => {
-    // 한국 시간 기준으로 날짜 문자열 생성
-    const koreanTime = new Date(date.getTime() + 9 * 60 * 60 * 1000); // UTC+9
-    const year = koreanTime.getFullYear();
-    const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
-    const day = String(koreanTime.getDate()).padStart(2, "0");
+    // 선택한 날짜를 그대로 사용
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
     const dateString = `${year}-${month}-${day}`;
     return diaryData[dateString];
   };

@@ -23,10 +23,12 @@ import {
   Animated,
   Modal,
 } from "react-native";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
+import { useFocusEffect, CommonActions } from "@react-navigation/native";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 import i18n from "../utils/i18n";
@@ -41,11 +43,10 @@ const DiaryInputScreen = ({ navigation, route }) => {
   const { selectedDate: selectedDateParam } = route.params || {
     selectedDate: (() => {
       const today = new Date();
-      // 한국 시간 기준으로 날짜 문자열 생성
-      const koreanTime = new Date(today.getTime() + 9 * 60 * 60 * 1000); // UTC+9
-      const year = koreanTime.getFullYear();
-      const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
-      const day = String(koreanTime.getDate()).padStart(2, "0");
+      // 오늘 날짜를 그대로 사용
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
       return `${year}-${month}-${day}`;
     })(),
   };
@@ -406,7 +407,7 @@ const DiaryInputScreen = ({ navigation, route }) => {
   const handleDailyCardPress = () => {
     if (hasDailyCard && dailyCardData) {
       // 이미 뽑은 경우 결과 페이지로 이동 - 실제 데이터 사용
-      navigation.navigate("DailyResult", {
+      navigation.replace("DailyResult", {
         result: dailyCardData.result || "데일리 카드 결과",
         cardType: "daily",
         score: dailyCardData.score,
@@ -414,7 +415,13 @@ const DiaryInputScreen = ({ navigation, route }) => {
       });
     } else {
       // 아직 뽑지 않은 경우 데일리 카드 선택 페이지로 이동 - 선택된 날짜 전달
-      navigation.navigate("DailyCardSelection", { selectedDate });
+      // Date 객체 대신 문자열로 전달
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+      const day = String(selectedDate.getDate()).padStart(2, "0");
+      const dateString = `${year}-${month}-${day}`;
+
+      navigation.replace("DailyCardSelection", { selectedDate: dateString });
     }
   };
 

@@ -12,8 +12,10 @@ import {
   Alert,
   Linking,
   BackHandler,
+  Platform,
 } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+
+import { useFocusEffect, CommonActions } from "@react-navigation/native";
 import { Image } from "expo-image";
 import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
@@ -80,6 +82,23 @@ const ResultScreen = ({ navigation, route }) => {
       ? i18n.t("cardDraw.dailyTitle")
       : i18n.t("cardDraw.yesnoTitle");
   };
+
+  // 안드로이드 하드웨어 뒤로가기 버튼 처리
+  useFocusEffect(
+    React.useCallback(() => {
+      if (Platform.OS === "android") {
+        const onBackPress = () => {
+          handleBack();
+          return true; // 기본 뒤로가기 동작 방지
+        };
+
+        BackHandler.addEventListener("hardwareBackPress", onBackPress);
+
+        return () =>
+          BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+      }
+    }, [])
+  );
 
   useEffect(() => {
     // 결과 애니메이션
@@ -363,7 +382,9 @@ const ResultScreen = ({ navigation, route }) => {
             },
           ]}
         >
-          <Text style={styles.cardNameText}>{cardResult.name} {i18n.t("cardDraw.cardSuffix")}</Text>
+          <Text style={styles.cardNameText}>
+            {cardResult.name} {i18n.t("cardDraw.cardSuffix")}
+          </Text>
         </Animated.View>
 
         {/* YES/NO 퍼센트 텍스트 */}
