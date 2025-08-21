@@ -92,3 +92,41 @@ export const resetDailyCardData = async () => {
     await AsyncStorage.removeItem("todayDailyCard");
   } catch (error) {}
 };
+
+// 일일 카드 뽑기 횟수 가져오기
+export const getDailyCardCount = async () => {
+  try {
+    const today = new Date().toDateString();
+    const count = await AsyncStorage.getItem(`oracleCardCount_${today}`);
+    return parseInt(count) || 0;
+  } catch (error) {
+    console.log("Error getting daily card count:", error);
+    return 0;
+  }
+};
+
+// 일일 카드 뽑기 횟수 증가
+export const incrementDailyCardCount = async () => {
+  try {
+    const today = new Date().toDateString();
+    const currentCount = await getDailyCardCount();
+    const newCount = currentCount + 1;
+    await AsyncStorage.setItem(`oracleCardCount_${today}`, String(newCount));
+    console.log(`Daily card count incremented to: ${newCount}`);
+    return newCount;
+  } catch (error) {
+    console.log("Error incrementing daily card count:", error);
+    return 1;
+  }
+};
+
+// 일일 카드 뽑기 횟수 리셋 (테스트용)
+export const resetDailyCardCount = async () => {
+  try {
+    const today = new Date().toDateString();
+    await AsyncStorage.removeItem(`oracleCardCount_${today}`);
+    console.log("Daily card count reset");
+  } catch (error) {
+    console.log("Error resetting daily card count:", error);
+  }
+};

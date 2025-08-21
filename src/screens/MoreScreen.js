@@ -12,6 +12,7 @@ import { colors } from "../styles/colors";
 import { commonStyles } from "../styles/common";
 import i18n from "../utils/i18n";
 import { useLanguage } from "../contexts/LanguageContext";
+import { BannerAd } from "../utils/adMobUtils";
 
 const { width } = Dimensions.get("window");
 
@@ -109,6 +110,7 @@ const MoreScreen = ({ navigation }) => {
       {/* 앱 버전 정보 */}
       <View style={styles.versionContainer}>
         <Text style={styles.versionText}>{i18n.t("more.version")}</Text>
+        <BannerAd />
       </View>
     </View>
   );

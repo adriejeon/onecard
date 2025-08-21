@@ -2,7 +2,7 @@
   "expo": {
     "name": "나의 타로 일기",
     "slug": "TarotMind",
-    "version": "1.5.9",
+    "version": "1.6.0",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.adrie.TarotMind",
-      "buildNumber": "22",
+      "buildNumber": "23",
       "infoPlist": {
         "CFBundleDisplayName": "나의 타로 일기",
         "NSCameraUsageDescription": "앱이 카메라에 접근하여 사진을 촬영할 수 있습니다.",
@@ -32,12 +32,13 @@
     },
     "android": {
       "package": "com.adrie.TarotMind",
-      "versionCode": 4,
+      "versionCode": 7,
       "permissions": [
         "CAMERA",
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE"
       ],
+
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#3100BB"

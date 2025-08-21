@@ -84,6 +84,9 @@ PODS:
   - FBLazyVector (0.79.5)
   - fmt (11.0.2)
   - glog (0.3.5)
+  - Google-Mobile-Ads-SDK (12.4.0):
+    - GoogleUserMessagingPlatform (>= 1.1)
+  - GoogleUserMessagingPlatform (3.0.0)
   - libavif/core (0.11.1)
   - libavif/libdav1d (0.11.1):
     - libavif/core
@@ -1355,7 +1358,7 @@ PODS:
     - React-jsiexecutor
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
-  - react-native-safe-area-context (5.6.0):
+  - react-native-safe-area-context (5.4.0):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -1369,8 +1372,8 @@ PODS:
     - React-ImageManager
     - React-jsc
     - React-jsi
-    - react-native-safe-area-context/common (= 5.6.0)
-    - react-native-safe-area-context/fabric (= 5.6.0)
+    - react-native-safe-area-context/common (= 5.4.0)
+    - react-native-safe-area-context/fabric (= 5.4.0)
     - React-NativeModulesApple
     - React-RCTFabric
     - React-renderercss
@@ -1380,7 +1383,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-safe-area-context/common (5.6.0):
+  - react-native-safe-area-context/common (5.4.0):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -1403,7 +1406,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-safe-area-context/fabric (5.6.0):
+  - react-native-safe-area-context/fabric (5.4.0):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -1814,6 +1817,31 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNGoogleMobileAds (15.4.0):
+    - DoubleConversion
+    - glog
+    - Google-Mobile-Ads-SDK (= 12.4.0)
+    - GoogleUserMessagingPlatform (= 3.0.0)
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsc
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNReactNativeHapticFeedback (2.3.3):
     - DoubleConversion
     - glog
@@ -2005,7 +2033,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNShare (12.2.0):
+  - RNShare (12.1.0):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -2028,7 +2056,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNSVG (15.12.1):
+  - RNSVG (15.11.2):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -2050,9 +2078,9 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNSVG/common (= 15.12.1)
+    - RNSVG/common (= 15.11.2)
     - Yoga
-  - RNSVG/common (15.12.1):
+  - RNSVG/common (15.11.2):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -2075,7 +2103,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNVectorIcons (10.3.0):
+  - RNVectorIcons (10.2.0):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -2202,6 +2230,7 @@ DEPENDENCIES:
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNGoogleMobileAds (from `../node_modules/react-native-google-mobile-ads`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -2212,6 +2241,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Google-Mobile-Ads-SDK
+    - GoogleUserMessagingPlatform
     - libavif
     - libdav1d
     - libwebp
@@ -2394,6 +2425,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNGoogleMobileAds:
+    :path: "../node_modules/react-native-google-mobile-ads"
   RNReactNativeHapticFeedback:
     :path: "../node_modules/react-native-haptic-feedback"
   RNReanimated:
@@ -2430,6 +2463,8 @@ SPEC CHECKSUMS:
   FBLazyVector: d2a9cd223302b6c9aa4aa34c1a775e9db609eb52
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 08b301085f15bcbb6ff8632a8ebaf239aae04e6a
+  Google-Mobile-Ads-SDK: db00a3836f288f94e52114f312b56fe066699d82
+  GoogleUserMessagingPlatform: f8d0cdad3ca835406755d0a69aa634f00e76d576
   libavif: 84bbb62fb232c3018d6f1bab79beea87e35de7b7
   libdav1d: 23581a4d8ec811ff171ed5e2e05cd27bad64c39f
   libwebp: 02b23773aedb6ff1fd38cec7a77b81414c6842a8
@@ -2464,7 +2499,7 @@ SPEC CHECKSUMS:
   React-logger: 85fa3509931497c72ccd2547fcc91e7299d8591e
   React-Mapbuffer: 96a2f2a176268581733be182fa6eebab1c0193be
   React-microtasksnativemodule: 11b292232f1626567a79d58136689f1b911c605f
-  react-native-safe-area-context: 26f8341d77762efc31b101297c302f573f4b045e
+  react-native-safe-area-context: b0ee54c424896b916aab46212b884cb8794308d7
   React-NativeModulesApple: 494c38599b82392ed14b2c0118fca162425bb618
   React-oscompat: 0592889a9fcf0eacb205532028e4a364e22907dd
   React-perflogger: c584fa50e422a46f37404d083fad12eb289d5de4
@@ -2499,12 +2534,13 @@ SPEC CHECKSUMS:
   RNCMaskedView: 7dafa5caa474e6cdbdf60cf6563af7779d3ce6eb
   RNDateTimePicker: e0fd40bc638cb5493e021c5c4a549025a91471d9
   RNGestureHandler: 6bf8b210cbad95ced45f3f9b8df05924b3a97300
+  RNGoogleMobileAds: 60f4ac10e2eea08ab9ea49d045923d540c6cc16d
   RNReactNativeHapticFeedback: 6a35ca0dedbf89e276d8167d12c7775d7c47af5f
   RNReanimated: 79c239f5562adcf2406b681830f716f1e7d76081
   RNScreens: dd9a329b21412c5322a5447fc2c3ae6471cf6e5a
-  RNShare: d89d06f3e254b365cef8d1e4c3c4be510bd676fb
-  RNSVG: 820687c168d70d90a47d96a0cd5e263905fc67d9
-  RNVectorIcons: e8b1657fe26c7d7338c7ac827395dc3af8dd0870
+  RNShare: 43ca21a6884546b6e056c375085810d8868ac805
+  RNSVG: 57225e3832e15933a2e18e15b9db2d0455610465
+  RNVectorIcons: a6b0ef90022e1383800ece67d832535d57625aa5
   SDWebImage: f29024626962457f3470184232766516dee8dfea
   SDWebImageAVIFCoder: 00310d246aab3232ce77f1d8f0076f8c4b021d90
   SDWebImageSVGCoder: 15a300a97ec1c8ac958f009c02220ac0402e936c

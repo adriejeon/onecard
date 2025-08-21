@@ -23,6 +23,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import i18n from "../utils/i18n";
 import { useLanguage } from "../contexts/LanguageContext";
+import { showInterstitialAd } from "../utils/adMobUtils";
+import { incrementDailyCardCount } from "../utils/dailyCardUtils";
 
 const { width, height } = Dimensions.get("window");
 
@@ -182,12 +184,32 @@ const CardDrawScreen = ({ navigation, route }) => {
     }, 600);
   };
 
-  const handleViewResult = () => {
+  const handleViewResult = async () => {
     if (selectedCard) {
-      navigation.replace("Result", {
-        question,
-        result: selectedCard,
-      });
+      try {
+        // 일일 카드 뽑기 횟수 증가
+        const cardCount = await incrementDailyCardCount();
+
+        // 3번째부터 전면 광고 표시
+        if (cardCount >= 3) {
+          console.log(`Showing interstitial ad (card count: ${cardCount})`);
+          await showInterstitialAd();
+        } else {
+          console.log(`No ad shown (card count: ${cardCount})`);
+        }
+
+        navigation.replace("Result", {
+          question,
+          result: selectedCard,
+        });
+      } catch (error) {
+        console.log("Error in handleViewResult:", error);
+        // 에러가 발생해도 결과 화면으로 이동
+        navigation.replace("Result", {
+          question,
+          result: selectedCard,
+        });
+      }
     }
   };
 
