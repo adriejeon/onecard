@@ -34,6 +34,7 @@ import {
   calculateCompletionRate,
   saveTodoData,
 } from "../utils/todoUtils";
+import { BannerAd } from "../utils/adMobUtils";
 
 const { width, height } = Dimensions.get("window");
 
@@ -522,26 +523,6 @@ const HomeScreen = ({ navigation, route }) => {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* 상단 인사 */}
-        <View style={styles.greetingContainer}>
-          <View style={styles.gradientContainer}>
-            <MaskedView
-              style={{ width: "100%" }}
-              maskElement={<Text style={styles.greetingText}>{greeting}</Text>}
-            >
-              <LinearGradient
-                colors={["#612CC9", "#C53D93"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 0.8, y: 0 }}
-              >
-                <Text style={[styles.greetingText, { opacity: 0 }]}>
-                  {greeting}
-                </Text>
-              </LinearGradient>
-            </MaskedView>
-          </View>
-        </View>
-
         {/* 달력 - 스와이프 영역으로 제한 */}
         <View style={styles.calendarWrapper}>
           <PanGestureHandler
@@ -609,6 +590,11 @@ const HomeScreen = ({ navigation, route }) => {
             </Text>
           </TouchableOpacity>
         </View>
+
+        {/* 애드몹 배너 광고 */}
+        <View style={styles.adContainer}>
+          <BannerAd />
+        </View>
       </ScrollView>
 
       {/* 날짜 선택 모달 */}
@@ -634,28 +620,8 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
-  greetingContainer: {
-    justifyContent: "flex-start",
-    paddingTop: 20,
-    paddingHorizontal: 12,
-    marginBottom: 20,
-  },
-  gradientContainer: {
-    width: "100%",
-  },
-  greetingText: {
-    fontSize: 28,
-    fontWeight: "normal",
-    textAlign: "left",
-  },
-  dateText: {
-    fontSize: 16,
-    color: "#474747",
-    textAlign: "left",
-    opacity: 0.9,
-  },
   calendarWrapper: {
-    marginBottom: 20,
+    marginBottom: 10,
     overflow: "hidden", // 스와이프가 다른 영역에 영향을 주지 않도록 제한
     backgroundColor: "rgba(255, 255, 255, 0.05)", // 달력 영역을 시각적으로 구분 (선택사항)
     borderRadius: 15, // 달력 영역을 둥글게
@@ -852,9 +818,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     justifyContent: "center",
-    paddingTop: 10,
+    paddingTop: 5,
     paddingHorizontal: 16,
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 20,
   },
   worryButton: {
@@ -963,6 +929,11 @@ const styles = StyleSheet.create({
   },
   modalButtonTextPrimary: {
     color: "#ffffff",
+  },
+  adContainer: {
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 20,
   },
 });
 

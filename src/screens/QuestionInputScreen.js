@@ -232,9 +232,8 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     backgroundColor: colors.primary,
-    borderRadius: 8,
-    paddingVertical: 20,
-    paddingHorizontal: 80,
+    borderRadius: 15,
+    paddingVertical: 18,
     marginBottom: 30,
     width: "100%",
     alignItems: "center",
@@ -245,7 +244,7 @@ const styles = StyleSheet.create({
     opacity: 0.2,
   },
   nextButtonText: {
-    fontSize: 22,
+    fontSize: 16,
     fontWeight: "bold",
     color: colors.textLight,
     textAlign: "center",

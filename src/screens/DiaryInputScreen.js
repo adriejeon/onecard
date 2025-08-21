@@ -316,8 +316,7 @@ const DiaryInputScreen = ({ navigation, route }) => {
 
       await AsyncStorage.setItem(dateKey, JSON.stringify(diaryData));
 
-      // 스낵바 표시
-      showAutoSaveSnackbar();
+      // 자동 저장 시에는 스낵바 표시하지 않음
     } catch (error) {
       console.error("자동 저장 실패:", error);
     }
@@ -345,6 +344,64 @@ const DiaryInputScreen = ({ navigation, route }) => {
       });
     }, 4000);
   }, []);
+
+  const handleManualSave = useCallback(async () => {
+    // 실제로 변경된 내용이 있는지 확인
+    const hasContent = diaryText.trim().length > 0;
+    const hasEmotion = selectedEmotion !== null;
+    const hasImages = selectedImages.length > 0;
+
+    // 기존 데이터와 비교하여 변경사항이 있는지 확인
+    const currentSelectedDate = selectedDate;
+    // 한국 시간 기준으로 날짜 문자열 생성
+    const koreanTime = new Date(
+      currentSelectedDate.getTime() + 9 * 60 * 60 * 1000
+    ); // UTC+9
+    const year = koreanTime.getFullYear();
+    const month = String(koreanTime.getMonth() + 1).padStart(2, "0");
+    const day = String(koreanTime.getDate()).padStart(2, "0");
+    const dateString = `${year}-${month}-${day}`;
+    const dateKey = `diary_${dateString}`;
+
+    try {
+      const existingData = await AsyncStorage.getItem(dateKey);
+      let hasChanges = false;
+
+      if (existingData) {
+        const existing = JSON.parse(existingData);
+        hasChanges =
+          existing.content !== diaryText.trim() ||
+          existing.emotion !== selectedEmotion ||
+          JSON.stringify(existing.images) !== JSON.stringify(selectedImages);
+      } else {
+        // 새로 생성되는 경우
+        hasChanges = hasContent || hasEmotion || hasImages;
+      }
+
+      if (!hasChanges) {
+        // 변경사항이 없어도 저장 완료 메시지 표시
+        showAutoSaveSnackbar(i18n.t("diary.saveComplete"));
+        return;
+      }
+
+      const diaryData = {
+        date: dateString,
+        content: diaryText.trim(),
+        emotion: selectedEmotion,
+        images: selectedImages,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      await AsyncStorage.setItem(dateKey, JSON.stringify(diaryData));
+
+      // 수동 저장 시에만 스낵바 표시
+      showAutoSaveSnackbar(i18n.t("diary.saveComplete"));
+    } catch (error) {
+      console.error("수동 저장 실패:", error);
+      showAutoSaveSnackbar(i18n.t("diary.saveError"));
+    }
+  }, [diaryText, selectedEmotion, selectedImages, showAutoSaveSnackbar]);
 
   const handleTextChange = (text) => {
     setDiaryText(text);
@@ -863,27 +920,18 @@ const DiaryInputScreen = ({ navigation, route }) => {
                 </View>
               )}
 
-              {/* 과거 날짜인 경우 안내 메시지 표시 */}
-              {isPastDate && (
-                <View style={styles.futureDateMessage}>
-                  <Text
-                    style={[
-                      styles.futureDateSubText,
-                      Platform.OS === "android" && styles.androidText,
-                    ]}
-                  >
-                    {i18n.t("diary.pastDateMessage")}
+              {/* 저장 버튼 */}
+              <View style={styles.saveButtonContainer}>
+                <TouchableOpacity
+                  style={styles.saveButton}
+                  onPress={handleManualSave}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.saveButtonText}>
+                    {i18n.t("diary.save")}
                   </Text>
-                  <Text
-                    style={[
-                      styles.futureDateSubText,
-                      Platform.OS === "android" && styles.androidText,
-                    ]}
-                  >
-                    {i18n.t("diary.pastDateSubMessage")}
-                  </Text>
-                </View>
-              )}
+                </TouchableOpacity>
+              </View>
             </ScrollView>
           </View>
         </TouchableWithoutFeedback>
@@ -1148,19 +1196,24 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   saveButtonContainer: {
-    marginTop: 20,
-    marginBottom: 20,
+    paddingBottom: 40,
+    alignItems: "center",
   },
   saveButton: {
     backgroundColor: colors.primary,
     borderRadius: 15,
     paddingVertical: 18,
+    marginBottom: 30,
+    width: "100%",
     alignItems: "center",
+    justifyContent: "center",
+    minHeight: Platform.OS === "android" ? 56 : undefined,
   },
   saveButtonText: {
-    color: "#ffffff",
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
+    color: colors.textLight,
+    textAlign: "center",
   },
   keyboardAvoidingView: {
     flex: 1,
